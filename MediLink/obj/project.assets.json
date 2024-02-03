@@ -3670,19 +3670,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\david\\.nuget\\packages\\": {}
+    "C:\\Users\\juane\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\MediLink.csproj",
+      "projectUniqueName": "C:\\FinalProject\\MediLink-main\\MediLink-main\\MediLink\\MediLink.csproj",
       "projectName": "MediLink",
-      "projectPath": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\MediLink.csproj",
-      "packagesPath": "C:\\Users\\david\\.nuget\\packages\\",
-      "outputPath": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\obj\\",
+      "projectPath": "C:\\FinalProject\\MediLink-main\\MediLink-main\\MediLink\\MediLink.csproj",
+      "packagesPath": "C:\\Users\\juane\\.nuget\\packages\\",
+      "outputPath": "C:\\FinalProject\\MediLink-main\\MediLink-main\\MediLink\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\david\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\juane\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3746,7 +3751,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.405\\RuntimeIdentifierGraph.json"
       }
     }
   }
