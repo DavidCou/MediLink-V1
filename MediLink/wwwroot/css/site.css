@@ -1,22 +1,141 @@
-html {
-  font-size: 14px;
+﻿html {
+    font-size: 14px;
 }
+
+header.masthead {
+    padding-top: 10.5rem;
+    padding-bottom: 6rem;
+    text-align: center;
+    color: #fff;
+    background-image: url("img/mh-img.png");
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+}
+
+    header.masthead .masthead-subheading {
+        font-size: 1.5rem;
+        font-style: italic;
+        line-height: 1.5rem;
+        margin-bottom: 15px;
+        font-family: "Roboto Slab", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+
+    header.masthead .masthead-heading {
+        font-size: 3.25rem;
+        font-weight: 700;
+        line-height: 1.25rem;
+        margin-bottom: .5rem;
+        font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+
+#header-st {
+    height: 100vh; /* Or 100% for non-viewport-height image */
+    background-image: url('/img/main-banner.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.header-title {
+    color: white;
+    font-size: 75px;
+    width: 80%;
+    margin-left: 2em;
+}
+
+#btn-search-title {
+    margin-left: 7em;
+    margin-top: 2em;
+    font-size: 25px;
+}
+
+#company-title {
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: inline-block;
+    margin-left: 0;
+    font-weight: 700;
+}
+
+#div-info-one {
+    background: #FFFFC1;
+}
+
+.col-div-one {
+    padding-left: 6em;
+    padding-right: 6em;
+    vertical-align: middle;
+    padding-top: 7em;
+}
+
+.center-text {
+    margin: auto;
+    width: 50%;
+    padding-top: 3em;
+}
+
+#div-info-three {
+    background-image: url('/img/medical-information.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-weight: 800;
+    text-shadow: #FC0 1px 0 10px;
+    color: #F0F0F0;
+}
+
+
+.fa.fa-twitter {
+    font-family: sans-serif;
+}
+
+    .fa.fa-twitter::before {
+        content: "𝕏";
+        font-size: 1.2em;
+    }
+
+footer {
+    background: #FFFFC1;
+    width: 100%
+}
+
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
+
+    header .masthead {
+        padding-top: 8rem;
+        padding-bottom: 11.5rem;
+    }
+
+        header.masthead .masthead-subheading {
+            font-size: 2.25rem;
+            font-style: italic;
+            line-height: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        header.masthead .masthead-heading {
+            font-size: 4.5rem;
+            font-weight: 700;
+            line-height: 2.5rem;
+            margin-bottom: 1rem;
+        }
 }
 
+
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }

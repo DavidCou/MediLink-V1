@@ -4,45 +4,148 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MediLink</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">  <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
     <link rel="stylesheet" href="~/MediLink.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MediLink</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+    <header id="header-st">
+
+        <nav class="navbar navbar-expand static-top ">
+            <div class="mr=auto">
+                <a class="navbar-brand mx-0" href="#"><img class="ms-5 me-0" src="~/img/logo2.png" alt="Company Logo" width="70" height="60"></a>
+                <h3 id="company-title">MediLink</h3>
+            </div>
+
+            <div class="ml-auto mt-4">
+                <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav mx-auto ">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link mx-2 h6 text-white" href="@Url.Action("Index", "Home")">Home</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link mx-2 h6 text-white" href="@Url.Action("Search", "Search")">Search</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link mx-2 h6 text-white" href="@Url.Action("Articles", "Articles")">Articles</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2 h6 text-white" href="@Url.Action("Appointments", "Appointments")">Appointments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2 h6 text-white" href="@Url.Action("About", "Home")">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link mx-2 h6 text-white" href="@Url.Action("Contact", "Home")">Contact Us</a>
+                        </li>
+                        <li class="nav-item dropdown no-arrow ">
+                            <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 mx-2 d-none d-lg-inline text-white ">Language</span>
+                            </a>
+                            <!-- Dropdown - Languages -->
+                            <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    English
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" )">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Spanish
+                                </a>
+                                <div class="dropdown-divider"></div>
+
+
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-white h6 pt-">@ViewData["userconnected"]</span>
+                                <img class="img-profile rounded-circle"
+                                     src="~/img/undraw_profile.svg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
+
+                                <div class="dropdown-divider"></div>
+                                @if (ViewData["userconnected"] != null)
+                                {
+                                    <a class="dropdown-item mx-0" href='/Members/Update/@ViewData["userconnectedid"]'>
+                                        <i class="bi bi-person text-gray-400 mx-0" style="font-size: 15px"></i>
+                                        Profile
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="@Url.Action("ChangePassword", "Members")">
+                                        <i class="bi bi-people text-gray-400"></i>
+                                        Change Password
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="@Url.Action("CloseSession", "Management")" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="bi bi-box-arrow-in-left text-gray-400"></i>
+                                        Logout
+                                    </a>
+                                }
+                                else
+                                {
+
+                                    <a class="dropdown-item" href="@Url.Action("Login", "Management")">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Login
+                                    </a>
+                                }
+
+                            </div>
+                        </li>
+
                     </ul>
+
                 </div>
             </div>
+
+
         </nav>
+        <div class="mt-5">
+            <h1 class="header-title">
+                Effortlessly connect
+            </h1>
+            <h1 class="header-title">
+                with Family Doctors
+            </h1>
+            <h1 class="header-title">
+                and Medical Centers
+            </h1>
+            <h1 class="header-title">
+            </h1>
+        </div>
+        <div>
+            <a id="btn-search-title" class="text-light btn btn-primary mr-5 h2"> Start Search</a>
+        </div>
     </header>
-    <div class="container">
+    <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
+        <div class="container text-center ">
             &copy; 2024 - MediLink - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
