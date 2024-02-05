@@ -1,7 +1,13 @@
+using MediLink.Entities;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var connStr = builder.Configuration.GetConnectionString("MediLinkDb");
+builder.Services.AddDbContext<MediLinkDbContext>(options => options.UseSqlServer(connStr));
 
 var app = builder.Build();
 

@@ -2,7 +2,6 @@
 {
     public class PreferedSpokenLanguages
     {
-        public int Id { get; set; }
 
         public int PatientPreferences_ID { get; set; }
 
@@ -10,6 +9,6 @@
 
         public PatientPreferences PatientPreferences { get; set; }
 
-        public Languages Languages { get; set; }
+        public Languages Language { get; set; }
     }
 }

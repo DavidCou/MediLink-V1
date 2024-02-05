@@ -2,8 +2,6 @@
 {
     public class PractitionerSpokenLanguages
     {
-        public int Id { get; set; }
-
         public int PractionerDetails_ID { get; set; }
 
         public int Laguage_ID { get; set; }
