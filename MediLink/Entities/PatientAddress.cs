@@ -1,20 +1,42 @@
-﻿namespace MediLink.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace MediLink.Entities
 {
     public class PatientAddress
     {
         public int Id { get; set; }
 
-        public string City { get; set; }
+		[Column(TypeName = "VARCHAR")]
+		[StringLength(maximumLength: 150)]
+		public string City { get; set; } = null!;
 
-        public string Province { get; set; } = "Ontario";
+		[Column(TypeName = "VARCHAR")]
+		[StringLength(maximumLength: 50)]
+		public string Province { get; set; } = "Ontario";
 
-        public string country { get; set; } = "Canada";
+		[Column(TypeName = "VARCHAR")]
+		[StringLength(maximumLength: 7)]
+		public string country { get; set; } = "Canada";
 
-        public string PostalCode { get; set; }
+		[Column(TypeName = "VARCHAR")]
+		[StringLength(maximumLength: 7)]
+		public string PostalCode { get; set; } = null!;
 
-        public string StreetAddress { get; set; }
+		[Column(TypeName = "VARCHAR")]
+		[StringLength(maximumLength: 250)]
+		public string StreetAddress { get; set; } = null!;
 
         public bool IsDeleted { get; set; }
+
+        public PatientDetail? PatientDetails { get; set; }
+
+
+
+
+
+
+
 
     }
 }

@@ -2,12 +2,12 @@
 {
     public class PractitionerSpokenLanguages
     {
-        public int PractionerDetails_ID { get; set; }
+        public int PractitionerId { get; set; }
 
-        public int Laguage_ID { get; set; }
+        public int LanguageId { get; set; }
 
-        public Languages Language { get; set; }
+        public Languages Language { get; set; } = null!;
 
-        public PractionerDetails PractionerDetails { get; set; }
+        public Practitioner Practitioner { get; set; } = null!;
     }
 }

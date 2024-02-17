@@ -89,10 +89,66 @@ header.masthead {
     font-family: sans-serif;
 }
 
-    .fa.fa-twitter::before {
-        content: "𝕏";
-        font-size: 1.2em;
-    }
+.fa.fa-twitter::before {
+    content: "𝕏";
+    font-size: 1.2em;
+}
+
+/* -------------------------  Styles Login Patients ------------------------------------------ */
+
+.bg-login-image {
+    background: url('/img/main_banner-login.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+.bg-gradient-login {
+    background: #FFFFEB;
+}
+
+#company-title-login {
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* -------------- Styles Register -------------------------------------------------  */
+
+.bg-register-image {
+    background: url('/img/main_banner2.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+
+form.user .custom-checkbox.small label {
+    line-height: 1.5rem;
+}
+
+form.user .form-control-user {
+    font-size: 0.8rem;
+    border-radius: 10rem;
+    padding: 1.5rem 1rem;
+}
+
+form.user .btn-user {
+    font-size: 0.8rem;
+    border-radius: 10rem;
+    padding: 0.75rem 1rem;
+}
+
+/* -------------------------  Styles Login Practitioners ------------------------------------------ */
+
+.bg-login-image-doctor {
+    background: url('/img/Healthcare-img-two.png');
+    background-position: center;
+    background-size: cover;
+}
+
+/* -------------------------  Styles Register Practitioners ------------------------------------------ */
+
+
 
 footer {
     background: #FFFFC1;

@@ -35,11 +35,53 @@ namespace MediLink.Migrations
 
                     b.Property<string>("LanguageName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("VARCHAR");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Languages");
+                    b.ToTable("Languages", (string)null);
+                });
+
+            modelBuilder.Entity("MediLink.Entities.OfficeAddress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<string>("Province")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<string>("StreetAddress")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<string>("country")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("VARCHAR");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OfficeAddress", (string)null);
                 });
 
             modelBuilder.Entity("MediLink.Entities.OfficeType", b =>
@@ -55,11 +97,12 @@ namespace MediLink.Migrations
 
                     b.Property<string>("OfficeName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("VARCHAR");
 
                     b.HasKey("Id");
 
-                    b.ToTable("OfficeTypes");
+                    b.ToTable("OfficeTypes", (string)null);
                 });
 
             modelBuilder.Entity("MediLink.Entities.Patient", b =>
@@ -74,28 +117,37 @@ namespace MediLink.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool>("IsEmailConfirmed")
                         .HasColumnType("bit");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<int>("PatientDetailsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PatietDetails_ID")
+                    b.Property<int?>("PatientPreferencesId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Username")
+                    b.Property<bool>("passwordReset")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("token")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PatientDetailsId");
+                    b.HasIndex("PatientDetailsId")
+                        .IsUnique();
 
-                    b.ToTable("Patients");
+                    b.HasIndex("PatientPreferencesId")
+                        .IsUnique()
+                        .HasFilter("[PatientPreferencesId] IS NOT NULL");
+
+                    b.ToTable("Patients", (string)null);
                 });
 
             modelBuilder.Entity("MediLink.Entities.PatientAddress", b =>
@@ -108,33 +160,38 @@ namespace MediLink.Migrations
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(7)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<string>("Province")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<string>("StreetAddress")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<string>("country")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(7)
+                        .HasColumnType("VARCHAR");
 
                     b.HasKey("Id");
 
-                    b.ToTable("PatientAddresses");
+                    b.ToTable("PatientAddress", (string)null);
                 });
 
-            modelBuilder.Entity("MediLink.Entities.PatientDetails", b =>
+            modelBuilder.Entity("MediLink.Entities.PatientDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -142,46 +199,61 @@ namespace MediLink.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("DoB")
+                        .HasColumnType("date");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("VARCHAR");
 
-                    b.Property<int>("PatientAddressId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PatientAddress_ID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PatientPreferencesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PatientPreferences_ID")
+                    b.Property<int>("PatientAddressesId")
                         .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(17)
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<DateTime>("creation_Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("gender")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PatientAddressId");
+                    b.HasIndex("PatientAddressesId")
+                        .IsUnique();
 
-                    b.HasIndex("PatientPreferencesId");
-
-                    b.ToTable("PatientDetails");
+                    b.ToTable("PatientDetails", (string)null);
                 });
 
-            modelBuilder.Entity("MediLink.Entities.PatientPreferences", b =>
+            modelBuilder.Entity("MediLink.Entities.PatientOfficeType", b =>
+                {
+                    b.Property<int>("PatientPreferenceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OfficeTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PatientPreferenceId", "OfficeTypeId");
+
+                    b.HasIndex("OfficeTypeId");
+
+                    b.ToTable("PatientOfficeTypes", (string)null);
+                });
+
+            modelBuilder.Entity("MediLink.Entities.PatientPreference", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -189,134 +261,35 @@ namespace MediLink.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("IsAcceptingNePatients")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("OfficeTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OfficeType_ID")
-                        .HasColumnType("int");
-
                     b.Property<string>("location")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<int>("rating")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OfficeTypeId");
-
-                    b.ToTable("PatientPreferences");
+                    b.ToTable("PatientPreferences", (string)null);
                 });
 
-            modelBuilder.Entity("MediLink.Entities.PatientSpokenLanguages", b =>
+            modelBuilder.Entity("MediLink.Entities.PatientSpokenLanguage", b =>
                 {
-                    b.Property<int>("Laguage_ID")
+                    b.Property<int>("LanguageId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PatientDetails_ID")
+                    b.Property<int>("PatientDetailsId")
                         .HasColumnType("int");
 
-                    b.HasKey("Laguage_ID", "PatientDetails_ID");
+                    b.HasKey("LanguageId", "PatientDetailsId");
 
-                    b.HasIndex("PatientDetails_ID");
+                    b.HasIndex("PatientDetailsId");
 
-                    b.ToTable("PatientSpokenLanguages");
-                });
-
-            modelBuilder.Entity("MediLink.Entities.PractionerAddress", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PostalCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Province")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StreetAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("country")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PractionerAddresses");
-                });
-
-            modelBuilder.Entity("MediLink.Entities.PractionerDetails", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsAcceptingNewPatients")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("OfficeTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OfficeType_ID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PractionerAddressId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PractionerAddress_ID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("gender")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("lastPatientAcceptedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OfficeTypeId");
-
-                    b.HasIndex("PractionerAddressId");
-
-                    b.ToTable("PractionerDetails");
+                    b.ToTable("PatientSpokenLanguages", (string)null);
                 });
 
             modelBuilder.Entity("MediLink.Entities.Practitioner", b =>
@@ -329,7 +302,16 @@ namespace MediLink.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<bool>("IsAcceptingNewPatients")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -337,48 +319,94 @@ namespace MediLink.Migrations
                     b.Property<bool>("IsValidated")
                         .HasColumnType("bit");
 
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("VARCHAR");
+
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("VARCHAR");
 
-                    b.Property<int>("PractionerDetailsId")
-                        .HasColumnType("int");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("VARCHAR");
 
-                    b.Property<int>("PractionerDetails_ID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PractitionerTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PractitionerType_ID")
+                    b.Property<int?>("PractitionerTypesId")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("VARCHAR");
+
+                    b.Property<string>("gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("lastPatientAcceptedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("passwordReset")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("token")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PractionerDetailsId");
+                    b.HasIndex("PractitionerTypesId")
+                        .IsUnique()
+                        .HasFilter("[PractitionerTypesId] IS NOT NULL");
 
-                    b.HasIndex("PractitionerTypeId");
+                    b.ToTable("Practitioners", (string)null);
+                });
 
-                    b.ToTable("Practitioners");
+            modelBuilder.Entity("MediLink.Entities.PractitionerOfficeAddress", b =>
+                {
+                    b.Property<int>("PractitionerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OfficeAddressesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PractitionerId", "OfficeAddressesId");
+
+                    b.HasIndex("OfficeAddressesId");
+
+                    b.ToTable("PractitionerAddresses", (string)null);
+                });
+
+            modelBuilder.Entity("MediLink.Entities.PractitionerOfficeType", b =>
+                {
+                    b.Property<int>("PractitionerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OfficeTypesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PractitionerId", "OfficeTypesId");
+
+                    b.HasIndex("OfficeTypesId");
+
+                    b.ToTable("PractitionerOfficeTypes", (string)null);
                 });
 
             modelBuilder.Entity("MediLink.Entities.PractitionerSpokenLanguages", b =>
                 {
-                    b.Property<int>("Laguage_ID")
+                    b.Property<int>("LanguageId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PractionerDetails_ID")
+                    b.Property<int>("PractitionerId")
                         .HasColumnType("int");
 
-                    b.HasKey("Laguage_ID", "PractionerDetails_ID");
+                    b.HasKey("LanguageId", "PractitionerId");
 
-                    b.HasIndex("PractionerDetails_ID");
+                    b.HasIndex("PractitionerId");
 
-                    b.ToTable("PractitionerSpokenLanguages");
+                    b.ToTable("PractitionerSpokenLanguages", (string)null);
                 });
 
             modelBuilder.Entity("MediLink.Entities.PractitionerType", b =>
@@ -391,87 +419,95 @@ namespace MediLink.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(350)
+                        .HasColumnType("VARCHAR");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("VARCHAR");
 
                     b.HasKey("Id");
 
-                    b.ToTable("PractitionerTypes");
+                    b.ToTable("PractitionerTypes", (string)null);
                 });
 
-            modelBuilder.Entity("MediLink.Entities.PreferedSpokenLanguages", b =>
+            modelBuilder.Entity("MediLink.Entities.PreferedLanguage", b =>
                 {
-                    b.Property<int>("Language_ID")
+                    b.Property<int>("LanguageId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PatientPreferences_ID")
+                    b.Property<int>("PatientPreferenceId")
                         .HasColumnType("int");
 
-                    b.HasKey("Language_ID", "PatientPreferences_ID");
+                    b.HasKey("LanguageId", "PatientPreferenceId");
 
-                    b.HasIndex("PatientPreferences_ID");
+                    b.HasIndex("PatientPreferenceId");
 
-                    b.ToTable("PreferedSpokenLanguages");
+                    b.ToTable("PreferedLanguages", (string)null);
                 });
 
             modelBuilder.Entity("MediLink.Entities.Patient", b =>
                 {
-                    b.HasOne("MediLink.Entities.PatientDetails", "PatientDetails")
-                        .WithMany()
-                        .HasForeignKey("PatientDetailsId")
+                    b.HasOne("MediLink.Entities.PatientDetail", "PatientDetails")
+                        .WithOne("Patients")
+                        .HasForeignKey("MediLink.Entities.Patient", "PatientDetailsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("MediLink.Entities.PatientPreference", "PatientPreferences")
+                        .WithOne("Patients")
+                        .HasForeignKey("MediLink.Entities.Patient", "PatientPreferencesId");
 
                     b.Navigation("PatientDetails");
-                });
-
-            modelBuilder.Entity("MediLink.Entities.PatientDetails", b =>
-                {
-                    b.HasOne("MediLink.Entities.PatientAddress", "PatientAddress")
-                        .WithMany()
-                        .HasForeignKey("PatientAddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MediLink.Entities.PatientPreferences", "PatientPreferences")
-                        .WithMany()
-                        .HasForeignKey("PatientPreferencesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PatientAddress");
 
                     b.Navigation("PatientPreferences");
                 });
 
-            modelBuilder.Entity("MediLink.Entities.PatientPreferences", b =>
+            modelBuilder.Entity("MediLink.Entities.PatientDetail", b =>
+                {
+                    b.HasOne("MediLink.Entities.PatientAddress", "PatientAddresses")
+                        .WithOne("PatientDetails")
+                        .HasForeignKey("MediLink.Entities.PatientDetail", "PatientAddressesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PatientAddresses");
+                });
+
+            modelBuilder.Entity("MediLink.Entities.PatientOfficeType", b =>
                 {
                     b.HasOne("MediLink.Entities.OfficeType", "OfficeType")
-                        .WithMany()
+                        .WithMany("PatientOfficeTypes")
                         .HasForeignKey("OfficeTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("OfficeType");
-                });
-
-            modelBuilder.Entity("MediLink.Entities.PatientSpokenLanguages", b =>
-                {
-                    b.HasOne("MediLink.Entities.Languages", "Language")
-                        .WithMany("PatientSpokenLanguages")
-                        .HasForeignKey("Laguage_ID")
+                    b.HasOne("MediLink.Entities.PatientPreference", "PatientPreference")
+                        .WithMany("PatientOfficeType")
+                        .HasForeignKey("PatientPreferenceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MediLink.Entities.PatientDetails", "PatientDetails")
+                    b.Navigation("OfficeType");
+
+                    b.Navigation("PatientPreference");
+                });
+
+            modelBuilder.Entity("MediLink.Entities.PatientSpokenLanguage", b =>
+                {
+                    b.HasOne("MediLink.Entities.Languages", "Language")
                         .WithMany("PatientSpokenLanguages")
-                        .HasForeignKey("PatientDetails_ID")
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MediLink.Entities.PatientDetail", "PatientDetails")
+                        .WithMany("PatientSpokenLanguages")
+                        .HasForeignKey("PatientDetailsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -480,80 +516,89 @@ namespace MediLink.Migrations
                     b.Navigation("PatientDetails");
                 });
 
-            modelBuilder.Entity("MediLink.Entities.PractionerDetails", b =>
-                {
-                    b.HasOne("MediLink.Entities.OfficeType", "OfficeType")
-                        .WithMany()
-                        .HasForeignKey("OfficeTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MediLink.Entities.PractionerAddress", "PractionerAddress")
-                        .WithMany()
-                        .HasForeignKey("PractionerAddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("OfficeType");
-
-                    b.Navigation("PractionerAddress");
-                });
-
             modelBuilder.Entity("MediLink.Entities.Practitioner", b =>
                 {
-                    b.HasOne("MediLink.Entities.PractionerDetails", "PractionerDetails")
-                        .WithMany()
-                        .HasForeignKey("PractionerDetailsId")
+                    b.HasOne("MediLink.Entities.PractitionerType", "PractitionerTypes")
+                        .WithOne("Practitioners")
+                        .HasForeignKey("MediLink.Entities.Practitioner", "PractitionerTypesId");
+
+                    b.Navigation("PractitionerTypes");
+                });
+
+            modelBuilder.Entity("MediLink.Entities.PractitionerOfficeAddress", b =>
+                {
+                    b.HasOne("MediLink.Entities.OfficeAddress", "OfficeAddresses")
+                        .WithMany("PractitionerAddress")
+                        .HasForeignKey("OfficeAddressesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MediLink.Entities.PractitionerType", "PractitionerType")
-                        .WithMany()
-                        .HasForeignKey("PractitionerTypeId")
+                    b.HasOne("MediLink.Entities.Practitioner", "Practitioner")
+                        .WithMany("PractitionerAddress")
+                        .HasForeignKey("PractitionerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PractionerDetails");
+                    b.Navigation("OfficeAddresses");
 
-                    b.Navigation("PractitionerType");
+                    b.Navigation("Practitioner");
+                });
+
+            modelBuilder.Entity("MediLink.Entities.PractitionerOfficeType", b =>
+                {
+                    b.HasOne("MediLink.Entities.OfficeType", "OfficeTypes")
+                        .WithMany("PractitionerOfficeTypes")
+                        .HasForeignKey("OfficeTypesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MediLink.Entities.Practitioner", "Practitioner")
+                        .WithMany("PractitionerOfficeTypes")
+                        .HasForeignKey("PractitionerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OfficeTypes");
+
+                    b.Navigation("Practitioner");
                 });
 
             modelBuilder.Entity("MediLink.Entities.PractitionerSpokenLanguages", b =>
                 {
                     b.HasOne("MediLink.Entities.Languages", "Language")
                         .WithMany("PractitionerSpokenLanguages")
-                        .HasForeignKey("Laguage_ID")
+                        .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MediLink.Entities.PractionerDetails", "PractionerDetails")
+                    b.HasOne("MediLink.Entities.Practitioner", "Practitioner")
                         .WithMany("PractitionerSpokenLanguages")
-                        .HasForeignKey("PractionerDetails_ID")
+                        .HasForeignKey("PractitionerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Language");
 
-                    b.Navigation("PractionerDetails");
+                    b.Navigation("Practitioner");
                 });
 
-            modelBuilder.Entity("MediLink.Entities.PreferedSpokenLanguages", b =>
+            modelBuilder.Entity("MediLink.Entities.PreferedLanguage", b =>
                 {
                     b.HasOne("MediLink.Entities.Languages", "Language")
-                        .WithMany("PreferedSpokenLanguages")
-                        .HasForeignKey("Language_ID")
+                        .WithMany("PreferedLanguages")
+                        .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MediLink.Entities.PatientPreferences", "PatientPreferences")
-                        .WithMany("PreferedSpokenLanguages")
-                        .HasForeignKey("PatientPreferences_ID")
+                    b.HasOne("MediLink.Entities.PatientPreference", "PatientPreference")
+                        .WithMany("PreferedLanguages")
+                        .HasForeignKey("PatientPreferenceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Language");
 
-                    b.Navigation("PatientPreferences");
+                    b.Navigation("PatientPreference");
                 });
 
             modelBuilder.Entity("MediLink.Entities.Languages", b =>
@@ -562,22 +607,56 @@ namespace MediLink.Migrations
 
                     b.Navigation("PractitionerSpokenLanguages");
 
-                    b.Navigation("PreferedSpokenLanguages");
+                    b.Navigation("PreferedLanguages");
                 });
 
-            modelBuilder.Entity("MediLink.Entities.PatientDetails", b =>
+            modelBuilder.Entity("MediLink.Entities.OfficeAddress", b =>
+                {
+                    b.Navigation("PractitionerAddress");
+                });
+
+            modelBuilder.Entity("MediLink.Entities.OfficeType", b =>
+                {
+                    b.Navigation("PatientOfficeTypes");
+
+                    b.Navigation("PractitionerOfficeTypes");
+                });
+
+            modelBuilder.Entity("MediLink.Entities.PatientAddress", b =>
+                {
+                    b.Navigation("PatientDetails");
+                });
+
+            modelBuilder.Entity("MediLink.Entities.PatientDetail", b =>
                 {
                     b.Navigation("PatientSpokenLanguages");
+
+                    b.Navigation("Patients")
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("MediLink.Entities.PatientPreferences", b =>
+            modelBuilder.Entity("MediLink.Entities.PatientPreference", b =>
                 {
-                    b.Navigation("PreferedSpokenLanguages");
+                    b.Navigation("PatientOfficeType");
+
+                    b.Navigation("Patients")
+                        .IsRequired();
+
+                    b.Navigation("PreferedLanguages");
                 });
 
-            modelBuilder.Entity("MediLink.Entities.PractionerDetails", b =>
+            modelBuilder.Entity("MediLink.Entities.Practitioner", b =>
                 {
+                    b.Navigation("PractitionerAddress");
+
+                    b.Navigation("PractitionerOfficeTypes");
+
                     b.Navigation("PractitionerSpokenLanguages");
+                });
+
+            modelBuilder.Entity("MediLink.Entities.PractitionerType", b =>
+                {
+                    b.Navigation("Practitioners");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,10 @@
 ﻿using MediLink.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace MediLink.Controllers
 {
@@ -15,6 +19,17 @@ namespace MediLink.Controllers
 
         public IActionResult Index()
         {
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+            if (claimuser.Identity.IsAuthenticated)
+            {
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            ViewData["userName"] = userName;
+
             return View();
         }
 

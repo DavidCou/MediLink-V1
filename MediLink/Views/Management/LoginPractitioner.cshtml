@@ -1,0 +1,130 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MediLink</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/MediLink.styles.css" asp-append-version="true" />
+</head>
+<body class="bg-gradient-login">
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-lg-block bg-login-image-doctor">
+                                <div>
+                                    <h3 id="company-title-login" class="text-center">Sign In </h3>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Welcome!!</h1>
+                                    </div>
+                                    <form class="user" action="@Url.Action("LoginPractitioner","Management")" method="post">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control form-control-user"
+                                                   id="exampleInputEmail" aria-describedby="emailHelp"
+                                                   placeholder="Enter Email Address..." name="Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user"
+                                                   id="exampleInputPassword" placeholder="Password" name="Password">
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
+
+                                        <hr>
+
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <button type='button' class="small btn btn-link" data-toggle='modal' data-target='#resetpassword'>Forgot Password?</button>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="small" href="@Url.Action("RegisterPractitioner", "Management")">Create an Account!</a>
+                                    </div>
+                                    @if (ViewData["mensajeResultLoginPractitioner"] != null)
+                                    {
+                                        <div class="alert alert-danger" role="alert">
+                                            @ViewData["mensajeResultLoginPractitioner"]
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- Modal Reset Password-->
+    <div class="modal fade" id="resetpassword" tabindex="-1" aria-labelledby="resetpasswordLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Please insert your email!!</h1>
+                        </div>
+                        <form class="w-100" action="@Url.Action("RestartPasswordPractitioner","Management")" method="post">
+                            <div class="form-group">
+                                <input type="email" class="form-control form-control-user"
+                                       id="exampleInputEmail" aria-describedby="emailHelp"
+                                       placeholder="Enter Email Address..." name="Email">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-user btn-block">Reset</button>
+
+                            <hr>
+
+                        </form>
+
+
+                    </div>
+
+
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+
+</html>

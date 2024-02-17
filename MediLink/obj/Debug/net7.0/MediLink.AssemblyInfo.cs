@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MediLink")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c09b38fe145ebab3b51e14290186ebc87257fb64")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+08c159464a9411d0bc5465778f0318f1f1631e4a")]
 [assembly: System.Reflection.AssemblyProductAttribute("MediLink")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MediLink")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

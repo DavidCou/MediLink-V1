@@ -1,19 +1,36 @@
-﻿namespace MediLink.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace MediLink.Entities
 {
     public class Patient
     {
         public int Id { get; set; }
 
-        public string Username { get; set; }
+		[Column(TypeName = "VARCHAR")]
+		[StringLength(maximumLength: 150)]
+		public string Password { get; set; } = null!;
 
-        public string Password { get; set; }
+        public string Email { get; set; } = null!;
 
-        public string Email { get; set; }
+        public bool IsEmailConfirmed { get; set; } = false;
 
-        public bool IsDeleted { get; set; } = false;
+        public bool passwordReset { get; set; } = false;
 
-        public int PatietDetails_ID { get; set; }
+        public string token { get; set; } = string.Empty;
 
-       public PatientDetails PatientDetails { get; set; }
-    }
+        public int? PatientPreferencesId { get; set; }
+               
+        public PatientPreference? PatientPreferences { get; set; }
+
+        public int PatientDetailsId { get; set; }
+
+		public PatientDetail? PatientDetails { get; set; }
+
+        
+
+		
+
+
+	}
 }

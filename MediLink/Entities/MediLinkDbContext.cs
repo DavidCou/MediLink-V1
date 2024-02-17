@@ -15,45 +15,56 @@ namespace MediLink.Entities
 
         public DbSet<Patient> Patients { get; set; }
 
-        public DbSet<PatientAddress> PatientAddresses { get; set; }
+		public DbSet<PatientDetail> PatientDetails { get; set; }
+
+		public DbSet<PatientAddress> PatientAddress { get; set; }
 
         public DbSet<Practitioner> Practitioners { get; set; }
 
         public DbSet<PractitionerType> PractitionerTypes  { get; set; }
 
-        public DbSet<PractionerAddress> PractionerAddresses  { get; set; }
+        public DbSet<PatientOfficeType> PatientOfficeTypes { get; set; }		
 
-        public DbSet<PractionerDetails> PractionerDetails { get; set; }
+		public DbSet<PractitionerOfficeAddress> PractitionerAddresses { get; set; }
 
-        public DbSet<PatientDetails> PatientDetails { get; set; }
+        public DbSet<PractitionerOfficeType> PractitionerOfficeTypes { get; set; }
 
-        public DbSet<PatientPreferences> PatientPreferences { get; set; }
+        public DbSet<PatientPreference> PatientPreferences { get; set; }
 
-        public DbSet<PatientSpokenLanguages> PatientSpokenLanguages { get; set; }
+        public DbSet<PreferedLanguage> PreferedLanguages { get; set; }
 
-        public DbSet<PreferedSpokenLanguages> PreferedSpokenLanguages { get; set; }
+        public DbSet<PatientSpokenLanguage> PatientSpokenLanguages { get; set; }
 
         public DbSet<PractitionerSpokenLanguages> PractitionerSpokenLanguages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<PractitionerSpokenLanguages>().HasKey(pr => new { pr.Laguage_ID, pr.PractionerDetails_ID });
 
-            modelBuilder.Entity<PractitionerSpokenLanguages>().HasOne(pr => pr.Language).WithMany(l => l.PractitionerSpokenLanguages).HasForeignKey(pr => pr.Laguage_ID);
+			base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<PractitionerSpokenLanguages>().HasOne(pr => pr.PractionerDetails).WithMany(l => l.PractitionerSpokenLanguages).HasForeignKey(pr => pr.PractionerDetails_ID);
+			modelBuilder.Entity<PatientDetail>().Property(us => us.DoB).HasColumnType("date");
 
-            modelBuilder.Entity<PatientSpokenLanguages>().HasKey(p => new { p.Laguage_ID, p.PatientDetails_ID });
+            modelBuilder.Entity<PractitionerSpokenLanguages>().HasKey(ps => new { ps.LanguageId, ps.PractitionerId });
 
-            modelBuilder.Entity<PatientSpokenLanguages>().HasOne(p => p.Language).WithMany(l => l.PatientSpokenLanguages).HasForeignKey(p => p.Laguage_ID);
+			modelBuilder.Entity<PreferedLanguage>().HasKey(ps => new { ps.LanguageId, ps.PatientPreferenceId });
 
-            modelBuilder.Entity<PatientSpokenLanguages>().HasOne(p => p.PatientDetails).WithMany(l => l.PatientSpokenLanguages).HasForeignKey(pr => pr.PatientDetails_ID);
+            modelBuilder.Entity<PatientSpokenLanguage>().HasKey(ps => new { ps.LanguageId, ps.PatientDetailsId });
 
-            modelBuilder.Entity<PreferedSpokenLanguages>().HasKey(p => new { p.Language_ID, p.PatientPreferences_ID });
+            modelBuilder.Entity<PatientOfficeType>().HasKey(pao => new { pao.PatientPreferenceId, pao.OfficeTypeId });
 
-            modelBuilder.Entity<PreferedSpokenLanguages>().HasOne(p => p.Language).WithMany(l => l.PreferedSpokenLanguages).HasForeignKey(p => p.Language_ID);
+			modelBuilder.Entity<PractitionerOfficeAddress>().HasKey(pa => new { pa.PractitionerId, pa.OfficeAddressesId });
 
-            modelBuilder.Entity<PreferedSpokenLanguages>().HasOne(p => p.PatientPreferences).WithMany(l => l.PreferedSpokenLanguages).HasForeignKey(pr => pr.PatientPreferences_ID);
+            modelBuilder.Entity<PractitionerOfficeType>().HasKey(po => new { po.PractitionerId, po.OfficeTypesId });
+
+            modelBuilder.Entity<Languages>().HasData(
+                new Languages() { Id = 1, LanguageName = "English", IsDeleted = false},
+                new Languages() { Id = 2, LanguageName = "Spanish", IsDeleted = false},
+                new Languages() { Id = 3, LanguageName = "French", IsDeleted = false});
+
+            modelBuilder.Entity<OfficeType>().HasData(
+                new OfficeType() { Id = 1, OfficeName = "Community Center", IsDeleted = false },
+                new OfficeType() { Id = 2, OfficeName = "Private", IsDeleted = false });
+
         }
 
 
