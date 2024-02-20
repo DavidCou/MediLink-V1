@@ -16,8 +16,8 @@ using NuGet.Common;
 
 namespace MediLink.Controllers
 {
-	public class ManagementController : Controller
-	{
+    public class ManagementController : Controller
+    {
         private readonly IUserService _userService;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
@@ -27,16 +27,16 @@ namespace MediLink.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        
+
         public ActionResult LoginPatient()
-		{
+        {
             string mensajeResultLog = TempData["mensajeResultLogin"] as string;
 
             ViewData["mensajeResultLoginPatient"] = mensajeResultLog;
 
             return View();
 
-		}
+        }
 
         [HttpPost]
         public async Task<IActionResult> LoginPatient(string Email, string Password)
@@ -46,7 +46,7 @@ namespace MediLink.Controllers
 
             if (patientFound == null)
             {
-                ViewData["mensajeResultLoginPatient"] = "User Not Found";                
+                ViewData["mensajeResultLoginPatient"] = "User Not Found";
                 return View();
             }
 
@@ -59,7 +59,7 @@ namespace MediLink.Controllers
 
             if (patientFound.passwordReset)
             {
-                ViewData["mensajeResultLoginPatient"] = "A Password reset has veen requested An email has been sent to your accountPlease change your password ";
+                ViewData["mensajeResultLoginPatient"] = "A Password reset has veen requested. An email has been sent to your accountPlease change your password ";
                 return View();
             }
 
@@ -85,7 +85,8 @@ namespace MediLink.Controllers
 
         public ActionResult RegisterPatient()
         {
-            return View();
+            PatientNewRequest oPatient = new PatientNewRequest();
+            return View(oPatient);
         }
 
         [HttpPost]
@@ -94,11 +95,15 @@ namespace MediLink.Controllers
             //verify if the patient already exist 
             Patient patientFound = await _userService.GetUserByEmail(oPatientNew.Email);
 
+            List<string> errorMessage = new List<string>();
+            //string[] errorMessage;
+
             if (patientFound != null)
             {
                 ViewData["MessageRegister"] = "User Already Exist";
                 return View();
             }
+
 
             // Regular expression for phone validation
             string phonePattern = @"^\d{3}-\d{3}-\d{4}$";
@@ -107,79 +112,166 @@ namespace MediLink.Controllers
             Regex regex = new Regex(phonePattern);
 
             DateTime currentDate = DateTime.Now;
-            DateTime inputDate = new DateTime(oPatientNew.DoB.Year, oPatientNew.DoB.Month, oPatientNew.DoB.Day); 
+            DateTime inputDate = new DateTime(oPatientNew.DoB.Year, oPatientNew.DoB.Month, oPatientNew.DoB.Day);
 
             // Calculate the current date minus 2 days
             DateTime currentDateMinusTwoDays = currentDate.AddDays(-2);
 
-            // Matching the password against the regex pattern
-            if (!regex.IsMatch(oPatientNew.PhoneNumber))
+            if (string.IsNullOrEmpty(oPatientNew.FirstName) || string.IsNullOrWhiteSpace(oPatientNew.FirstName))
             {
-                ViewData["MessageRegister"] = "Phone number not valid input format 222-222-2222";
-                return View();
-
+                errorMessage.Add("-Please input Firstname");
             }
 
-            // valid if selected a gender
-            if (oPatientNew.gender == null)
+            if (string.IsNullOrEmpty(oPatientNew.LastName) || string.IsNullOrWhiteSpace(oPatientNew.LastName))
             {
-                ViewData["MessageRegister"] = "Must be select a gender";
-                return View();
-
+                errorMessage.Add("-Please input Lastname");
             }
 
-            if (inputDate >= currentDateMinusTwoDays)
+            if (string.IsNullOrEmpty(oPatientNew.Email) || string.IsNullOrWhiteSpace(oPatientNew.Email))
             {
-                ViewData["MessageRegister"] = "Birthday date is invalid";
-                return View();
-               
+                errorMessage.Add("-Please input an email");
             }
 
+                     
 
             if (oPatientNew.Password != oPatientNew.ConfirmPassword)
             {
-                ViewData["MessageRegister"] = "Password not match";
-                return View();
+                errorMessage.Add("-Password not match");
+                
+            }
+
+            if (string.IsNullOrEmpty(oPatientNew.Password) && string.IsNullOrEmpty(oPatientNew.ConfirmPassword))
+            {
+                errorMessage.Add("-Please Input a Password ");
+                
+            }
+
+            //verify if the user has selected personal infomation tag
+            if (!string.IsNullOrEmpty(oPatientNew.PhoneNumber) || !string.IsNullOrEmpty(oPatientNew.gender) || !oPatientNew.DoB.ToString().Contains("0001-01-01"))
+            {
+                // Matching the number against the regex pattern
+                if (!regex.IsMatch(oPatientNew.PhoneNumber))
+                {
+                    errorMessage.Add("-Phone number not valid input format 222-222-2222");
+                  
+
+                }
+
+                // valid if selected a gender
+                if (oPatientNew.gender == null)
+                {
+                    errorMessage.Add("-Must be select a gender ");
+                   
+
+                }
+
+                if (oPatientNew.DoB.ToString().Contains("0001-01-01"))
+                {
+                    errorMessage.Add("-Must be select a Birth of date ");                   
+
+                }
+                else
+                {
+                    if (inputDate >= currentDateMinusTwoDays)
+                    {
+                        errorMessage.Add("-Birthday date is invalid");
+                       
+
+                    }
+                }
+
+            }
+
+            //verify if the user has selected address infomation tag
+            if (!string.IsNullOrEmpty(oPatientNew.StreetAddress) || !string.IsNullOrEmpty(oPatientNew.City) || !string.IsNullOrEmpty(oPatientNew.PostalCode))
+            {
+                // valid if selected a address
+                if (string.IsNullOrEmpty(oPatientNew.StreetAddress))
+                {
+                    errorMessage.Add("-Please input street address ");                    
+
+                }
+
+                // valid if selected a city
+                if (string.IsNullOrEmpty(oPatientNew.City))
+                {
+                    errorMessage.Add("-Please input city ");
+                   
+                }
+
+                // valid if selected a city
+                if (oPatientNew.Province == null)
+                {
+                    errorMessage.Add("-Please select a Province");
+
+                }
+
+                // valid if selected a ;ostcode
+                if (string.IsNullOrEmpty(oPatientNew.PostalCode))
+                {
+                    errorMessage.Add("-Please input Postcode");
+
+                }
+
             }
 
 
 
-            oPatientNew.Password = Utilities.EncryptPassword(oPatientNew.Password);
-
-            oPatientNew.token = Utilities.GenerateToken();
-
-            PatientNewRequest userCreated =  await _userService.SavePatient(oPatientNew);
-
-            if (userCreated.Id > 0)
+            // valid if there are errors
+            if (errorMessage.Count == 0)
             {
-                // Map the path relative to the content root
-                string path = Path.Combine(_webHostEnvironment.ContentRootPath, "Templates", "ConfirmEmail.html");
-                
-                string content = System.IO.File.ReadAllText(path);
-                string url = string.Format("{0}://{1}{2}", HttpContext.Request.Scheme, Request.Headers["host"], "/Management/ConfirmRegisterPatient?token=" + oPatientNew.token);
+                oPatientNew.Password = Utilities.EncryptPassword(oPatientNew.Password);
 
-                string htmlBody = string.Format(content, oPatientNew.LastName, url);
+                oPatientNew.token = Utilities.GenerateToken();
 
-                Email emailDTO = new Email()
+                PatientNewRequest userCreated = await _userService.SavePatient(oPatientNew);
+
+                if (userCreated.Id > 0)
                 {
-                    recipient = oPatientNew.Email,
-                    subject = "Confirmation Email MediLink",
-                    body = htmlBody
-                };
+                    // Map the path relative to the content root
+                    string path = Path.Combine(_webHostEnvironment.ContentRootPath, "Templates", "ConfirmEmail.html");
 
-                bool sent = EmailService.SendEmail(emailDTO);
+                    string content = System.IO.File.ReadAllText(path);
+                    string url = string.Format("{0}://{1}{2}", HttpContext.Request.Scheme, Request.Headers["host"], "/Management/ConfirmRegisterPatient?token=" + oPatientNew.token);
 
-                ViewData["MessageRegister"] = $"Your account has been created. We have sent a message to the email {oPatientNew.Email} to confirm your account";
-                 
+                    string htmlBody = string.Format(content, oPatientNew.LastName, url);
+
+                    Email emailDTO = new Email()
+                    {
+                        recipient = oPatientNew.Email,
+                        subject = "Confirmation Email MediLink",
+                        body = htmlBody
+                    };
+
+                    bool sent = EmailService.SendEmail(emailDTO);
+
+                    ViewData["MessageRegister"] = $"Your account has been created. We have sent a message to the email {oPatientNew.Email} to confirm your account";
+
+                }
+                else
+                {
+                    ViewData["MessageRegister"] = "Can not create user";
+                }
+
+
+
+                return View();
+
             }
             else
             {
-                ViewData["MessageRegister"] = "Can not create user";
+                // Pass the error list to the view using ViewBag
+                ViewBag.MyErrorList = errorMessage;
+                ViewData["MessageRegister"] = errorMessage;
+                return View(oPatientNew);
             }
-               
+
+
+
+
+
 
             
-            return View();
 
 
         }

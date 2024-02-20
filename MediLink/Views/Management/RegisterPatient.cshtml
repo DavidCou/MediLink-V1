@@ -3,6 +3,8 @@
     Layout = null;
 }
 
+@model MediLink.Models.PatientNewRequest
+
 <!DOCTYPE html>
 
 <html>
@@ -32,6 +34,20 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
+                           
+                            @if (ViewBag.MyErrorList != null)
+                                {
+                                    
+                                    <div class="alert alert-danger" role="alert">
+                                    <ul>
+
+                                        @foreach (var item in ViewBag.MyErrorList)
+                                        {
+                                            <li>@item</li>
+                                        }
+                                    </ul>
+                                    </div>
+                                }
                             <form class="user" action="@Url.Action("RegisterPatient","Management")" method="post">
                                 <fieldset>
                                     <div class="row">
@@ -39,67 +55,48 @@
                                             <div class="form-group">
                                                 <label class="control-label">Firstname</label>
                                                 <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="firstName" name="FirstName" placeholder="Firstname" class="form-control" required value="" type="text"></div>
+                                                    <div class="input-group"><input id="firstName" name="FirstName" placeholder="Firstname" class="form-control" value="@Model.FirstName" type="text"></div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">Email</label>
-                                                <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="email" name="Email" placeholder="your@email.com" class="form-control" required value="" type="text"></div>
-                                                </div>
-                                            </div>
+                                            </div>                                           
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label class="control-label">Lastname</label>
                                                 <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="lastname" name="LastName" placeholder="Lastname" class="form-control" required value="" type="text"></div>
+                                                    <div class="input-group"><input id="lastname" name="LastName" placeholder="Lastname" class="form-control" value="@Model.LastName" type="text"></div>
                                                 </div>
-                                            </div>                                           
-                                            <div class="form-group">
-                                                <label class="control-label">Phone</label>
-                                                <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="phone" name="PhoneNumber" placeholder="Phone" class="form-control" required value="" type="text"></div>
-                                                </div>
-                                            </div>
+                                            </div> 
 
                                         </div>
 
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Email</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="email" name="Email" placeholder="your@email.com" class="form-control" value="@Model.Email" type="text"></div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label class="control-label">Password</label>
                                                 <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="password" name="Password" placeholder="Password" class="form-control" required value="" type="password"></div>
+                                                    <div class="input-group"><input id="password" name="Password" placeholder="Password" class="form-control" value="" type="password"></div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">Gender</label>
-                                                <div class="inputGroupContainer">
-                                                    <div class="input-group">
-                                                        <select name="gender" class="selectpicker form-control" aria-label="Default select " required>
-                                                            <option selected disabled value="noselected" )>Select a genre</option>
-                                                            <option value="Female" )>Female</option>
-                                                            <option value="Male">Male</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </div>                                            
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label class="control-label">Confirm Password</label>
                                                 <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" class="form-control" required value="" type="password"></div>
+                                                    <div class="input-group"><input id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" class="form-control" value="" type="password"></div>
                                                 </div>
-                                            </div>                                           
-                                            <label class="control-label">Day of Birthday</label>
-                                            <div class="form-group">
-                                                <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="dob" name="DoB" class="form-control" required value="" type="date"></div>
-                                                </div>
-                                            </div>
+                                            </div>                                     
+                                           
                                         </div>
 
                                     </div>                                  
@@ -110,90 +107,163 @@
 
                                 </fieldset>
 
-                                <fieldset>
-                                    <legend>Address</legend>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label class="control-label">Street Address</label>
-                                                <div class="inputGroupContainer">
-                                                     <div class="input-group"><input id="street-address" name="streetaddress" placeholder="Number" class="form-control" required value="" type="text"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
 
-                                                <div class="inputGroupContainer">
-                                                    <label class="control-label">Province</label>
-                                                    <div class="input-group">
-                                                        <select id="provinceupd" name="Provinve" class="selectpicker form-control" aria-label="Default select ">
-                                                            <option value="Ontario">Ontario</option>
-                                                            <option value="Quebec">Quebec</option>
-                                                            <option value="New Brunswick">New Brunswick</option>
-                                                            <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
-                                                            <option value="Alberta">Alberta</option>
-                                                            <option value="British Columbia">British Columbia</option>
-                                                            <option value="Nova Scotia">Nova Scotia</option>
-                                                            <option value="Manitoba">Manitoba</option>
-                                                            <option value="Prince Edward Island">Prince Edward Island</option>
-                                                            <option value="Saskatchewan">Saskatchewan</option>
-                                                            <option value="Northwest Territories">Northwest Territories</option>
-                                                            <option value="Nunavut">Nunavut</option>
-                                                            <option value="Yukon">Yukon</option>
-                                                        </select>
+                                <div class="page__wrapper">
+                                    <h4 class="text-center text-danger">Optional Information</h4>
+                                    <div class="accordion">
+                                        <details>
+                                            <summary>Personal Information</summary>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Phone</label>
+                                                        <div class="inputGroupContainer">
+                                                            <div class="input-group"><input id="phone" name="PhoneNumber" placeholder="Phone" class="form-control" value="@Model.PhoneNumber" type="text"></div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">Country</label>
-                                                <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="countryupd" name="Country" placeholder="Country" class="form-control" required value="Canada" type="text"></div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Gender</label>
+                                                        <div class="inputGroupContainer">
+                                                            <div class="input-group">
+                                                                <select name="gender" class="selectpicker form-control" aria-label="Default select " asp-for="@Model.gender">
+                                                                    <option selected disabled value="noselected" )>Select a genre</option>
+                                                                    <option value="Female">Female</option>
+                                                                    <option value="Male" >Male</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
+
                                             </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label class="control-label">Day of Birthday</label>
+                                                    <div class="form-group">
+                                                        <div class="inputGroupContainer">
+                                                            <div class="input-group"><input id="dob" name="DoB" class="form-control" value="@Model.DoB" type="date"></div>
+                                                        </div>
+                                                    </div>
 
-                                            
-                                            
-
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                <label class="control-label">City</label>
-                                                <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="cityupd" name="City" placeholder="City" class="form-control" required value="" type="text"></div>
                                                 </div>
+
                                             </div>
-                                            
-                                            <div class="form-group">
-                                                <label class="control-label">Postcode</label>
-                                                <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="postal_Codeupd" name="PostalCode" placeholder="Postal Code/ZIP" class="form-control" required value="" type="text"></div>
+                                        </details>
+                                        <details>
+                                            <summary>Address</summary>
+                                            <fieldset>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Street Address</label>
+                                                            <div class="inputGroupContainer">
+                                                                <div class="input-group"><input id="street-address" name="streetaddress" placeholder="Number" class="form-control" value="@Model.StreetAddress" type="text"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+
+                                                            <div class="inputGroupContainer">
+                                                                <label class="control-label">Province</label>
+                                                                <div class="input-group">
+                                                                    <select id="provinceupd" name="Provinve" class="selectpicker form-control" aria-label="Default select " value="@Model.Province">
+                                                                        <option selected disabled value="noselected" )>Select a Province</option>
+                                                                        <option value="Ontario">Ontario</option>
+                                                                        <option value="Quebec">Quebec</option>
+                                                                        <option value="New Brunswick">New Brunswick</option>
+                                                                        <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+                                                                        <option value="Alberta">Alberta</option>
+                                                                        <option value="British Columbia">British Columbia</option>
+                                                                        <option value="Nova Scotia">Nova Scotia</option>
+                                                                        <option value="Manitoba">Manitoba</option>
+                                                                        <option value="Prince Edward Island">Prince Edward Island</option>
+                                                                        <option value="Saskatchewan">Saskatchewan</option>
+                                                                        <option value="Northwest Territories">Northwest Territories</option>
+                                                                        <option value="Nunavut">Nunavut</option>
+                                                                        <option value="Yukon">Yukon</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">Country</label>
+                                                            <div class="inputGroupContainer">
+                                                                <div class="input-group"><input id="countryupd" name="Country" placeholder="Country" class="form-control" value="Canada" type="text"></div>
+                                                            </div>
+                                                        </div>
+
+
+
+
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">City</label>
+                                                            <div class="inputGroupContainer">
+                                                                <div class="input-group"><input id="cityupd" name="City" placeholder="City" class="form-control" value="@Model.City" type="text"></div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="control-label">Postcode</label>
+                                                            <div class="inputGroupContainer">
+                                                                <div class="input-group"><input id="postal_Codeupd" name="PostalCode" placeholder="Postal Code/ZIP" class="form-control" value="@Model.PostalCode" type="text"></div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                    </div>
+
                                                 </div>
-                                            </div>
+                                                <!--
+
+                                                <div>
+                                                    <button type='button' class='btn btn-info px-5 mt-3 w-100' data-toggle='modal' data-target='#editpreferences'>Preferences</button>
+                                                </div>
+                                                -->
+
+                                            </fieldset>
 
                                             
-                                           
-                                        </div>
-
+                                        </details>
+                                        
                                     </div>
-                                    <!-- 
+                                </div>
+
+
+
+
+
+
+
+
+
+
+                               
+
+                              
+
+
+
+                               
                                    
-                                    <div>
-                                        <button type='button' class='btn btn-info px-5 mt-3 w-100' data-toggle='modal' data-target='#editpreferences'>Preferences</button>
-                                    </div>
-                                    -->
+                                    
+                                    
+                               
 
-                                </fieldset>
+
+
+
 
                                 <div class="text-center my-5">
                                     <a class="btn-user btn-block" href="@Url.Action("Index", "Home")">Return</a>
                                     <button type="submit" class="btn btn-primary px-5 w-100">Add</button>
                                 </div>
                                 <hr>
-                                @if (ViewData["MessageRegister"] != null)
-                                {
-                                    <div class="alert alert-danger" role="alert">
-                                        @ViewData["MessageRegister"]
-                                    </div>
-                                }
+                               
                                
                             </form>
                             <hr>

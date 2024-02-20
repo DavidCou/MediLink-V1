@@ -23,39 +23,39 @@ namespace MediLink.Models
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(maximumLength: 100)]
-        public string FirstName { get; set; } = null!;
+        public string? FirstName { get; set; } 
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(maximumLength: 100)]
-        public string LastName { get; set; } = null!;
+        public string? LastName { get; set; }  
 
-        public string gender { get; set; } = null!;
+        public string? gender { get; set; } 
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(maximumLength: 17)]
-        public string PhoneNumber { get; set; } = null!;
+        public string? PhoneNumber { get; set; } 
 
         public DateTime DoB { get; set; }
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(maximumLength: 150)]
-        public string City { get; set; } = null!;
+        public string? City { get; set; } 
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(maximumLength: 50)]
-        public string Province { get; set; } = "Ontario";
+        public string? Province { get; set; } = "Ontario";
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(maximumLength: 7)]
-        public string country { get; set; } = "Canada";
+        public string? country { get; set; } = "Canada";
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(maximumLength: 7)]
-        public string PostalCode { get; set; } = null!;
+        public string? PostalCode { get; set; } = null!;
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(maximumLength: 250)]
-        public string StreetAddress { get; set; } = null!;
+        public string? StreetAddress { get; set; } = null!;
 
     }
 }
