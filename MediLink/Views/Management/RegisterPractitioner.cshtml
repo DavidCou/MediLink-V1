@@ -1,6 +1,7 @@
 ﻿@{
     Layout = null;
 }
+@model MediLink.Models.PractitionerNewRequest
 
 <!DOCTYPE html>
 
@@ -31,6 +32,19 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                             </div>
+                            @if (ViewBag.MyErrorList != null)
+                            {
+
+                                <div class="alert alert-danger" role="alert">
+                                    <ul>
+
+                                        @foreach (var item in ViewBag.MyErrorList)
+                                        {
+                                            <li>@item</li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
                             <form class="user" action="@Url.Action("RegisterPractitioner","Management")" method="post">
                                 <fieldset>
                                     <div class="row">
@@ -38,30 +52,43 @@
                                             <div class="form-group">
                                                 <label class="control-label">Firstname</label>
                                                 <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="firstName" name="FirstName" placeholder="Firstname" class="form-control" required value="" type="text"></div>
+                                                    <div class="input-group"><input id="firstName" name="FirstName" placeholder="Firstname" class="form-control" value="@Model.FirstName" type="text"></div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">Email</label>
-                                                <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="email" name="Email" placeholder="your@email.com" class="form-control" required value="" type="text"></div>
-                                                </div>
-                                            </div>
+                                            </div>                                            
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label class="control-label">Lastname</label>
                                                 <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="lastname" name="LastName" placeholder="Lastname" class="form-control" required value="" type="text"></div>
+                                                    <div class="input-group"><input id="lastname" name="LastName" placeholder="Lastname" class="form-control" value="@Model.LastName" type="text"></div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">Username</label>
-                                                <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="Username" name="Username" placeholder="Username" class="form-control" required value="" type="text"></div>
-                                                </div>
-                                            </div>
+                                            </div>                                   
 
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Email</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="email" name="Email" placeholder="your@email.com" class="form-control" value="@Model.Email" type="text"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Gender</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group">
+                                                        <select name="gender" class="selectpicker form-control" aria-label="Default select " asp-for="@Model.gender">
+                                                            <option selected disabled value="noselected" )>Select a genre</option>
+                                                            <option value="Female">Female</option>
+                                                            <option value="Male">Male</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </div>
@@ -70,39 +97,57 @@
                                             <div class="form-group">
                                                 <label class="control-label">Password</label>
                                                 <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="password" name="Password" placeholder="Password" class="form-control" required value="" type="password"></div>
+                                                    <div class="input-group"><input id="password" name="Password" placeholder="Password" class="form-control" value="" type="password"></div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label class="control-label">Gender</label>
-                                                <div class="inputGroupContainer">
-                                                    <div class="input-group">
-                                                        <select name="gender" class="selectpicker form-control" aria-label="Default select " required>
-                                                            <option selected disabled value="noselected" )>Select a genre</option>
-                                                            <option value="Female" )>Female</option>
-                                                            <option value="Male">Male</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label class="control-label">Confirm Password</label>
                                                 <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" class="form-control" required value="" type="password"></div>
+                                                    <div class="input-group"><input id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" class="form-control" value="" type="password"></div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label">Phone</label>
-                                                <div class="inputGroupContainer">
-                                                    <div class="input-group"><input id="phone" name="PhoneNumber" placeholder="Phone" class="form-control" required value="" type="text"></div>
-                                                </div>
-                                            </div>
+                                            </div>                                         
                                             
                                         </div>
 
                                     </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Phone</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="phone" name="PhoneNumber" placeholder="Phone" class="form-control" value="@Model.PhoneNumber" type="text"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Type</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group">
+                                                        <select name="PractitionerTypesId" class="form-control" asp-for="@Model.PractitionerTypesId">
+                                                            <option value="" disable selected>Select a type</option>
+                                                            @foreach (var c in Model.practitionerTypes)
+                                                            {
+                                                                <option value="@c.Id">@c.Name</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="text-center">
+
+                                        <button type='button' class='btn btn-warning mx-5 w-75 mt-2' data-toggle='modal' data-target='#editoffices'>Select Office(s)</button>
+
+                                    </div>
+
 
 
 
@@ -115,13 +160,8 @@
                                     <a class="btn-user btn-block" href="@Url.Action("Index", "Home")">Return</a>
                                     <button type="submit" class="btn btn-primary px-5 w-100">Add</button>
                                 </div>
-                                <hr>
-                                @if (ViewData["MessageRegisterPract"] != null)
-                                {
-                                    <div class="alert alert-danger" role="alert">
-                                        @ViewData["MessageRegisterPract"]
-                                    </div>
-                                }
+                                
+                                 
 
                             </form>
                             <hr>
@@ -140,6 +180,91 @@
     </div>
 
 
+   
 
+    <!-- Modal Edit Offices -->
+    <div class="modal fade" id="editoffices" tabindex="-1" aria-labelledby="editmodal" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                
+                <div class="modal-body">
+
+                    <div class="card">
+                        <div class="card-header">
+
+                            <i class="fas fa-users me-1"></i> List of Offices                          
+                            <div class="d-inline text-end">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="container my-1">
+                                    <div class="d-flex justify-content-center ">
+                                        <div class="searchbar">
+                                            <input id="filterInputOffice" class="search_input" type="text" name="" onkeyup="searchOffice()" placeholder="Search a office...">
+                                            <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <table id="data-table-offices" class="table mx-auto" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Office</th>                                            
+                                            <th>Address</th>                                            
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class='mx-2'>
+                                            <td id="office-1">Community Center Kitchener</td>
+                                            <td>58 Jhon Street Kitchener Ontario</td>
+                                            
+                                            <td>
+                                                <button id="offic-01" type='button' class='btn btn-primary mr-1 w-75' onclick="addOfficePractitioner(this)">Add</button>
+                                               
+                                            </td>
+
+                                        </tr>
+                                        <tr class='mx-2'>
+                                            <td id="office-2"> Bleans Medical Center </td>
+                                            <td>85 Main Street Canbridge Ontario</td>
+
+                                            <td>
+                                                <button type='button' id="offic-02" class='btn btn-primary mr-1 w-75' onclick="addOfficePractitioner(this)">Add</button>
+
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </body>
+
 </html>
+
+
+

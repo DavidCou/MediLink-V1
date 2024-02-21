@@ -13,6 +13,7 @@ using MediLink.Models;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using NuGet.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediLink.Controllers
 {
@@ -20,11 +21,14 @@ namespace MediLink.Controllers
     {
         private readonly IUserService _userService;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private MediLinkDbContext _mediLinkContext;
 
-        public ManagementController(IUserService userService, IWebHostEnvironment webHostEnvironment)
+        public ManagementController(IUserService userService, IWebHostEnvironment webHostEnvironment, MediLinkDbContext mediLinkDbContext)
         {
             _userService = userService;
             _webHostEnvironment = webHostEnvironment;
+            _mediLinkContext = mediLinkDbContext;
+
         }
 
 
@@ -438,9 +442,16 @@ namespace MediLink.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult RegisterPractitioner()
+        public async Task<IActionResult> RegisterPractitioner()
         {
-            return View();
+            //get a list all the practitioners tyoes
+            List<PractitionerType> practitionerTypes = await _mediLinkContext.PractitionerTypes.ToListAsync();
+
+            PractitionerNewRequest oPractitioner = new PractitionerNewRequest();
+
+            oPractitioner.practitionerTypes = practitionerTypes;
+
+            return View(oPractitioner);
         }
 
         [HttpPost]
@@ -449,11 +460,17 @@ namespace MediLink.Controllers
             //verify if the patient already exist 
             Practitioner practFound = await _userService.GetPractitionerByEmail(oPractict.Email);
 
+            //get a list all the practitioners tyoes
+            List<PractitionerType> practitionerTypes = await _mediLinkContext.PractitionerTypes.ToListAsync();
+
             if (practFound != null)
             {
                 ViewData["MessageRegisterPract"] = "User Already Exist";
                 return View();
             }
+
+            List<string> errorMessage = new List<string>();
+                       
 
             // Regular expression for phone validation
             string phonePattern = @"^\d{3}-\d{3}-\d{4}$";
@@ -461,67 +478,121 @@ namespace MediLink.Controllers
             // Creating Regex object
             Regex regex = new Regex(phonePattern);
 
-            
-            // Matching the password against the regex pattern
-            if (!regex.IsMatch(oPractict.PhoneNumber))
+           
+            if (string.IsNullOrEmpty(oPractict.FirstName) || string.IsNullOrWhiteSpace(oPractict.FirstName))
             {
-                ViewData["MessageRegister"] = "Phone number not valid input format 222-222-2222";
-                return View();
+                errorMessage.Add("-Please input Firstname");
+            }
 
+            if (string.IsNullOrEmpty(oPractict.LastName) || string.IsNullOrWhiteSpace(oPractict.LastName))
+            {
+                errorMessage.Add("-Please input Lastname");
+            }
+
+            if (string.IsNullOrEmpty(oPractict.Email) || string.IsNullOrWhiteSpace(oPractict.Email))
+            {
+                errorMessage.Add("-Please input an email");
+            }
+
+
+
+            if (oPractict.Password != oPractict.ConfirmPassword)
+            {
+                errorMessage.Add("-Password not match");
+
+            }
+
+            if (string.IsNullOrEmpty(oPractict.Password) && string.IsNullOrEmpty(oPractict.ConfirmPassword))
+            {
+                errorMessage.Add("-Please Input a Password ");
+
+            }
+
+            if (string.IsNullOrEmpty(oPractict.PhoneNumber) && string.IsNullOrEmpty(oPractict.PhoneNumber))
+            {
+                errorMessage.Add("-Please Input a Phone Number ");
+
+            }
+            else
+            {
+                // Matching the number against the regex pattern
+                if (!regex.IsMatch(oPractict.PhoneNumber))
+                {
+                    errorMessage.Add("-Phone number not valid input format 222-222-2222");
+
+
+                }
             }
 
             // valid if selected a gender
             if (oPractict.gender == null)
             {
-                ViewData["MessageRegister"] = "Must be select a gender";
-                return View();
+                errorMessage.Add("-Must be select a gender ");
+
 
             }
 
-            if (oPractict.Password != oPractict.ConfirmPassword)
+            // valid if selected a type
+            if (oPractict.PractitionerTypesId == null)
             {
-                ViewData["MessageRegister"] = "Password not match";
-                return View();
+                errorMessage.Add("-Must be select a practitioner type ");
+
+
             }
 
+            //assign list of practitioner types
+            oPractict.practitionerTypes = practitionerTypes;
 
-
-            oPractict.Password = Utilities.EncryptPassword(oPractict.Password);
-
-            oPractict.token = Utilities.GenerateToken();
-
-            PractitionerNewRequest userCreated = await _userService.SavePractitioner(oPractict);
-
-            if (userCreated.Id > 0)
+            if (errorMessage.Count == 0)
             {
-                // Map the path relative to the content root
-                string path = Path.Combine(_webHostEnvironment.ContentRootPath, "Templates", "ConfirmEmail.html");
+               
+                oPractict.Password = Utilities.EncryptPassword(oPractict.Password);
 
-                string content = System.IO.File.ReadAllText(path);
-                string url = string.Format("{0}://{1}{2}", HttpContext.Request.Scheme, Request.Headers["host"], "/Management/ConfirmRegisterPractitioner?token=" + oPractict.token);
+                oPractict.token = Utilities.GenerateToken();
 
-                string htmlBody = string.Format(content, oPractict.LastName, url);
+                PractitionerNewRequest userCreated = await _userService.SavePractitioner(oPractict);
 
-                Email emailDTO = new Email()
+                if (userCreated.Id > 0)
                 {
-                    recipient = oPractict.Email,
-                    subject = "Confirmation Email MediLink",
-                    body = htmlBody
-                };
+                    // Map the path relative to the content root
+                    string path = Path.Combine(_webHostEnvironment.ContentRootPath, "Templates", "ConfirmEmail.html");
 
-                bool sent = EmailService.SendEmail(emailDTO);
+                    string content = System.IO.File.ReadAllText(path);
+                    string url = string.Format("{0}://{1}{2}", HttpContext.Request.Scheme, Request.Headers["host"], "/Management/ConfirmRegisterPractitioner?token=" + oPractict.token);
 
-                ViewData["MessageRegisterPract"] = $"Your account has been created. We have sent a message to the email {oPractict.Email} to confirm your account";
+                    string htmlBody = string.Format(content, oPractict.LastName, url);
 
+                    Email emailDTO = new Email()
+                    {
+                        recipient = oPractict.Email,
+                        subject = "Confirmation Email MediLink",
+                        body = htmlBody
+                    };
+
+                    bool sent = EmailService.SendEmail(emailDTO);
+
+                    ViewData["MessageRegisterPract"] = $"Your account has been created. We have sent a message to the email {oPractict.Email} to confirm your account";
+
+                }
+                else
+                {
+                    ViewData["MessageRegisterPract"] = "Can not create user";
+                }
             }
             else
             {
-                ViewData["MessageRegisterPract"] = "Can not create user";
+                // Pass the error list to the view using ViewBag
+                ViewBag.MyErrorList = errorMessage;
+               
+                ViewData["MessageRegisterPract"] = errorMessage;
             }
 
 
+            
 
-            return View();
+
+
+            return View(oPractict);
 
 
         }

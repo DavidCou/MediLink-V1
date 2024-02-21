@@ -1,14 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using MediLink.Entities;
 
 namespace MediLink.Models
 {
     public class PractitionerNewRequest
     {
         public int Id { get; set; }
-        
-        public string Username { get; set; } = null!;
-       
+                   
         public string Password { get; set; } = null!;
 
         public string ConfirmPassword { get; set; } = null!;
@@ -34,5 +33,10 @@ namespace MediLink.Models
         public DateTime lastPatientAcceptedDate { get; set; }
 
         public bool IsAcceptingNewPatients { get; set; }
+
+        public int? PractitionerTypesId { get; set; }
+
+        public List<PractitionerType>? practitionerTypes { get; set; }
+
     }
 }

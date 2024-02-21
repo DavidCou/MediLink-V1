@@ -3,4 +3,58 @@
 
 // Write your JavaScript code.
 
+let arrayIdOffice = [];
+
+//function to search medical offices
+function searchOffice() {
+    //declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("filterInputOffice");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("data-table-offices");
+    tr = table.getElementsByTagName("tr");
+
+
+    //loop through all table rows and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            txtValue = td.textContent || td.innerHTML;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+function addOfficePractitioner(button) {
+    console.log("Test");
+   
+    var id = button.id;
+    var idclean = button.id.replace("offic-", "");
+    var valueText = button.textContent;
+
+    var btnClicked = document.getElementById(id);
+
+     
+
+    if (valueText == "Add") {
+        btnClicked.textContent = "Remove";
+        arrayIdOffice.push(idclean);
+        btnClicked.classList.remove("btn-primary");  
+        btnClicked.classList.add("btn-danger"); 
+    } else {
+        btnClicked.textContent = "Add";
+        arrayIdOffice = arrayIdOffice.filter(item => item != idclean);
+        btnClicked.classList.remove("btn-danger"); 
+        btnClicked.classList.add("btn-primary"); 
+    }
+
+    console.log("Valor de arreglo");
+    console.log(arrayIdOffice);
+    
+
+}
 
