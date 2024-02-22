@@ -6,7 +6,7 @@
 
 		public int OfficeAddressesId { get; set; }
 
-		public OfficeAddress OfficeAddresses { get; set; } = null!;
+		public OfficeAddress OfficeAddresse { get; set; } = null!;
 
 		public Practitioner Practitioner { get; set; } = null!;
 	}

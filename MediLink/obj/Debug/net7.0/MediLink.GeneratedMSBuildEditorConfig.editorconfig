@@ -9,73 +9,75 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MediLink
 build_property.RootNamespace = MediLink
-build_property.ProjectDir = C:\Users\juane\source\repos\Last19022024\MediLink\MediLink\
+build_property.ProjectDir = D:\college\Git_Repos\Semester_6\MediLink\MediLink\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\juane\source\repos\Last19022024\MediLink\MediLink
+build_property.MSBuildProjectDirectory = D:\college\Git_Repos\Semester_6\MediLink\MediLink
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/Home/Index.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/Home/Privacy.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/Management/ConfirmRegisterPatient.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Management/ConfirmRegisterPatient.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudFxDb25maXJtUmVnaXN0ZXJQYXRpZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/Management/ConfirmRegisterPractitioner.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Management/ConfirmRegisterPractitioner.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudFxDb25maXJtUmVnaXN0ZXJQcmFjdGl0aW9uZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/Management/LoginPatient.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Management/LoginPatient.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudFxMb2dpblBhdGllbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/Management/LoginPractitioner.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Management/LoginPractitioner.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudFxMb2dpblByYWN0aXRpb25lci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/Management/RegisterPatient.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Management/RegisterPatient.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudFxSZWdpc3RlclBhdGllbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/Management/RegisterPractitioner.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Management/RegisterPractitioner.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudFxSZWdpc3RlclByYWN0aXRpb25lci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/Management/RestartPasswordFormPatient.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Management/RestartPasswordFormPatient.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudFxSZXN0YXJ0UGFzc3dvcmRGb3JtUGF0aWVudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/Management/RestartPasswordFormPractitioner.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Management/RestartPasswordFormPractitioner.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudFxSZXN0YXJ0UGFzc3dvcmRGb3JtUHJhY3RpdGlvbmVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/Patient/Preferences.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Patient/Preferences.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxQcmVmZXJlbmNlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/Shared/Error.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/_ViewImports.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/_ViewStart.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/juane/source/repos/Last19022024/MediLink/MediLink/Views/Shared/_Layout.cshtml]
+[D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-hj5vdlv9ru

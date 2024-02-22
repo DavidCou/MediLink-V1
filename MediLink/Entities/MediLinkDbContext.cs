@@ -27,8 +27,6 @@ namespace MediLink.Entities
 
 		public DbSet<PractitionerOfficeAddress> PractitionerAddresses { get; set; }
 
-        public DbSet<PractitionerOfficeType> PractitionerOfficeTypes { get; set; }
-
         public DbSet<PatientPreference> PatientPreferences { get; set; }
 
         public DbSet<PreferedLanguage> PreferedLanguages { get; set; }
@@ -37,7 +35,12 @@ namespace MediLink.Entities
 
         public DbSet<PractitionerSpokenLanguages> PractitionerSpokenLanguages { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public DbSet<WalkInPractitionerSpokenLanguages> WalkInPractitionerSpokenLanguages { get; set; }
+
+        public DbSet<WalkInPractitioner> WalkInPractitioner { get; set; }
+
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
 			base.OnModelCreating(modelBuilder);
@@ -54,18 +57,22 @@ namespace MediLink.Entities
 
 			modelBuilder.Entity<PractitionerOfficeAddress>().HasKey(pa => new { pa.PractitionerId, pa.OfficeAddressesId });
 
-            modelBuilder.Entity<PractitionerOfficeType>().HasKey(po => new { po.PractitionerId, po.OfficeTypesId });
+            modelBuilder.Entity<WalkInPractitionerSpokenLanguages>().HasKey(wpsp => new { wpsp.LanguageId, wpsp.WalkInPractitionerId });
 
             modelBuilder.Entity<Languages>().HasData(
                 new Languages() { Id = 1, LanguageName = "English", IsDeleted = false},
                 new Languages() { Id = 2, LanguageName = "Spanish", IsDeleted = false},
-                new Languages() { Id = 3, LanguageName = "French", IsDeleted = false});
+                new Languages() { Id = 3, LanguageName = "French", IsDeleted = false}
+            );
 
             modelBuilder.Entity<OfficeType>().HasData(
                 new OfficeType() { Id = 1, OfficeName = "Community Center", IsDeleted = false },
-                new OfficeType() { Id = 2, OfficeName = "Private", IsDeleted = false });
+                new OfficeType() { Id = 2, OfficeName = "Walk In Clinic", IsDeleted = false },
+			    new OfficeType() { Id = 3, OfficeName = "Medical Center", IsDeleted = false },
+			    new OfficeType() { Id = 4, OfficeName = "Clinic", IsDeleted = false }
+           );
 
-        }
+		}
 
 
 

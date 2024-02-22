@@ -15,9 +15,8 @@ namespace MediLink.Entities
 
 		public ICollection<PatientOfficeType>? PatientOfficeTypes { get; set; }
 
-        //public OfficeAddress? OfficeAddressed { get; set; }
+        public ICollection<OfficeAddress>? OfficeAddresses { get; set; }
 
-        public ICollection<PractitionerOfficeType>? PractitionerOfficeTypes { get; set; }
 
 
 

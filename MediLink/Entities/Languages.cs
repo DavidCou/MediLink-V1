@@ -19,6 +19,9 @@ namespace MediLink.Entities
 
         public ICollection<PatientSpokenLanguage>? PatientSpokenLanguages { get; set; }
 
+        public ICollection<WalkInPractitionerSpokenLanguages>? WalkInPractitionerSpokenLanguages { get; set; }
 
-    }
+
+
+	}
 }

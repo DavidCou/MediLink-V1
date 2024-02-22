@@ -17,6 +17,6 @@ namespace MediLink.Entities
 
         public bool IsDeleted { get; set; } = false;
 
-        public Practitioner? Practitioners { get; set; }
+        public ICollection<Practitioner>? Practitioners { get; set; }
     }
 }

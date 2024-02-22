@@ -9,9 +9,9 @@ namespace MediLink.Entities
 
 		[Column(TypeName = "VARCHAR")]
 		[StringLength(maximumLength: 200)]
-		public string location { get; set; }
+		public string? location { get; set; }
 
-		public int rating { get; set; }
+		public int? rating { get; set; }
                 
         public bool IsDeleted { get; set; } = false;
 

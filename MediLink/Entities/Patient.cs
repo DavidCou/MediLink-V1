@@ -23,7 +23,7 @@ namespace MediLink.Entities
                
         public PatientPreference? PatientPreferences { get; set; }
 
-        public int PatientDetailsId { get; set; }
+        public int? PatientDetailsId { get; set; }
 
 		public PatientDetail? PatientDetails { get; set; }
 

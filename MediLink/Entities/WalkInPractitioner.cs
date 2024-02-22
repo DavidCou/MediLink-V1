@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MediLink.Entities
 {
-    public class Practitioner
+    public class WalkInPractitioner
     {
         public int Id { get; set; }
 
@@ -24,28 +24,22 @@ namespace MediLink.Entities
         public bool IsDeleted { get; set; } = false;
 
 		[Column(TypeName = "VARCHAR")]
-		[StringLength(maximumLength: 250)]
-		public string FirstName { get; set; } = null!;
-
-		[Column(TypeName = "VARCHAR")]
-		[StringLength(maximumLength: 250)]
-		public string LastName { get; set; } = null!;
-
-		public string? gender { get; set; }
-
-		[Column(TypeName = "VARCHAR")]
 		[StringLength(maximumLength: 12)]
 		public string PhoneNumber { get; set; } = null!;
 
-        public DateTime lastPatientAcceptedDate { get; set; }
+		public string? ClinicNotes { get; set; }
 
-        public bool IsAcceptingNewPatients { get; set; }
+		public DateTime? CurrentWaitTime { get; set; }
 
-        public ICollection<PractitionerSpokenLanguages> PractitionerSpokenLanguages { get; set; }
+		public DateTime? HistoricalWaitTimeMin { get; set; }
+
+		public DateTime? HistoricalWaitTimeMax { get; set; }
+
+		public ICollection<WalkInPractitionerSpokenLanguages> WalkInPractitionerSpokenLanguages { get; set; }
 				
 		public ICollection<PractitionerOfficeAddress> PractitionerAddress { get; set; }
 
-        public int? PractitionerTypesId { get; set; }
+        public int? PractitionerTypeId { get; set; }
 
         public PractitionerType PractitionerType { get; set; } = null!;
 
