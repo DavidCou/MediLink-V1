@@ -31,10 +31,8 @@ header.masthead {
     }
 
 #header-st {
-    height: 100vh; /* Or 100% for non-viewport-height image */
-    background-image: url('/img/main-banner.jpg');
     background-repeat: no-repeat;
-    background-size: cover;
+    background-color: #037FB0;
 }
 
 .header-title {
