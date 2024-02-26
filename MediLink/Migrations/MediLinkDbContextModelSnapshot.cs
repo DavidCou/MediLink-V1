@@ -382,9 +382,6 @@ namespace MediLink.Migrations
                     b.Property<int>("PractitionerTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PractitionerTypesId")
-                        .HasColumnType("int");
-
                     b.Property<string>("gender")
                         .HasColumnType("nvarchar(max)");
 
@@ -413,17 +410,9 @@ namespace MediLink.Migrations
                     b.Property<int>("OfficeAddressesId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OfficeAddresseId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("WalkInPractitionerId")
-                        .HasColumnType("int");
-
                     b.HasKey("PractitionerId", "OfficeAddressesId");
 
-                    b.HasIndex("OfficeAddresseId");
-
-                    b.HasIndex("WalkInPractitionerId");
+                    b.HasIndex("OfficeAddressesId");
 
                     b.ToTable("PractitionerAddresses");
                 });
@@ -484,7 +473,7 @@ namespace MediLink.Migrations
                     b.ToTable("PreferedLanguages");
                 });
 
-            modelBuilder.Entity("MediLink.Entities.WalkInPractitioner", b =>
+            modelBuilder.Entity("MediLink.Entities.WalkInClinic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -515,6 +504,9 @@ namespace MediLink.Migrations
                     b.Property<bool>("IsValidated")
                         .HasColumnType("bit");
 
+                    b.Property<int>("OfficeAddressId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -525,9 +517,6 @@ namespace MediLink.Migrations
                         .HasMaxLength(12)
                         .HasColumnType("VARCHAR");
 
-                    b.Property<int?>("PractitionerTypeId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("passwordReset")
                         .HasColumnType("bit");
 
@@ -537,9 +526,10 @@ namespace MediLink.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PractitionerTypeId");
+                    b.HasIndex("OfficeAddressId")
+                        .IsUnique();
 
-                    b.ToTable("WalkInPractitioner");
+                    b.ToTable("WalkInClinics");
                 });
 
             modelBuilder.Entity("MediLink.Entities.WalkInPractitionerSpokenLanguages", b =>
@@ -639,9 +629,9 @@ namespace MediLink.Migrations
 
             modelBuilder.Entity("MediLink.Entities.PractitionerOfficeAddress", b =>
                 {
-                    b.HasOne("MediLink.Entities.OfficeAddress", "OfficeAddresse")
+                    b.HasOne("MediLink.Entities.OfficeAddress", "OfficeAddresses")
                         .WithMany("PractitionerAddress")
-                        .HasForeignKey("OfficeAddresseId")
+                        .HasForeignKey("OfficeAddressesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -651,11 +641,7 @@ namespace MediLink.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MediLink.Entities.WalkInPractitioner", null)
-                        .WithMany("PractitionerAddress")
-                        .HasForeignKey("WalkInPractitionerId");
-
-                    b.Navigation("OfficeAddresse");
+                    b.Navigation("OfficeAddresses");
 
                     b.Navigation("Practitioner");
                 });
@@ -698,13 +684,15 @@ namespace MediLink.Migrations
                     b.Navigation("PatientPreference");
                 });
 
-            modelBuilder.Entity("MediLink.Entities.WalkInPractitioner", b =>
+            modelBuilder.Entity("MediLink.Entities.WalkInClinic", b =>
                 {
-                    b.HasOne("MediLink.Entities.PractitionerType", "PractitionerType")
-                        .WithMany()
-                        .HasForeignKey("PractitionerTypeId");
+                    b.HasOne("MediLink.Entities.OfficeAddress", "OfficeAddress")
+                        .WithOne("WalkInClinic")
+                        .HasForeignKey("MediLink.Entities.WalkInClinic", "OfficeAddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("PractitionerType");
+                    b.Navigation("OfficeAddress");
                 });
 
             modelBuilder.Entity("MediLink.Entities.WalkInPractitionerSpokenLanguages", b =>
@@ -715,7 +703,7 @@ namespace MediLink.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MediLink.Entities.WalkInPractitioner", "WalkInPractitioner")
+                    b.HasOne("MediLink.Entities.WalkInClinic", "WalkInPractitioner")
                         .WithMany("WalkInPractitionerSpokenLanguages")
                         .HasForeignKey("WalkInPractitionerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -740,6 +728,8 @@ namespace MediLink.Migrations
             modelBuilder.Entity("MediLink.Entities.OfficeAddress", b =>
                 {
                     b.Navigation("PractitionerAddress");
+
+                    b.Navigation("WalkInClinic");
                 });
 
             modelBuilder.Entity("MediLink.Entities.OfficeType", b =>
@@ -784,10 +774,8 @@ namespace MediLink.Migrations
                     b.Navigation("Practitioners");
                 });
 
-            modelBuilder.Entity("MediLink.Entities.WalkInPractitioner", b =>
+            modelBuilder.Entity("MediLink.Entities.WalkInClinic", b =>
                 {
-                    b.Navigation("PractitionerAddress");
-
                     b.Navigation("WalkInPractitionerSpokenLanguages");
                 });
 #pragma warning restore 612, 618

@@ -37,7 +37,7 @@ namespace MediLink.Entities
 
         public DbSet<WalkInPractitionerSpokenLanguages> WalkInPractitionerSpokenLanguages { get; set; }
 
-        public DbSet<WalkInPractitioner> WalkInPractitioner { get; set; }
+		public DbSet<WalkInClinic> WalkInClinics { get; set; }
 
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -31,5 +31,7 @@ namespace MediLink.Entities
 
         public ICollection<PractitionerOfficeAddress>? PractitionerAddress { get; set; }
 
-    }
+        public WalkInClinic? WalkInClinic { get; set; }
+
+	}
 }

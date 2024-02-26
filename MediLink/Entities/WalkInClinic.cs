@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MediLink.Entities
 {
-    public class WalkInPractitioner
+    public class WalkInClinic
     {
         public int Id { get; set; }
 
@@ -36,14 +36,9 @@ namespace MediLink.Entities
 		public DateTime? HistoricalWaitTimeMax { get; set; }
 
 		public ICollection<WalkInPractitionerSpokenLanguages> WalkInPractitionerSpokenLanguages { get; set; }
-				
-		public ICollection<PractitionerOfficeAddress> PractitionerAddress { get; set; }
+		
+		public int OfficeAddressId {  get; set; }
 
-        public int? PractitionerTypeId { get; set; }
-
-        public PractitionerType PractitionerType { get; set; } = null!;
-
-        
-
+		public OfficeAddress OfficeAddress { get; set; }
     }
 }

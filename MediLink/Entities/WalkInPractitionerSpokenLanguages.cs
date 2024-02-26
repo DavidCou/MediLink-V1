@@ -8,6 +8,6 @@
 
         public Languages Language { get; set; } = null!;
 
-        public WalkInPractitioner WalkInPractitioner { get; set; } = null!;
+        public WalkInClinic WalkInPractitioner { get; set; } = null!;
     }
 }

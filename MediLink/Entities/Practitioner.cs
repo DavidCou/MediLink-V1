@@ -45,8 +45,6 @@ namespace MediLink.Entities
 				
 		public ICollection<PractitionerOfficeAddress> PractitionerAddress { get; set; }
 
-        public int? PractitionerTypesId { get; set; }
-
         public PractitionerType PractitionerType { get; set; } = null!;
 
         
