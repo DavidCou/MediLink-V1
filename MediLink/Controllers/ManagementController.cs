@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using NuGet.Common;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace MediLink.Controllers
 {
@@ -248,18 +249,26 @@ namespace MediLink.Controllers
                     };
 
                     bool sent = EmailService.SendEmail(emailDTO);
-
-                    ViewData["MessageRegister"] = $"Your account has been created. We have sent a message to the email {oPatientNew.Email} to confirm your account";
+                    errorMessage.Add($"Your account has been created. We have sent a message to the email {oPatientNew.Email} to confirm your account");
+                   
 
                 }
                 else
                 {
-                    ViewData["MessageRegister"] = "Can not create user";
+                    errorMessage.Add("Can not create user");
+                   
                 }
 
+                ViewBag.MyErrorList = errorMessage;
+                ViewData["MessageRegister"] = errorMessage;
 
 
-                return View();
+                PatientNewRequest oPatient = new PatientNewRequest();
+                oPatient.FirstName = "";
+                oPatient.LastName = "";
+                oPatient.Password = "";
+                oPatient.ConfirmPassword = "";
+                return View(oPatient);
 
             }
             else
@@ -571,13 +580,31 @@ namespace MediLink.Controllers
 
                     bool sent = EmailService.SendEmail(emailDTO);
 
-                    ViewData["MessageRegisterPract"] = $"Your account has been created. We have sent a message to the email {oPractict.Email} to confirm your account";
+                    errorMessage.Add($"Your account has been created. We have sent a message to the email {oPractict.Email} to confirm your account");
+                     
 
                 }
                 else
                 {
-                    ViewData["MessageRegisterPract"] = "Can not create user";
+                    errorMessage.Add("Can not create user");
+          
                 }
+
+                // Pass the error list to the view using ViewBag
+                ViewBag.MyErrorList = errorMessage;
+
+                ViewData["MessageRegisterPract"] = errorMessage;
+
+                PractitionerNewRequest oNewPract = new PractitionerNewRequest();
+                oNewPract.FirstName = "";
+                oNewPract.LastName = "";
+                oNewPract.Email = "";
+                oNewPract.Password = "";
+                oNewPract.ConfirmPassword = "";
+
+
+                return View(oNewPract);
+
             }
             else
             {
@@ -585,6 +612,8 @@ namespace MediLink.Controllers
                 ViewBag.MyErrorList = errorMessage;
                
                 ViewData["MessageRegisterPract"] = errorMessage;
+
+                return View(oPractict);
             }
 
 
@@ -592,7 +621,7 @@ namespace MediLink.Controllers
 
 
 
-            return View(oPractict);
+           
 
 
         }
