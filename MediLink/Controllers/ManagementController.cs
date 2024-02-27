@@ -85,7 +85,7 @@ namespace MediLink.Controllers
                 properties
                 );
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("PatientHomePage", "Patient"); ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         }
 
         public ActionResult RegisterPatient()

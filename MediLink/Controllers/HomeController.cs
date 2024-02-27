@@ -19,6 +19,10 @@ namespace MediLink.Controllers
 
         public IActionResult Index()
         {
+            return View();
+        }
+
+        public IActionResult GetPatientHomePage() {
             ClaimsPrincipal claimuser = HttpContext.User;
             string userName = "";
 
@@ -30,7 +34,7 @@ namespace MediLink.Controllers
 
             ViewData["userName"] = userName;
 
-            return View();
+            return RedirectToAction("Patient", "PatientIndex");
         }
 
         public IActionResult Privacy()

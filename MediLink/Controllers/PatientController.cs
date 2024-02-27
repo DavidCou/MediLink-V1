@@ -16,6 +16,22 @@ namespace MediLink.Controllers
             _userService = userService;
         }
 
+        public IActionResult PatientHomePage()
+        {
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+            if (claimuser.Identity.IsAuthenticated)
+            {
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            ViewData["userName"] = userName;
+
+            return View();
+        }
+
         [HttpGet]
         public async Task<IActionResult> Preferences()
         {
@@ -29,12 +45,6 @@ namespace MediLink.Controllers
             }
 
             Patient patient = await _userService.GetUserByEmail(userName);
-
-            if (patient == null)
-            {
-                TempData["mensajeResultLogin"] = "Please log in";
-                return RedirectToAction("LoginPatient", "Management");
-            }
 
             PatientPreference preferences = await _mediLinkContext.PatientPreferences.Where(p => p.Id == patient.PatientPreferencesId).FirstOrDefaultAsync();
 

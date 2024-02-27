@@ -12,144 +12,17 @@
     <link rel="stylesheet" href="~/MediLink.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header id="header-st">
-
-        <nav class="navbar navbar-expand static-top ">
-            <div class="mr=auto">
-                <a class="navbar-brand mx-0" href="#"><img class="ms-5 me-0" src="~/img/logo2.png" alt="Company Logo" width="70" height="60"></a>
-                <h3 id="company-title">MediLink</h3>
-            </div>
-
-            <div class="ml-auto mt-4">
-                <div class=" collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav mx-auto ">
-                        <li class="nav-item">
-                            <a class="nav-link mx-2 h6 text-white" href="@Url.Action("Index", "Home")">Home</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link mx-2 h6 text-white" href="@Url.Action("Search", "Search")">Search</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-2 h6 text-white" href="@Url.Action("Articles", "Articles")">Articles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-2 h6 text-white" href="@Url.Action("Appointments", "Appointments")">Appointments</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-2 h6 text-white" href="@Url.Action("About", "Home")">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link mx-2 h6 text-white" href="@Url.Action("Contact", "Home")">Contact Us</a>
-                        </li>
-                        <li class="nav-item dropdown no-arrow ">
-                            <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 mx-2 d-none d-lg-inline text-white ">Language</span>
-                            </a>
-                            <!-- Dropdown - Languages -->
-                            <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
-                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    English
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" )">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Spanish
-                                </a>
-                                <div class="dropdown-divider"></div>
-
-
-                            </div>
-                        </li>
-
-
-                        @if (ViewData["userName"] != "")
-                        {
-                            <li class="nav-item dropdown no-arrow ">
-                                <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 mx-2 d-none d-lg-inline text-white ">@ViewData["userName"]</span>
-                                </a>
-                                <!-- Dropdown - Patients Options -->
-                                <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
-                                     aria-labelledby="userDropdown">
-                                    <a class="dropdown-item mx-0" href='/Patients/Update/@ViewData["userconnectedid"]'>
-                                        <i class="bi bi-person text-gray-400 mx-0" style="font-size: 15px"></i>
-                                        Profile
-                                    </a>
-                                    <a class="dropdown-item mx-0" href="@Url.Action("Preferences", "Patient")">
-                                        <i class="bi bi-person-gear text-gray-400 mx-0" style="font-size: 15px"></i>
-                                        Preferences
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="@Url.Action("ChangePassword", "Patients")">
-                                        <i class="bi bi-people text-gray-400"></i>
-                                        Change Password
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="@Url.Action("Logout", "Management")" >
-                                        <i class="bi bi-box-arrow-in-left text-gray-400"></i>
-                                        Logout
-                                    </a>
-
-
-                                </div>
-                            </li>
-
-
-
-
-                            
-                        }
-                        else
-                        {
-                            <!-- Nav Item - User Information -->
-                            <li class="nav-item dropdown no-arrow ">
-                                <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 mx-2 d-none d-lg-inline text-white ">Login</span>
-                                </a>
-                                <!-- Dropdown - Login -->
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                     aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="@Url.Action("LoginPatient", "Management")">
-                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Patients
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="@Url.Action("LoginPractitioner", "Management")" )">
-                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Practitioner
-                                    </a>
-                                   
-                                </div>
-                            </li>
-                            
-                        }
-
-                        
-                       
-
-                    </ul>
-
-                </div>
-            </div>
-
-
-        </nav>
-    </header>
-    <div class="container-fluid">
-        <main role="main" class="pb-3">
+    <div>
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer text-muted">
         <div class="container text-center ">
-            &copy; 2024 - MediLink - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - MediLink
+            <a class="h6 " href="@Url.Action("About", "Home")">About Us</a>
+            <a class="h6 " href="@Url.Action("Contact", "Home")">Contact Us</a>
         </div>
     </footer>
    
