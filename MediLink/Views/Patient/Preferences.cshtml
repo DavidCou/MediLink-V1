@@ -8,42 +8,47 @@
 
 @if(ViewData["Message"] != null)
 {
-    <div class="alert alert-info">
+    <div class="alert alert-info" align="center">
         @ViewData["Message"]
     </div>
 }
 
-<h1>Preferences</h1>
+<h1 align="center">Preferences</h1>
 
 <form asp-controller="Patient" asp-action="Preferences" method="post">
-    <div class="mb-3 row">
-        <label for="preferencesCity" class="col-auto col-form-label">City: </label>
-        <div class="sm-col-6">
-            <input type="text" id="preferencesCity" class="form-control" asp-for="preferences.location" />
-        </div>
-    </div>
-    <div class ="mb-3 row">
-        <label class="col-auto form-label">Rating: </label>
-        <select asp-for="preferences.rating" >
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-        </select>
+    <div class="row">
+        <div class="col-6 row"><div class="form-group">
+            <label for="preferencesCity" class="control-label">City: </label>
+            <div class="inputGroupContainer"><div class="input-group">
+                <input type="text" id="preferencesCity" class="form-control" asp-for="preferences.location" />
+            </div></div>
+        </div></div>
+        <div class="col-6"><div class ="form-group">
+            <label class="control-label">Rating: </label>
+            <div class="inputGroupContainer"><div class="input-group">
+                        <select asp-for="preferences.rating">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+            </div></div>
+            
+        </div></div>
     </div>
     <div class="mb-3 row">
         <label asp-for="selectedLanguageIds" class="col-auto form-label">Spoken Languages: </label>
         <div class="col-sm-6">
-            <select asp-for="selectedLanguageIds" asp-items="Model.languages" multiple >
+            <select asp-for="selectedLanguageIds" data-size="5" data-wrap="true" asp-items="@Model.languages" data-count-selected-text="({0} are chosen)" data-live-search="true" class="selectpicker show-tick checkbox" multiple data-selected-text-format="count" tabindex="-98">
             </select>
         </div>
     </div>
     <div class="mb-3 row">
         <label asp-for="selectedOfficeTypeIds" class="col-auto form-label">Preferred Office Types: </label>
         <div class="col-sm-6">
-            <select asp-for="selectedOfficeTypeIds" asp-items="Model.officeTypes" multiple >
+            <select asp-for="selectedOfficeTypeIds" data-size="5" data-wrap="true" asp-items="@Model.officeTypes" data-count-selected-text="({0} are chosen)" data-live-search="true" class="selectpicker show-tick checkbox" multiple data-selected-text-format="count" tabindex="-98">
             </select>
         </div>
     </div>
