@@ -72,6 +72,13 @@ namespace MediLink.Entities
 			    new OfficeType() { Id = 4, OfficeName = "Clinic", IsDeleted = false }
            );
 
+            modelBuilder.Entity<PractitionerType>().HasData(
+                new PractitionerType() { Id = 1, Name = "Family Doctor", Description = "A general health practitioner"},
+				new PractitionerType() { Id = 2, Name = "Pediatrician", Description = "A general health practitioner that specializes in child healthcare" },
+				new PractitionerType() { Id = 3, Name = "Walk-in Clinic", Description = "" }
+
+			); 
+
 		}
 
 

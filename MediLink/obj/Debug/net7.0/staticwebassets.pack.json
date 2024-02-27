@@ -13,12 +13,12 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\Healthcare-img-one.png",
-      "PackagePath": "staticwebassets\\img\\Healthcare-img-one.png"
-    },
-    {
       "Id": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\Healthcare-img-two.png",
       "PackagePath": "staticwebassets\\img\\Healthcare-img-two.png"
+    },
+    {
+      "Id": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\Walk-in Clinic Waiting Room.jpg",
+      "PackagePath": "staticwebassets\\img\\Walk-in Clinic Waiting Room.jpg"
     },
     {
       "Id": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\logo.png",

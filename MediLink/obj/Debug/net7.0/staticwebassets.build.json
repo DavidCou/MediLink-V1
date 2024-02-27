@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "9swg70UXjEOps4vMFf2m9RLEeiEOWW5k5kUvcsfa+fM=",
+  "Hash": "mzFlpzSmDDFZdRF4tsBnOwj0RomVsDhcNNmJAyX2eco=",
   "Source": "MediLink",
   "BasePath": "_content/MediLink",
   "Mode": "Default",
@@ -91,25 +91,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
-    },
-    {
-      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\Healthcare-img-one.png",
-      "SourceId": "MediLink",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
-      "BasePath": "_content/MediLink",
-      "RelativePath": "img/Healthcare-img-one.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\Healthcare-img-one.png"
     },
     {
       "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\Healthcare-img-two.png",
@@ -338,6 +319,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\undraw_profile.svg"
+    },
+    {
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\Walk-in Clinic Waiting Room.jpg",
+      "SourceId": "MediLink",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
+      "BasePath": "_content/MediLink",
+      "RelativePath": "img/Walk-in Clinic Waiting Room.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\Walk-in Clinic Waiting Room.jpg"
     },
     {
       "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\js\\site.js",
