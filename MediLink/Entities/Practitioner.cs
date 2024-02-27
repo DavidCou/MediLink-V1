@@ -37,7 +37,7 @@ namespace MediLink.Entities
 		[StringLength(maximumLength: 12)]
 		public string PhoneNumber { get; set; } = null!;
 
-        public DateTime lastPatientAcceptedDate { get; set; }
+        public DateTime? lastPatientAcceptedDate { get; set; }
 
         public bool IsAcceptingNewPatients { get; set; }
 
@@ -45,7 +45,9 @@ namespace MediLink.Entities
 				
 		public ICollection<PractitionerOfficeAddress> PractitionerAddress { get; set; }
 
-        public PractitionerType PractitionerType { get; set; } = null!;
+        public int PractitionerTypeId { get; set; }
+
+		public PractitionerType PractitionerType { get; set; } = null!;
 
         
 
