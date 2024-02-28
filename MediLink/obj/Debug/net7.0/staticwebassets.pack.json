@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\MediLink.bundle.scp.css"
     },
     {
+      "Id": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\css\\bootstrap-multiselect.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap-multiselect.css"
+    },
+    {
       "Id": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
@@ -63,6 +67,10 @@
     {
       "Id": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\undraw_profile.svg",
       "PackagePath": "staticwebassets\\img\\undraw_profile.svg"
+    },
+    {
+      "Id": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\js\\bootstrap-multiselect.js",
+      "PackagePath": "staticwebassets\\js\\bootstrap-multiselect.js"
     },
     {
       "Id": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\js\\site.js",
