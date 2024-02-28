@@ -68,10 +68,10 @@ namespace MediLink.Entities
             );
 
             modelBuilder.Entity<OfficeType>().HasData(
-                new OfficeType() { Id = 1, OfficeName = "Community Center", IsDeleted = false },
-                new OfficeType() { Id = 2, OfficeName = "Walk In Clinic", IsDeleted = false },
-			    new OfficeType() { Id = 3, OfficeName = "Medical Center", IsDeleted = false },
-			    new OfficeType() { Id = 4, OfficeName = "Clinic", IsDeleted = false }
+                new OfficeType() { Id = 1, OfficeTypeName = "Community Center", IsDeleted = false },
+                new OfficeType() { Id = 2, OfficeTypeName = "Walk In Clinic", IsDeleted = false },
+			    new OfficeType() { Id = 3, OfficeTypeName = "Medical Center", IsDeleted = false },
+			    new OfficeType() { Id = 4, OfficeTypeName = "Clinic", IsDeleted = false }
            );
 
             modelBuilder.Entity<PractitionerType>().HasData(

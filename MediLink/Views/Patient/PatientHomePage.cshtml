@@ -1,4 +1,5 @@
-﻿@{
+﻿@model PatientViewModel
+@{
     ViewData["Title"] = "Patient Home Page";
 }
 <nav id="header-st" class="navbar navbar-expand static-top ">
@@ -48,7 +49,6 @@
 </nav>
 <div id="div-info-one" class="container-fluid">
     <div class="row">
-        <!-- Left column -->
         <div class="col-sm-4 d-flex align-items-center justify-content-center">
             <div class="btn-group-vertical-center">
                 <h3 class="mb-4 mt-2">Menu</h3>
@@ -62,20 +62,21 @@
                 <button type="button" class="btn btn-blue btn-block btn-half-width mb-3">View / Update Your Ratings</button>
             </div>
         </div>
-        <!-- Center column -->
         <div class="col-sm-4 center-content">
             <div class="profile-info mt-2">
                 <h2>Profile Information</h2>
-                <p><strong>Name:</strong> John Doe</p>
-                <p><strong>Email:</strong> johndoe@example.com</p>
-                <p><strong>Gender:</strong> Male</p>
-                <p><strong>Address:</strong> 123 Main Street, City, Country</p>
-                <!-- You can add more profile information here -->
+                <p><strong>Full Name:</strong>@Model.PatientDetail.FirstName @Model.PatientDetail.LastName</p>
+                <p><strong>Email:</strong>@Model.Email</p>
+                <p><strong>Phone Number:</strong>@Model.PatientDetail.PhoneNumber</p>
+                <p><strong>Gender:</strong>@Model.PatientDetail.gender</p>
+                <p><strong>Date Of Birth:</strong>@Model.PatientDetail.DoB</p>
+                <p><strong>Address:</strong>@Model.PatientAddress.StreetAddress, @Model.PatientAddress</p>
+                <p><strong>Postal Code:</strong>@Model.PatientAddress.PostalCode</p>
+                <p><strong>Provice Of Residence:@Model.PatientAddress.Province</strong></p>
+                <p><strong>Contry Of Residence:@Model.PatientAddress.country</strong></p>
             </div>
         </div>
-        <!-- Right column -->
         <div class="col-sm-4">
-            <!-- Empty for now -->
         </div>
     </div>
 </div>

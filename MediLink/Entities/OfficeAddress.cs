@@ -7,6 +7,8 @@ namespace MediLink.Entities
     {
         public int Id { get; set; }
 
+        public string OfficeName { get; set; }
+
         [Column(TypeName = "VARCHAR")]
         [StringLength(maximumLength: 150)]
         public string City { get; set; } = null!;

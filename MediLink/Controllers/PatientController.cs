@@ -70,7 +70,7 @@ namespace MediLink.Controllers
             }
 
             var languages = _mediLinkContext.Languages.Where(l => l.IsDeleted == false).OrderBy(l => l.LanguageName).ToList();
-            var officeTypes = _mediLinkContext.OfficeTypes.Where(ot => ot.IsDeleted == false).OrderBy(ot => ot.OfficeName).ToList();
+            var officeTypes = _mediLinkContext.OfficeTypes.Where(ot => ot.IsDeleted == false).OrderBy(ot => ot.OfficeTypeName).ToList();
             PreferencesViewModel viewModel = new PreferencesViewModel();
 
             viewModel.preferences = preferences;
@@ -78,7 +78,7 @@ namespace MediLink.Controllers
             languages.Add(new Languages { Id = 0, LanguageName = "" });
             viewModel.languages = new MultiSelectList(languages, "Id", "LanguageName", preferences.PreferedLanguages.Select(pl => pl.LanguageId));
 
-            officeTypes.Add(new OfficeType { Id = 0, OfficeName = "" });
+            officeTypes.Add(new OfficeType { Id = 0, OfficeTypeName = "" });
             viewModel.officeTypes = new MultiSelectList(officeTypes, "Id", "OfficeName", preferences.PatientOfficeType.Select(po => po.OfficeTypeId));
 
             return View(viewModel);
@@ -141,12 +141,12 @@ namespace MediLink.Controllers
             await _mediLinkContext.SaveChangesAsync();
 
             var languages = _mediLinkContext.Languages.Where(l => l.IsDeleted == false).OrderBy(l => l.LanguageName).ToList();
-            var officeTypes = _mediLinkContext.OfficeTypes.Where(ot => ot.IsDeleted == false).OrderBy(ot => ot.OfficeName).ToList();
+            var officeTypes = _mediLinkContext.OfficeTypes.Where(ot => ot.IsDeleted == false).OrderBy(ot => ot.OfficeTypeName).ToList();
 
             languages.Add(new Languages { Id = 0, LanguageName = "" });
             viewModel.languages = new MultiSelectList(languages, "Id", "LanguageName", viewModel.selectedLanguageIds);
 
-            officeTypes.Add(new OfficeType { Id = 0, OfficeName = "" });
+            officeTypes.Add(new OfficeType { Id = 0, OfficeTypeName = "" });
             viewModel.officeTypes = new MultiSelectList(officeTypes, "Id", "OfficeName", viewModel.selectedOfficeTypeIds);
 
             ViewData["Message"] = "Your preferences have been updated";

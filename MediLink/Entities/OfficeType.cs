@@ -9,7 +9,7 @@ namespace MediLink.Entities
 
 		[Column(TypeName = "VARCHAR")]
 		[StringLength(maximumLength: 200)]
-		public string OfficeName { get; set; } = null!;
+		public string OfficeTypeName { get; set; } = null!;
 
         public bool IsDeleted { get; set; }	= false;
 

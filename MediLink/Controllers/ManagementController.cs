@@ -481,7 +481,7 @@ namespace MediLink.Controllers
                     .Select(t => new OfficeInfo()
                     {
                         fullAddress = t.StreetAddress + " " + t.City + " " + t.PostalCode,
-                        OfficeName = t.OfficeType.OfficeName
+                        OfficeName = t.OfficeType.OfficeTypeName
                        
                     })
                     .ToListAsync();
