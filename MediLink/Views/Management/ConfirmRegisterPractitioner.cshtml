@@ -23,14 +23,14 @@
         @if ((bool)ViewBag.Response)
         {
             <div class="alert alert-success">
-                <p><b>It is done!</b>&nbsp; The account has been corfirmed.</p>
+                <p>Your account has been confirmed.</p>
                 <a class="btn btn-success" href="@Url.Action("LoginPractitioner","Management")">Login</a>
             </div>
         }
         else
         {
             <div class="alert alert-danger">
-                <p>It was not possible confirm email</p>
+                <p>Error, something went wrong when confirming your account.</p>
             </div>
         }
     </div>

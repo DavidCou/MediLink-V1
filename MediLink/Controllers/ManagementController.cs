@@ -58,13 +58,13 @@ namespace MediLink.Controllers
 
             if (!patientFound.IsEmailConfirmed)
             {
-                ViewData["mensajeResultLoginPatient"] = "Must confirm the registration. An email has been sent to your account";
+                ViewData["mensajeResultLoginPatient"] = "Your email has not been confirmed yet. An email has been sent to your account";
                 return View();
             }
 
             if (patientFound.passwordReset)
             {
-                ViewData["mensajeResultLoginPatient"] = "A Password reset has veen requested. An email has been sent to your accountPlease change your password ";
+                ViewData["mensajeResultLoginPatient"] = "A password reset has been requested for your account and an email has been sent to your account. Please go to the email and reset your password";
                 return View();
             }
 
@@ -85,7 +85,7 @@ namespace MediLink.Controllers
                 properties
                 );
 
-            return RedirectToAction("PatientHomePage", "Patient"); ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            return RedirectToAction("PatientHomePage", "Patient");
         }
 
         public ActionResult RegisterPatient()
@@ -105,7 +105,7 @@ namespace MediLink.Controllers
 
             if (patientFound != null)
             {
-                ViewData["MessageRegister"] = "User Already Exist";
+                ViewData["MessageRegister"] = "User already exists";
                 return View();
             }
 
@@ -124,30 +124,30 @@ namespace MediLink.Controllers
 
             if (string.IsNullOrEmpty(oPatientNew.FirstName) || string.IsNullOrWhiteSpace(oPatientNew.FirstName))
             {
-                errorMessage.Add("-Please input Firstname");
+                errorMessage.Add("-Please enter your first name");
             }
 
             if (string.IsNullOrEmpty(oPatientNew.LastName) || string.IsNullOrWhiteSpace(oPatientNew.LastName))
             {
-                errorMessage.Add("-Please input Lastname");
+                errorMessage.Add("-Please enter your last name");
             }
 
             if (string.IsNullOrEmpty(oPatientNew.Email) || string.IsNullOrWhiteSpace(oPatientNew.Email))
             {
-                errorMessage.Add("-Please input an email");
+                errorMessage.Add("-Please enter you email");
             }
 
                      
 
             if (oPatientNew.Password != oPatientNew.ConfirmPassword)
             {
-                errorMessage.Add("-Password not match");
+                errorMessage.Add("-Password does not match");
                 
             }
 
             if (string.IsNullOrEmpty(oPatientNew.Password) && string.IsNullOrEmpty(oPatientNew.ConfirmPassword))
             {
-                errorMessage.Add("-Please Input a Password ");
+                errorMessage.Add("-Please enter a password");
                 
             }
 
@@ -157,7 +157,7 @@ namespace MediLink.Controllers
                 // Matching the number against the regex pattern
                 if (!regex.IsMatch(oPatientNew.PhoneNumber))
                 {
-                    errorMessage.Add("-Phone number not valid input format 222-222-2222");
+                    errorMessage.Add("-Phone number not valid, please use the following input format: 222-222-2222");
                   
 
                 }
@@ -165,21 +165,21 @@ namespace MediLink.Controllers
                 // valid if selected a gender
                 if (oPatientNew.gender == null)
                 {
-                    errorMessage.Add("-Must be select a gender ");
+                    errorMessage.Add("-Must select a gender ");
                    
 
                 }
 
                 if (oPatientNew.DoB.ToString().Contains("0001-01-01"))
                 {
-                    errorMessage.Add("-Must be select a Birth of date ");                   
+                    errorMessage.Add("-Must select a date of birth");                   
 
                 }
                 else
                 {
                     if (inputDate >= currentDateMinusTwoDays)
                     {
-                        errorMessage.Add("-Birthday date is invalid");
+                        errorMessage.Add("-Birthday is invalid, your birthday must be at least two days in the past");
                        
 
                     }
@@ -193,28 +193,28 @@ namespace MediLink.Controllers
                 // valid if selected a address
                 if (string.IsNullOrEmpty(oPatientNew.StreetAddress))
                 {
-                    errorMessage.Add("-Please input street address ");                    
+                    errorMessage.Add("-Please enter your street address ");                    
 
                 }
 
                 // valid if selected a city
                 if (string.IsNullOrEmpty(oPatientNew.City))
                 {
-                    errorMessage.Add("-Please input city ");
+                    errorMessage.Add("-Please enter your city ");
                    
                 }
 
                 // valid if selected a city
                 if (oPatientNew.Province == null)
                 {
-                    errorMessage.Add("-Please select a Province");
+                    errorMessage.Add("-Please select a province");
 
                 }
 
                 // valid if selected a ;ostcode
                 if (string.IsNullOrEmpty(oPatientNew.PostalCode))
                 {
-                    errorMessage.Add("-Please input Postcode");
+                    errorMessage.Add("-Please enter your postal code");
 
                 }
 
@@ -249,7 +249,7 @@ namespace MediLink.Controllers
                     };
 
                     bool sent = EmailService.SendEmail(emailDTO);
-                    errorMessage.Add($"Your account has been created. We have sent a message to the email {oPatientNew.Email} to confirm your account");
+                    errorMessage.Add($"Your account has been created. We have sent a message to the email {oPatientNew.Email} to confirm your email address");
                    
 
                 }
@@ -333,7 +333,7 @@ namespace MediLink.Controllers
 
                 if (emailSent)
                 {
-                    TempData["mensajeResultLogin"] = "Your password has been reseted, Please go to your email inbox to restart the password";
+                    TempData["mensajeResultLogin"] = "Your password has been reset and a password reset request has been sent to your account. Please complete the request to access your account again";
                 }
 
 
@@ -369,7 +369,7 @@ namespace MediLink.Controllers
                                    
             if (oPatientNew.Password != oPatientNew.ConfirmPassword)
             {
-                TempData["mensajeResultLogin"] = "Password not match";
+                TempData["mensajeResultLogin"] = "Password does not match";
 
                 return RedirectToAction("LoginPatient", "Management");
 
@@ -421,13 +421,13 @@ namespace MediLink.Controllers
 
             if (!practFound.IsValidated)
             {
-                ViewData["mensajeResultLoginPractitioner"] = "Must confirm the registration. An email has been sent to your account";
+                ViewData["mensajeResultLoginPractitioner"] = "Your email has not been confirmed yet. An email has been sent to your account";
                 return View();
             }
 
             if (practFound.passwordReset)
             {
-                ViewData["mensajeResultLoginPractitioner"] = "A Password reset has veen requested An email has been sent to your accountPlease change your password ";
+                ViewData["mensajeResultLoginPractitioner"] = "A password reset has been requested for your account and an email has been sent to your account. Please go to the email and reset your password";
                 return View();
             }
 
@@ -507,36 +507,36 @@ namespace MediLink.Controllers
            
             if (string.IsNullOrEmpty(oPractict.FirstName) || string.IsNullOrWhiteSpace(oPractict.FirstName))
             {
-                errorMessage.Add("-Please input Firstname");
+                errorMessage.Add("-Please enter your first name");
             }
 
             if (string.IsNullOrEmpty(oPractict.LastName) || string.IsNullOrWhiteSpace(oPractict.LastName))
             {
-                errorMessage.Add("-Please input Lastname");
+                errorMessage.Add("-Please enter your last name");
             }
 
             if (string.IsNullOrEmpty(oPractict.Email) || string.IsNullOrWhiteSpace(oPractict.Email))
             {
-                errorMessage.Add("-Please input an email");
+                errorMessage.Add("-Please enter your email");
             }
 
 
 
             if (oPractict.Password != oPractict.ConfirmPassword)
             {
-                errorMessage.Add("-Password not match");
+                errorMessage.Add("-Password does not match");
 
             }
 
             if (string.IsNullOrEmpty(oPractict.Password) && string.IsNullOrEmpty(oPractict.ConfirmPassword))
             {
-                errorMessage.Add("-Please Input a Password ");
+                errorMessage.Add("-Please enter a Password ");
 
             }
 
             if (string.IsNullOrEmpty(oPractict.PhoneNumber) && string.IsNullOrEmpty(oPractict.PhoneNumber))
             {
-                errorMessage.Add("-Please Input a Phone Number ");
+                errorMessage.Add("-Please enter your phone number ");
 
             }
             else
@@ -544,7 +544,7 @@ namespace MediLink.Controllers
                 // Matching the number against the regex pattern
                 if (!regex.IsMatch(oPractict.PhoneNumber))
                 {
-                    errorMessage.Add("-Phone number not valid input format 222-222-2222");
+                    errorMessage.Add("-Phone number not valid, please use the following input format: 222-222-2222");
 
 
                 }
@@ -553,7 +553,7 @@ namespace MediLink.Controllers
             // valid if selected a gender
             if (oPractict.gender == null)
             {
-                errorMessage.Add("-Must be select a gender ");
+                errorMessage.Add("-Must select a gender ");
 
 
             }
@@ -561,7 +561,7 @@ namespace MediLink.Controllers
             // valid if selected a type
             if (oPractict.PractitionerTypesId == null)
             {
-                errorMessage.Add("-Must be select a practitioner type ");
+                errorMessage.Add("-Must select a practitioner type ");
 
 
             }
@@ -597,7 +597,7 @@ namespace MediLink.Controllers
 
                     bool sent = EmailService.SendEmail(emailDTO);
 
-                    errorMessage.Add($"Your account has been created. We have sent a message to the email {oPractict.Email} to confirm your account");
+                    errorMessage.Add($"Your account has been created. We have sent a message to the email {oPractict.Email} to confirm your email address");
                      
 
                 }
@@ -692,7 +692,7 @@ namespace MediLink.Controllers
 
                 if (emailSent)
                 {
-                    TempData["mensajeResultLoginPract"] = "Your password has been reseted, Please go to your email inbox to restart the password";
+                    TempData["mensajeResultLoginPract"] = "Your password has been reset and a password reset request has been sent to your account. Please complete the request to access your account again";
                 }
 
 
