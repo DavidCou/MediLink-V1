@@ -472,6 +472,23 @@ namespace MediLink.Controllers
             //get a list all the practitioners tyoes
             List<PractitionerType> practitionerTypes = await _mediLinkContext.PractitionerTypes.ToListAsync();
 
+
+            // use the DB contet to query for all Address entities and transform them into
+            // OfficeInf bjects:
+            List<OfficeInfo> offices = await _mediLinkContext.OfficeAddresses
+                    .Include(t => t.OfficeType)                   
+                    .OrderByDescending(t => t.StreetAddress)
+                    .Select(t => new OfficeInfo()
+                    {
+                        fullAddress = t.StreetAddress + " " + t.City + " " + t.PostalCode,
+                        OfficeName = t.OfficeType.OfficeName
+                       
+                    })
+                    .ToListAsync();
+
+
+
+
             if (practFound != null)
             {
                 ViewData["MessageRegisterPract"] = "User Already Exist";
@@ -605,6 +622,7 @@ namespace MediLink.Controllers
                 oNewPract.Password = "";
                 oNewPract.ConfirmPassword = "";
                 oNewPract.practitionerTypes = practitionerTypes;
+                oNewPract.officeInfo = offices;
 
 
                 return View(oNewPract);

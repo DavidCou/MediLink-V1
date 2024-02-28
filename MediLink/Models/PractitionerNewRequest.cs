@@ -38,5 +38,7 @@ namespace MediLink.Models
 
         public List<PractitionerType>? practitionerTypes { get; set; }
 
+        public List<OfficeInfo>? officeInfo { get; set; }
+
     }
 }
