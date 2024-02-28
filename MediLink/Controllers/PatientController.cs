@@ -16,7 +16,7 @@ namespace MediLink.Controllers
             _userService = userService;
         }
 
-        public IActionResult PatientHomePage()
+        public async Task<IActionResult> PatientHomePage()
         {
             ClaimsPrincipal claimuser = HttpContext.User;
             string userName = "";
@@ -29,7 +29,48 @@ namespace MediLink.Controllers
 
             ViewData["userName"] = userName;
 
-            return View();
+            Patient patient = await _userService.GetUserByEmail(userName);
+
+            PatientDetail patientDetail = await _mediLinkContext.PatientDetails.Where(pd => pd.Id == patient.PatientDetailsId).FirstOrDefaultAsync();
+            PatientAddress patientAddress = await _mediLinkContext.PatientAddress.Where(pa => pa.Id == patientDetail.PatientAddressesId).FirstOrDefaultAsync();
+
+            PatientViewModel patientViewModel = new PatientViewModel()
+            {
+                Email = patient.Email,
+                PatientDetail = patientDetail,
+                PatientAddress = patientAddress
+            };
+
+            return View(patientViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdatePatientDetails() 
+        {
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+            if (claimuser.Identity.IsAuthenticated)
+            {
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            ViewData["userName"] = userName;
+
+            Patient patient = await _userService.GetUserByEmail(userName);
+
+            PatientDetail patientDetail = await _mediLinkContext.PatientDetails.Where(pd => pd.Id == patient.PatientDetailsId).FirstOrDefaultAsync();
+            PatientAddress patientAddress = await _mediLinkContext.PatientAddress.Where(pa => pa.Id == patientDetail.PatientAddressesId).FirstOrDefaultAsync();
+
+            PatientViewModel patientViewModel = new PatientViewModel()
+            {
+                Email = patient.Email,
+                PatientDetail = patientDetail,
+                PatientAddress = patientAddress
+            };
+
+            return View(patientViewModel);
         }
 
         [HttpGet]

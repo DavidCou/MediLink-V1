@@ -10,6 +10,12 @@
     <div class="ml-auto mt-4">
         <div class=" collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mx-auto ">
+                <li class="nav-item">
+                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("PatientHomePage", "Patient")">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("Search", "Search")">Search</a>
+                </li>
                 <li class="nav-item dropdown no-arrow ">
                     <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -17,6 +23,14 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
                          aria-labelledby="userDropdown">
+                        <a class="dropdown-item mx-0" href='/Patients/Update/@ViewData["userconnectedid"]'>
+                            <i class="bi bi-person text-gray-400 mx-0" style="font-size: 15px"></i>
+                            Profile
+                        </a>
+                        <a class="dropdown-item mx-0" href="@Url.Action("Preferences", "Patient")">
+                            <i class="bi bi-person-gear text-gray-400 mx-0" style="font-size: 15px"></i>
+                            Preferences
+                        </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="@Url.Action("ChangePassword", "Patients")">
                             <i class="bi bi-people text-gray-400"></i>
@@ -33,33 +47,28 @@
         </div>
     </div>
 </nav>
-<div class="container-fluid bg-gradient-login">
+<div id="div-info-one" class="container-fluid">
     <div class="row">
         <div class="col-sm-4 d-flex align-items-center justify-content-center">
             <div class="btn-group-vertical-center">
                 <h3 class="mb-4 mt-2">Menu</h3>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("SearchPractitioner","Patient")">Search For a Practitioner</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("SearchWalkInClinc","Patient")">Search For a Walk-in Clinic</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewRequestDetails","Patient")">View Your Wait List / New Patient Request Status</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewCurrentPractitioners","Patient")">View Your Current Practitioners</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("Preferences","Patient")">View / Update Your Preferences</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdatePatientDetails","Patient")">Edit Your Profile</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ReviewPractitioner","Patient")">Review Your Current / Past Practitioners</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdateReview","Patient")">View / Update Your Reviews</a>
+                <button type="button" class="btn btn-blue btn-block btn-half-width mb-3">Edit Profile</button>
+                <button type="button" class="btn btn-blue btn-block btn-half-width mb-3">Update Operating Hours</button>
+                <button type="button" class="btn btn-blue btn-block btn-half-width mb-3">View Historical Wait Times</button>
             </div>
         </div>
         <div class="col-sm-4 center-content">
             <div class="profile-info mt-2">
-                <h2 class="mb-4">Profile Information</h2>
-                <p><strong>Full Name: @Model.PatientDetail.FirstName @Model.PatientDetail.LastName</strong></p>
-                <p><strong>Email: @Model.Email</strong></p>
-                <p><strong>Phone Number: @Model.PatientDetail.PhoneNumber</strong></p>
-                <p><strong>Gender: @Model.PatientDetail.gender</strong></p>
-                <p><strong>Date Of Birth:</strong> @Model.PatientDetail.DoB</p>
-                <p><strong>Address:</strong> @Model.PatientAddress.StreetAddress @Model.PatientAddress.City</p>
+                <h2>Profile Information</h2>
+                <p><strong>Full Name:</strong>@Model.PatientDetail.FirstName @Model.PatientDetail.LastName</p>
+                <p><strong>Email:</strong>@Model.Email</p>
+                <p><strong>Phone Number:</strong>@Model.PatientDetail.PhoneNumber</p>
+                <p><strong>Gender:</strong>@Model.PatientDetail.gender</p>
+                <p><strong>Date Of Birth:</strong>@Model.PatientDetail.DoB</p>
+                <p><strong>Address:</strong>@Model.PatientAddress.StreetAddress, @Model.PatientAddress</p>
                 <p><strong>Postal Code:</strong>@Model.PatientAddress.PostalCode</p>
-                <p><strong>Provice Of Residence: @Model.PatientAddress.Province</strong></p>
-                <p><strong>Country Of Residence: @Model.PatientAddress.country</strong></p>
+                <p><strong>Provice Of Residence:@Model.PatientAddress.Province</strong></p>
+                <p><strong>Contry Of Residence:@Model.PatientAddress.country</strong></p>
             </div>
         </div>
         <div class="col-sm-4">

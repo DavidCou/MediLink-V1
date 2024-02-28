@@ -1,0 +1,200 @@
+﻿@model PatientViewModel
+@{
+    ViewData["Title"] = "Update Patient Details";
+}
+<nav id="header-st" class="navbar navbar-expand static-top ">
+    <div class="mr=auto">
+        <a class="navbar-brand mx-0" href="#"><img class="ms-5 me-0" src="~/img/logo2.png" alt="Company Logo" width="70" height="60"></a>
+        <h3 id="company-title">MediLink</h3>
+    </div>
+    <div class="ml-auto mt-4">
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto ">
+                <li class="nav-item">
+                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("PatientHomePage", "Patient")">Home</a>
+                </li>
+
+                <li class="nav-item dropdown no-arrow ">
+                    <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 mx-2 d-none d-lg-inline text-white ">@ViewData["userName"]</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
+                         aria-labelledby="userDropdown">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("ChangePassword", "Patients")">
+                            <i class="bi bi-people text-gray-400"></i>
+                            Change Password
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Management")">
+                            <i class="bi bi-box-arrow-in-left text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<body class="bg-gradient-login">
+    <div class="container">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <form asp-controller="Patient" asp-action="UpdatePatientDetails" method="post">
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label">First Name</label>
+                                    <div class="inputGroupContainer">
+                                        <div class="input-group"><input id="firstName" name="FirstName" placeholder="First Name" class="form-control" asp-for="PatientDetail.FirstName" type="text"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label">Last Name</label>
+                                    <div class="inputGroupContainer">
+                                        <div class="input-group"><input id="lastname" name="LastName" placeholder="Last Name" class="form-control" asp-for="PatientDetail.LastName" type="text"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label class="control-label">Email</label>
+                                    <div class="inputGroupContainer">
+                                        <div class="input-group"><input id="email" name="Email" placeholder="your@email.com" class="form-control" asp-for="Email" type="text"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="page__wrapper">
+                        <h4 class="text-center text-black">Optional Profile Information</h4>
+                        <div class="accordion">
+                            <details>
+                                <summary>Personal Information</summary>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Phone</label>
+                                            <div class="inputGroupContainer">
+                                                <div class="input-group"><input id="phone" name="PhoneNumber" placeholder="xxx-xxx-xxxx" class="form-control" asp-for="PatientDetail.PhoneNumber" type="text"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Gender</label>
+                                            <div class="inputGroupContainer">
+                                                <div class="input-group">
+                                                    <select name="gender" class="selectpicker form-control" aria-label="Default select " asp-for="PatientDetail.gender">
+                                                        <option selected disabled value="noselected" )>Select a genre</option>
+                                                        <option value="Female">Female</option>
+                                                        <option value="Male">Male</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label class="control-label">Date Of Birth</label>
+                                        <div class="form-group">
+                                            <div class="inputGroupContainer">
+                                                <div class="input-group"><input id="dob" name="DoB" class="form-control" asp-for="PatientDetail.DoB" type="date"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </details>
+                            <details>
+                                <summary>Address</summary>
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Street Address</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="street-address" name="streetaddress" placeholder="Number" class="form-control" asp-for="PatientAddress.StreetAddress" type="text"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <div class="inputGroupContainer">
+                                                    <label class="control-label">Province</label>
+                                                    <div class="input-group">
+                                                        <select id="provinceupd" name="Provinve" class="selectpicker form-control" aria-label="Default select " asp-for="PatientAddress.Province">
+                                                            <option selected disabled value="noselected" )>Select a Province</option>
+                                                            <option value="Ontario">Ontario</option>
+                                                            <option value="Quebec">Quebec</option>
+                                                            <option value="New Brunswick">New Brunswick</option>
+                                                            <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+                                                            <option value="Alberta">Alberta</option>
+                                                            <option value="British Columbia">British Columbia</option>
+                                                            <option value="Nova Scotia">Nova Scotia</option>
+                                                            <option value="Manitoba">Manitoba</option>
+                                                            <option value="Prince Edward Island">Prince Edward Island</option>
+                                                            <option value="Saskatchewan">Saskatchewan</option>
+                                                            <option value="Northwest Territories">Northwest Territories</option>
+                                                            <option value="Nunavut">Nunavut</option>
+                                                            <option value="Yukon">Yukon</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">Country</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="countryupd" name="Country" placeholder="Country" class="form-control" value="Canada" type="text"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">City</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="cityupd" name="City" placeholder="City" class="form-control" asp-for="PatientAddress.City" type="text"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label">Postal Code</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="postal_Codeupd" name="PostalCode" placeholder="Postal Code/ZIP" class="form-control" asp-for="PatientAddress.PostalCode" type="text"></div>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+                            </details>
+
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <a class="btn-user btn-block mt-3 mb-3" href="@Url.Action("PatientHomePage", "Patient")">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                    <hr>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+
