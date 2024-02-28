@@ -39,8 +39,10 @@ namespace MediLink.Entities
 
 		public DbSet<WalkInClinic> WalkInClinics { get; set; }
 
+        public DbSet<OfficeAddress> OfficeAddresses { get; set; }
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
 			base.OnModelCreating(modelBuilder);

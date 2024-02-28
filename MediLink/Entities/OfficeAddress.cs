@@ -33,5 +33,8 @@ namespace MediLink.Entities
 
         public WalkInClinic? WalkInClinic { get; set; }
 
-	}
+        public int OfficeTypeId { get; set; }
+
+        public OfficeType OfficeType { get; set; }
+    }
 }
