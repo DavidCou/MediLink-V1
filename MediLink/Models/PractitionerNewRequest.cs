@@ -34,7 +34,7 @@ namespace MediLink.Models
 
         public bool IsAcceptingNewPatients { get; set; }
 
-        public int? PractitionerTypesId { get; set; }
+        public int PractitionerTypesId { get; set; }
 
         public List<PractitionerType>? practitionerTypes { get; set; }
 

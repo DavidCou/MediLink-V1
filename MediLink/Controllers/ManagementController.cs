@@ -590,6 +590,9 @@ namespace MediLink.Controllers
           
                 }
 
+               
+              
+
                 // Pass the error list to the view using ViewBag
                 ViewBag.MyErrorList = errorMessage;
 
@@ -601,6 +604,7 @@ namespace MediLink.Controllers
                 oNewPract.Email = "";
                 oNewPract.Password = "";
                 oNewPract.ConfirmPassword = "";
+                oNewPract.practitionerTypes = practitionerTypes;
 
 
                 return View(oNewPract);

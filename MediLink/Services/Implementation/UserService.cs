@@ -237,7 +237,8 @@ namespace MediLink.Services.Implementation
             practitioner.LastName = oDoctor.LastName;
             practitioner.gender = oDoctor.gender;
             practitioner.PhoneNumber = oDoctor.PhoneNumber;
-            practitioner.token = oDoctor.token;           
+            practitioner.token = oDoctor.token;
+            practitioner.PractitionerTypeId = oDoctor.PractitionerTypesId;
             _dbContext.Practitioners.Add(practitioner);
 
 
