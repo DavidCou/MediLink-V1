@@ -42,6 +42,18 @@
         <h4 class="text-center text-black mt-5">Update Your Profile Information</h4>
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-3">
+                @if (ViewBag.MyErrorList != null)
+                {
+
+                    <div class="alert alert-danger" role="alert">
+                        @foreach (var item in ViewBag.MyErrorList)
+                        {
+                            <span>@item</span>
+
+                            <br>
+                        }
+                    </div>
+                }
                 <h4 class="text-center text-black">Required Profile Information</h4>
                 <form asp-controller="Patient" asp-action="UpdatePatientDetails" method="post">
                     <fieldset>
@@ -66,7 +78,7 @@
 
                         </div>
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="form-group">
                                     <label class="control-label">Email</label>
                                     <div class="inputGroupContainer">
@@ -122,16 +134,16 @@
                                             <label class="control-label">Spoken Languages:</label>
                                             <div class="inputGroupContainer">
                                                 <div class="input-group">
-                                                    <select name="spokenLanguages" class="selectpicker form-control" aria-label="Default select " asp-for="PatientDetail.PatientSpokenLanguages" multiple>
-                                                        <option selected disabled value="noselected" )>Select a language</option>
-                                                        @foreach (var language in Model.LanguageNames)
+                                                    <select name="spokenLanguages" class="selectpicker form-control" aria-label="Default select" asp-for="PatientDetail.PatientSpokenLanguages" multiple>
+                                                        @foreach (var language in Model.Languages)
                                                         {
-                                                            <option value="@language">@language</option>
+                                                            <option value="@language.Id">@language.LanguageName</option>
                                                         }
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </details>
