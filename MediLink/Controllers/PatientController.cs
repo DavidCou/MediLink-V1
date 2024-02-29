@@ -31,12 +31,27 @@ namespace MediLink.Controllers
 
             Patient patient = await _userService.GetUserByEmail(userName);
 
-            PatientDetail patientDetail = await _mediLinkContext.PatientDetails.Where(pd => pd.Id == patient.PatientDetailsId).FirstOrDefaultAsync();
-            PatientAddress patientAddress = await _mediLinkContext.PatientAddress.Where(pa => pa.Id == patientDetail.PatientAddressesId).FirstOrDefaultAsync();
+            List<string> spokenLanguages = new List<string>();
+            
+            PatientDetail patientDetail = await _mediLinkContext.PatientDetails
+                .Where(pd => pd.Id == patient.PatientDetailsId)
+                .FirstOrDefaultAsync();
+            
+            PatientAddress patientAddress = await _mediLinkContext.PatientAddress
+                .Where(pa => pa.Id == patientDetail.PatientAddressesId)
+                .FirstOrDefaultAsync();
+
+            List<PatientSpokenLanguage> patientSpokenLanguages = await _mediLinkContext.PatientSpokenLanguages.Where(psl => psl.PatientDetailsId == patientDetail.Id).ToListAsync();
+
+            foreach(PatientSpokenLanguage spokenLanguage in patientSpokenLanguages) 
+            {
+                spokenLanguages.Add(spokenLanguage.Language.LanguageName);
+            }
 
             PatientViewModel patientViewModel = new PatientViewModel()
             {
                 Email = patient.Email,
+                SpokenLanguages = spokenLanguages,
                 PatientDetail = patientDetail,
                 PatientAddress = patientAddress
             };
@@ -60,12 +75,26 @@ namespace MediLink.Controllers
 
             Patient patient = await _userService.GetUserByEmail(userName);
 
-            PatientDetail patientDetail = await _mediLinkContext.PatientDetails.Where(pd => pd.Id == patient.PatientDetailsId).FirstOrDefaultAsync();
-            PatientAddress patientAddress = await _mediLinkContext.PatientAddress.Where(pa => pa.Id == patientDetail.PatientAddressesId).FirstOrDefaultAsync();
+            PatientDetail patientDetail = await _mediLinkContext.PatientDetails
+                .Where(pd => pd.Id == patient.PatientDetailsId)
+                .FirstOrDefaultAsync();
+            
+            PatientAddress patientAddress = await _mediLinkContext.PatientAddress
+                .Where(pa => pa.Id == patientDetail.PatientAddressesId)
+                .FirstOrDefaultAsync();
+
+            List<Languages> languages = await _mediLinkContext.Languages.ToListAsync();
+            List<string> lanaguageNames = new List<string>();
+
+            foreach(Languages language in languages) 
+            {
+                lanaguageNames.Add(language.LanguageName);
+            }
 
             PatientViewModel patientViewModel = new PatientViewModel()
             {
                 Email = patient.Email,
+                LanguageNames = lanaguageNames,
                 PatientDetail = patientDetail,
                 PatientAddress = patientAddress
             };
