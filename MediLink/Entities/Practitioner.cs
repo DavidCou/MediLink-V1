@@ -49,7 +49,7 @@ namespace MediLink.Entities
 
 		public PractitionerType PractitionerType { get; set; } = null!;
 
-        
+        public int? rating { get; set; }
 
     }
 }
