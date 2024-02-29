@@ -354,6 +354,8 @@ namespace MediLink.Controllers
 
         public ActionResult RestartPasswordFormPatient(string token)
         {
+            string mensajeResultLog = TempData["mensajeResultRestart"] as string;
+            ViewData["mensajeResultRestartPatient"] = mensajeResultLog;
 
             ViewBag.token = token;
 
@@ -366,12 +368,20 @@ namespace MediLink.Controllers
         [HttpPost]
         public async Task<IActionResult> RestartPasswordFormPatient(PatientNewRequest oPatientNew)
         {
-                                   
+
             if (oPatientNew.Password != oPatientNew.ConfirmPassword)
             {
-                TempData["mensajeResultLogin"] = "Password does not match";
+                TempData["mensajeResultRestart"] = "Password does not match";
 
-                return RedirectToAction("LoginPatient", "Management");
+                return RedirectToAction("RestartPasswordFormPatient", new { token = oPatientNew.token });
+
+            }
+
+            if (oPatientNew.Password == null || oPatientNew.ConfirmPassword == null)
+            {
+                TempData["mensajeResultRestart"] = "Password not valid";
+
+                return RedirectToAction("RestartPasswordFormPatient", new { token = oPatientNew.token });
 
             }
 
@@ -456,9 +466,26 @@ namespace MediLink.Controllers
             //get a list all the practitioners tyoes
             List<PractitionerType> practitionerTypes = await _mediLinkContext.PractitionerTypes.ToListAsync();
 
+            // use the DB contet to query for all Address entities and transform them into
+            // OfficeInf bjects:
+            List<OfficeInfo> offices = await _mediLinkContext.OfficeAddresses
+                    .Include(t => t.OfficeType)
+                    .OrderByDescending(t => t.StreetAddress)
+                    .Select(t => new OfficeInfo()
+                    {
+                        fullAddress = t.StreetAddress + " " + t.City + " " + t.PostalCode,
+                        OfficeName = t.OfficeName,
+                        OfficeTypeName = t.OfficeType.OfficeTypeName,
+                        Id = t.Id
+
+                    })
+                    .ToListAsync();
+
+
             PractitionerNewRequest oPractitioner = new PractitionerNewRequest();
 
             oPractitioner.practitionerTypes = practitionerTypes;
+            oPractitioner.officeInfo = offices;
 
             return View(oPractitioner);
         }
@@ -476,13 +503,15 @@ namespace MediLink.Controllers
             // use the DB contet to query for all Address entities and transform them into
             // OfficeInf bjects:
             List<OfficeInfo> offices = await _mediLinkContext.OfficeAddresses
-                    .Include(t => t.OfficeType)                   
+                    .Include(t => t.OfficeType)
                     .OrderByDescending(t => t.StreetAddress)
                     .Select(t => new OfficeInfo()
                     {
                         fullAddress = t.StreetAddress + " " + t.City + " " + t.PostalCode,
-                        OfficeName = t.OfficeType.OfficeTypeName
-                       
+                        OfficeName = t.OfficeName,
+                        OfficeTypeName = t.OfficeType.OfficeTypeName,
+                        Id = t.Id
+
                     })
                     .ToListAsync();
 
@@ -496,7 +525,7 @@ namespace MediLink.Controllers
             }
 
             List<string> errorMessage = new List<string>();
-                       
+
 
             // Regular expression for phone validation
             string phonePattern = @"^\d{3}-\d{3}-\d{4}$";
@@ -504,7 +533,7 @@ namespace MediLink.Controllers
             // Creating Regex object
             Regex regex = new Regex(phonePattern);
 
-           
+
             if (string.IsNullOrEmpty(oPractict.FirstName) || string.IsNullOrWhiteSpace(oPractict.FirstName))
             {
                 errorMessage.Add("-Please enter your first name");
@@ -571,7 +600,7 @@ namespace MediLink.Controllers
 
             if (errorMessage.Count == 0)
             {
-               
+
                 oPractict.Password = Utilities.EncryptPassword(oPractict.Password);
 
                 oPractict.token = Utilities.GenerateToken();
@@ -598,17 +627,17 @@ namespace MediLink.Controllers
                     bool sent = EmailService.SendEmail(emailDTO);
 
                     errorMessage.Add($"Your account has been created. We have sent a message to the email {oPractict.Email} to confirm your email address");
-                     
+
 
                 }
                 else
                 {
                     errorMessage.Add("Can not create user");
-          
+
                 }
 
-               
-              
+
+
 
                 // Pass the error list to the view using ViewBag
                 ViewBag.MyErrorList = errorMessage;
@@ -632,18 +661,18 @@ namespace MediLink.Controllers
             {
                 // Pass the error list to the view using ViewBag
                 ViewBag.MyErrorList = errorMessage;
-               
+
                 ViewData["MessageRegisterPract"] = errorMessage;
 
                 return View(oPractict);
             }
 
 
-            
 
 
 
-           
+
+
 
 
         }
@@ -713,6 +742,8 @@ namespace MediLink.Controllers
 
         public ActionResult RestartPasswordFormPractitioner(string token)
         {
+            string mensajeResultLog = TempData["mensajeResultRestartPract"] as string;
+            ViewData["mensajeResultRestartPract"] = mensajeResultLog;
 
             ViewBag.token = token;
 
@@ -728,9 +759,17 @@ namespace MediLink.Controllers
 
             if (oPractitionerNew.Password != oPractitionerNew.ConfirmPassword)
             {
-                TempData["mensajeResultLoginPract"] = "Password not match";
+                TempData["mensajeResultRestartPract"] = "Password does not match";
 
-                return RedirectToAction("LoginPractitioner", "Management");
+                return RedirectToAction("RestartPasswordFormPractitioner", new { token = oPractitionerNew.token });
+
+            }
+
+            if (oPractitionerNew.Password == null || oPractitionerNew.ConfirmPassword == null)
+            {
+                TempData["mensajeResultRestartPract"] = "Password not valid";
+
+                return RedirectToAction("RestartPasswordFormPractitioner", new { token = oPractitionerNew.token });
 
             }
 

@@ -18,8 +18,10 @@ namespace MediLink.Models
 
         public string? OfficeName { get; set; }
 
+        public string? OfficeTypeName { get; set; }
+
         public OfficeType? OfficeType { get; set; }
 
-        public string? fullAddress { get; set;}
+        public string? fullAddress { get; set; }
     }
 }

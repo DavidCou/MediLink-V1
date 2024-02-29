@@ -26,7 +26,7 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-login-image-doctor"></div>
+                    <div class="col-lg-5 d-none d-lg-block bg-login-image-doctor" title="Register Practitioner"></div>
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
@@ -52,9 +52,10 @@
                                             <div class="form-group">
                                                 <label class="control-label">First Name</label>
                                                 <div class="inputGroupContainer">
+                                                    <input type="hidden" id="list-id-offices" name="listOffices" />
                                                     <div class="input-group"><input id="firstName" name="FirstName" placeholder="First Name" class="form-control" value="@Model.FirstName" type="text"></div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
@@ -62,7 +63,7 @@
                                                 <div class="inputGroupContainer">
                                                     <div class="input-group"><input id="lastname" name="LastName" placeholder="Last Name" class="form-control" value="@Model.LastName" type="text"></div>
                                                 </div>
-                                            </div>                                   
+                                            </div>
 
                                         </div>
 
@@ -100,7 +101,7 @@
                                                     <div class="input-group"><input id="password" name="Password" placeholder="Password" class="form-control" value="" type="password"></div>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
@@ -108,8 +109,8 @@
                                                 <div class="inputGroupContainer">
                                                     <div class="input-group"><input id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" class="form-control" value="" type="password"></div>
                                                 </div>
-                                            </div>                                         
-                                            
+                                            </div>
+
                                         </div>
 
                                     </div>
@@ -160,8 +161,8 @@
                                     <a class="btn-user btn-block" href="@Url.Action("Index", "Home")">Return</a>
                                     <button type="submit" class="btn btn-primary px-5 w-100">Register</button>
                                 </div>
-                                
-                                 
+
+
 
                             </form>
                             <hr>
@@ -180,19 +181,19 @@
     </div>
 
 
-   
+
 
     <!-- Modal Edit Offices -->
     <div class="modal fade" id="editoffices" tabindex="-1" aria-labelledby="editmodal" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
-                
+
                 <div class="modal-body">
 
                     <div class="card">
                         <div class="card-header">
 
-                            <i class="fas fa-users me-1"></i> List of Offices                          
+                            <i class="fas fa-users me-1"></i> List of Offices
                             <div class="d-inline text-end">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -205,7 +206,7 @@
                                 <div class="container my-1">
                                     <div class="d-flex justify-content-center ">
                                         <div class="searchbar">
-                                            <input id="filterInputOffice" class="search_input" type="text" name="" onkeyup="searchOffice()" placeholder="Search a office...">
+                                            <input id="filterInputOffice" class="search_input" type="text" name="" onkeyup="searchOffice()" placeholder="Search a office name...">
                                             <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
                                         </div>
                                     </div>
@@ -215,34 +216,38 @@
                                 <table id="data-table-offices" class="table mx-auto" style="width: 100%">
                                     <thead>
                                         <tr>
-                                            <th>Office</th>                                            
-                                            <th>Address</th>                                            
+                                            <th>Office Name</th>
+                                            <th>Type</th>
+                                            <th>Address</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class='mx-2'>
-                                            <td id="office-1">Community Center Kitchener</td>
-                                            <td>58 John Street Kitchener Ontario</td>
-                                            
-                                            <td>
-                                                <button id="offic-01" type='button' class='btn btn-primary mr-1 w-75' onclick="addOfficePractitioner(this)">Add</button>
-                                               
-                                            </td>
+                                        @foreach (var c in Model.officeInfo)
+                                        {
+                                            <tr class='mx-2'>
+                                                <td id="office-1">@c.OfficeName</td>
+                                                <td>@c.OfficeTypeName</td>
+                                                <td>@c.fullAddress</td>
 
-                                        </tr>
-                                        <tr class='mx-2'>
-                                            <td id="office-2"> Bleans Medical Center </td>
-                                            <td>85 Main Street Canbridge Ontario</td>
+                                                <td>
+                                                    <button id="offic-@c.Id" type='button' class='btn btn-primary mr-1 w-75' onclick="addOfficePractitioner(this)">Add</button>
 
-                                            <td>
-                                                <button type='button' id="offic-02" class='btn btn-primary mr-1 w-75' onclick="addOfficePractitioner(this)">Add</button>
+                                                </td>
 
-                                            </td>
+                                            </tr>
 
-                                        </tr>
+                                        }
+
+
                                     </tbody>
                                 </table>
+                                <div class="d-block text-center">
+                                    <button type="button" class="btn btn-secondary tex" data-dismiss="modal" aria-label="Close">
+                                        Close
+                                    </button>
+
+                                </div>
                             </div>
                         </div>
 

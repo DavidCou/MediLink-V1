@@ -29,8 +29,8 @@ function searchOffice() {
     }
 }
 
+//add the offices id to input
 function addOfficePractitioner(button) {
-    console.log("Test");
    
     var id = button.id;
     var idclean = button.id.replace("offic-", "");
@@ -38,23 +38,30 @@ function addOfficePractitioner(button) {
 
     var btnClicked = document.getElementById(id);
 
-     
+    var inputListOffices = document.getElementById('list-id-offices');
+
+
 
     if (valueText == "Add") {
         btnClicked.textContent = "Remove";
         arrayIdOffice.push(idclean);
-        btnClicked.classList.remove("btn-primary");  
-        btnClicked.classList.add("btn-danger"); 
+        btnClicked.classList.remove("btn-primary");
+        btnClicked.classList.add("btn-danger");
     } else {
         btnClicked.textContent = "Add";
         arrayIdOffice = arrayIdOffice.filter(item => item != idclean);
-        btnClicked.classList.remove("btn-danger"); 
-        btnClicked.classList.add("btn-primary"); 
+        btnClicked.classList.remove("btn-danger");
+        btnClicked.classList.add("btn-primary");
     }
 
-    console.log("Valor de arreglo");
-    console.log(arrayIdOffice);
+    //set the list of address id in the input
+    if (arrayIdOffice.length > 0) {
+        inputListOffices.value = arrayIdOffice.join(',');
+    } else {
+        inputListOffices.value = "";
+    }
+
     
 
-}
 
+}

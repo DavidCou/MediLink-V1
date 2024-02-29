@@ -227,10 +227,13 @@ namespace MediLink.Services.Implementation
 
         public async Task<PractitionerNewRequest> SavePractitioner(PractitionerNewRequest oDoctor)
         {
-            
-            //create patient
+            //create patient instance
             Practitioner practitioner = new Practitioner();
 
+            //create PractitionerOfficeAddress instance
+            List<PractitionerOfficeAddress> practitionerOfficeAddress = new List<PractitionerOfficeAddress>();
+
+            //assing the value to the new instance created
             practitioner.Email = oDoctor.Email;
             practitioner.Password = oDoctor.Password;
             practitioner.FirstName = oDoctor.FirstName;
@@ -244,7 +247,31 @@ namespace MediLink.Services.Implementation
 
             await _dbContext.SaveChangesAsync();
 
+            //get the last practitioner id created 
             oDoctor.Id = practitioner.Id;
+
+            //verify if the user add offices address to the new practitioner
+            if (oDoctor.listOffices != null)
+            {
+                //convert the string to array to iterate over each office id added
+                string[] offices = oDoctor.listOffices.Split(",");
+
+                //iterate over each office id added and save the address
+                foreach (string office in offices)
+                {
+                    int idOffice = Convert.ToInt32(office);
+
+                    practitionerOfficeAddress.Add(new PractitionerOfficeAddress { PractitionerId = oDoctor.Id, OfficeAddressesId = idOffice });
+
+
+                }
+
+                _dbContext.PractitionerAddresses.AddRange(practitionerOfficeAddress);
+
+                await _dbContext.SaveChangesAsync();
+
+
+            }
 
             return oDoctor;
         }
