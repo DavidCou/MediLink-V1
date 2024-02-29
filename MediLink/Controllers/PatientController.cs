@@ -114,6 +114,8 @@ namespace MediLink.Controllers
                     .Select(c => c.Value).SingleOrDefault();
             }
 
+            ViewData["userName"] = userName;
+
             Patient patient = await _userService.GetUserByEmail(userName);
 
             PatientPreference preferences = await _mediLinkContext.PatientPreferences.Where(p => p.Id == patient.PatientPreferencesId).FirstOrDefaultAsync();
@@ -163,6 +165,8 @@ namespace MediLink.Controllers
                 userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
                     .Select(c => c.Value).SingleOrDefault();
             }
+
+            ViewData["userName"] = userName;
 
             Patient patient = await _userService.GetUserByEmail(userName);
 
