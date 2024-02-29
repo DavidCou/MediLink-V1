@@ -145,10 +145,8 @@ namespace MediLink.Controllers
 
             viewModel.preferences = preferences;
             
-            languages.Add(new Languages { Id = 0, LanguageName = "" });
             viewModel.languages = new MultiSelectList(languages, "Id", "LanguageName", preferences.PreferedLanguages.Select(pl => pl.LanguageId));
 
-            officeTypes.Add(new OfficeType { Id = 0, OfficeTypeName = "" });
             viewModel.officeTypes = new MultiSelectList(officeTypes, "Id", "OfficeName", preferences.PatientOfficeType.Select(po => po.OfficeTypeId));
 
             return View(viewModel);

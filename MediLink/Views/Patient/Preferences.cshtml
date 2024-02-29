@@ -15,9 +15,9 @@
 
 <h1 align="center">Preferences</h1>
 
-<form asp-controller="Patient" asp-action="Preferences" method="post">
+<form asp-controller="Patient" asp-action="Preferences" method="post" align="center">
     <div class="row">
-        <div class="col-6 row"><div class="form-group">
+        <div class="col-6"><div class="form-group">
             <label for="preferencesCity" class="control-label">City: </label>
             <div class="inputGroupContainer"><div class="input-group">
                 <input type="text" id="preferencesCity" class="form-control" asp-for="preferences.location" />
@@ -38,18 +38,21 @@
             
         </div></div>
     </div>
-    <div class="mb-3 row">
-        <label asp-for="selectedLanguageIds" class="col-auto form-label">Spoken Languages: </label>
-        <div class="col-sm-6">
-            <select asp-for="selectedLanguageIds" data-size="5" data-wrap="true" asp-items="@Model.languages" data-count-selected-text="({0} are chosen)" data-live-search="true" class="selectpicker show-tick checkbox" multiple data-selected-text-format="count" tabindex="-98">
-            </select>
+
+    <div class="row">
+        <div class="col-6">
+            <label asp-for="selectedLanguageIds" class="col-auto form-label">Spoken Languages: </label>
+            <div class="inputGroupContainer"><div class="input-group">
+                <select asp-for="selectedLanguageIds" data-size="5" data-wrap="true" asp-items="@Model.languages" data-count-selected-text="({0} are chosen)" data-live-search="true" class="selectpicker show-tick checkbox" multiple data-selected-text-format="count" tabindex="-98">
+                </select>
+            </div></div>
         </div>
-    </div>
-    <div class="mb-3 row">
-        <label asp-for="selectedOfficeTypeIds" class="col-auto form-label">Preferred Office Types: </label>
-        <div class="col-sm-6">
-            <select asp-for="selectedOfficeTypeIds" data-size="5" data-wrap="true" asp-items="@Model.officeTypes" data-count-selected-text="({0} are chosen)" data-live-search="true" class="selectpicker show-tick checkbox" multiple data-selected-text-format="count" tabindex="-98">
-            </select>
+        <div class="col-6">
+            <label asp-for="selectedOfficeTypeIds" class="col-auto form-label">Preferred Office Types: </label>
+            <div class="inputGroupContainer"><div class="input-group">
+                <select asp-for="selectedOfficeTypeIds" data-size="5" data-wrap="true" asp-items="@Model.officeTypes" data-count-selected-text="({0} are chosen)" data-live-search="true" class="selectpicker show-tick checkbox" multiple data-selected-text-format="count" tabindex="-98">
+                </select>
+            </div></div>
         </div>
     </div>
 
@@ -60,5 +63,5 @@
 
     <input type="hidden" asp-for="preferences.Id" />
 
-    <input type="submit" value="Save" />
+    <input type="submit" class="btn btn-primary px-5 w-100" value="Save" />
 </form>
