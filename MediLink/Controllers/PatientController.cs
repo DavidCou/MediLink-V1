@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 
 namespace MediLink.Controllers
 {
@@ -101,37 +102,37 @@ namespace MediLink.Controllers
                     .Select(c => c.Value).SingleOrDefault();
             }
 
-            //List<string> errorMessage = new List<string>();
-            //string phonePattern = @"^\d{3}-\d{3}-\d{4}$";
-            //Regex regex = new Regex(phonePattern);
+            List<string> errorMessage = new List<string>();
+            string phonePattern = @"^\d{3}-\d{3}-\d{4}$";
+            Regex regex = new Regex(phonePattern);
 
-            //DateTime currentDate = DateTime.Now;
-            //DateTime? dob = new DateTime(patientViewModel.PatientDetail.DoB.Value.Year, patientViewModel.PatientDetail.DoB.Value.Month, patientViewModel.PatientDetail.DoB.Value.Day);
+            DateTime currentDate = DateTime.Now;
+            DateTime? dob = new DateTime(patientViewModel.PatientDetail.DoB.Value.Year, patientViewModel.PatientDetail.DoB.Value.Month, patientViewModel.PatientDetail.DoB.Value.Day);
 
-            //DateTime currentDateMinusTwoDays = currentDate.AddDays(-2);
+            DateTime currentDateMinusTwoDays = currentDate.AddDays(-2);
 
-            //if (string.IsNullOrEmpty(patientViewModel.PatientDetail.FirstName) || string.IsNullOrWhiteSpace(patientViewModel.PatientDetail.FirstName))
-            //{
-            //    errorMessage.Add("Your first name cannont be blank");
-            //}
+            if (string.IsNullOrEmpty(patientViewModel.PatientDetail.FirstName) || string.IsNullOrWhiteSpace(patientViewModel.PatientDetail.FirstName))
+            {
+                errorMessage.Add("Your first name cannont be blank");
+            }
 
-            //if (string.IsNullOrEmpty(patientViewModel.PatientDetail.LastName) || string.IsNullOrWhiteSpace(patientViewModel.PatientDetail.LastName))
-            //{
-            //    errorMessage.Add("Your last name cannot be blank");
-            //}
+            if (string.IsNullOrEmpty(patientViewModel.PatientDetail.LastName) || string.IsNullOrWhiteSpace(patientViewModel.PatientDetail.LastName))
+            {
+                errorMessage.Add("Your last name cannot be blank");
+            }
 
-            //if (string.IsNullOrEmpty(patientViewModel.Email) || string.IsNullOrWhiteSpace(patientViewModel.Email))
-            //{
-            //    errorMessage.Add("Your email cannot be blank");
-            //}
+            if (string.IsNullOrEmpty(patientViewModel.Email) || string.IsNullOrWhiteSpace(patientViewModel.Email))
+            {
+                errorMessage.Add("Your email cannot be blank");
+            }
 
-            //if (!string.IsNullOrEmpty(patientViewModel.PatientDetail.PhoneNumber) && !string.IsNullOrWhiteSpace(patientViewModel.PatientDetail.PhoneNumber))
-            //{
-            //    if (!regex.IsMatch(patientViewModel.PatientDetail.PhoneNumber))
-            //    {
-            //        errorMessage.Add("Phone number not valid, please use the following input format: 222-222-2222");
-            //    }
-            //}
+            if (!string.IsNullOrEmpty(patientViewModel.PatientDetail.PhoneNumber) && !string.IsNullOrWhiteSpace(patientViewModel.PatientDetail.PhoneNumber))
+            {
+                if (!regex.IsMatch(patientViewModel.PatientDetail.PhoneNumber))
+                {
+                    errorMessage.Add("Phone number not valid, please use the following input format: 222-222-2222");
+                }
+            }
 
             //if (dob >= currentDateMinusTwoDays)
             //{

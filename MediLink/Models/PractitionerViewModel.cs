@@ -12,5 +12,9 @@ namespace MediLink.Models
 
         public PractitionerType PractitionerType { get; set; }
 
+        public string IsAcceptingNewPatients { get; set; }
+
+        public string LastAcceptedPatientDate { get; set; }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿@model PatientViewModel
+﻿@model PractitionerViewModel
 @{
     ViewData["Title"] = "Patient Home Page";
 }
@@ -54,28 +54,40 @@
         <div class="col-sm-4 center-content">
             <div class="profile-info mt-2">
                 <h2 class="mb-4">Profile Information</h2>
-                <p><strong>Full Name:</strong> @Model.PatientDetail.FirstName @Model.PatientDetail.LastName</p>
-                <p><strong>Email:</strong> @Model.Email</p>
-                <p><strong>Phone Number:</strong> @Model.PatientDetail.PhoneNumber</p>
-                <p><strong>Gender:</strong> @Model.PatientDetail.gender</p>
+                <p><strong>Full Name:</strong> @Model.Practitioner.FirstName @Model.Practitioner.LastName</p>
+                <p><strong>Email:</strong> @Model.Practitioner.Email</p>
+                <p><strong>Phone Number:</strong> @Model.Practitioner.PhoneNumber</p>
+                <p><strong>Gender:</strong> @Model.Practitioner.gender</p>
                 <p>
                     <strong>Spoken Languages:</strong>
-                    @foreach (var language in Model.SpokenLanguages)
+                    @foreach (var language in Model.PractitionerSpokenLanguages)
                     {
                         <span>@language.Language.LanguageName</span>
 
-                        @(language != Model.SpokenLanguages.Last() ? ", " : "")
+                        @(language != Model.PractitionerSpokenLanguages.Last() ? ", " : "")
                     }
                 </p>
-                <p><strong>Date Of Birth:</strong> @Model.PatientDetail.DoB</p>
-                <p><strong>Address:</strong> @Model.PatientAddress.StreetAddress @Model.PatientAddress.City</p>
-                <p><strong>Postal Code:</strong>@Model.PatientAddress.PostalCode</p>
-                <p><strong>Province Of Residence:</strong> @Model.PatientAddress.Province</p>
-                <p><strong>Country Of Residence:</strong> @Model.PatientAddress.country</p>
-
+                <p><strong>Patient Acceptance Status:</strong> @Model.IsAcceptingNewPatients</p>
+                <p><strong>Last Accepted A Patient On:</strong> @Model.LastAcceptedPatientDate</p>
+                <p><strong>Current Rating:</strong> @Model.Practitioner.rating</p>
             </div>
         </div>
         <div class="col-sm-4">
+            <h2 class="mb-4">Office Information</h2>
+            @foreach (var office in Model.OfficeAddresses)
+            {
+                int officeNum = 1;
+                <h4 class="mb-2">Office @officeNum</h4>
+                <p><strong>Name Of Practice:</strong> @office.OfficeName</p>
+                <p><strong>Type Of Office:</strong> @office.OfficeType.OfficeTypeName</p>
+                <p><strong>Address:</strong> @office.StreetAddress @office.City</p>
+                <p><strong>Postal Code:</strong>@office.PostalCode</p>
+                <p><strong>Province Of Residence:</strong> @office.Province</p>
+                <p><strong>Country Of Residence:</strong> @office.country</p>
+                <p> </p>
+                <p> </p>
+                <p> </p>
+            }
         </div>
     </div>
 </div>
