@@ -79,19 +79,27 @@ namespace MediLink.Controllers
 
             List<Languages> languages = await _mediLinkContext.Languages.ToListAsync();
 
-            PatientViewModel patientViewModel = new PatientViewModel()
+            PatientUpdateViewModel patientUpdateViewModel = new PatientUpdateViewModel()
             {
-                Email = patient.Email,
                 Languages = languages,
-                PatientDetail = patientDetail,
-                PatientAddress = patientAddress
+                Email = patient.Email,
+                FirstName = patientDetail.FirstName,
+                LastName = patientDetail.LastName,
+                gender = patientDetail.gender,
+                PhoneNumber = patientDetail.PhoneNumber,
+                DoB = patientDetail.DoB,
+                City = patientAddress.City,
+                Province = patientAddress.Province,
+                country = patientAddress.country,
+                PostalCode = patientAddress.PostalCode,
+                StreetAddress = patientAddress.StreetAddress
             };
 
-            return View(patientViewModel);
+            return View(patientUpdateViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdatePatientDetails(PatientViewModel patientViewModel)
+        public async Task<IActionResult> UpdatePatientDetails(PatientUpdateViewModel patientUpdateViewModel)
         {
             ClaimsPrincipal claimuser = HttpContext.User;
             string userName = "";
@@ -107,39 +115,43 @@ namespace MediLink.Controllers
             Regex regex = new Regex(phonePattern);
 
             DateTime currentDate = DateTime.Now;
-            DateTime? dob = new DateTime(patientViewModel.PatientDetail.DoB.Value.Year, patientViewModel.PatientDetail.DoB.Value.Month, patientViewModel.PatientDetail.DoB.Value.Day);
+            DateTime? dob = null;
+            if (patientUpdateViewModel.DoB.HasValue)
+            {
+                dob = new DateTime(patientUpdateViewModel.DoB.Value.Year, patientUpdateViewModel.DoB.Value.Month, patientUpdateViewModel.DoB.Value.Day);
+            }
 
             DateTime currentDateMinusTwoDays = currentDate.AddDays(-2);
 
-            if (string.IsNullOrEmpty(patientViewModel.PatientDetail.FirstName) || string.IsNullOrWhiteSpace(patientViewModel.PatientDetail.FirstName))
+            if (string.IsNullOrEmpty(patientUpdateViewModel.FirstName) || string.IsNullOrWhiteSpace(patientUpdateViewModel.FirstName))
             {
                 errorMessage.Add("Your first name cannont be blank");
             }
 
-            if (string.IsNullOrEmpty(patientViewModel.PatientDetail.LastName) || string.IsNullOrWhiteSpace(patientViewModel.PatientDetail.LastName))
+            if (string.IsNullOrEmpty(patientUpdateViewModel.LastName) || string.IsNullOrWhiteSpace(patientUpdateViewModel.LastName))
             {
                 errorMessage.Add("Your last name cannot be blank");
             }
 
-            if (string.IsNullOrEmpty(patientViewModel.Email) || string.IsNullOrWhiteSpace(patientViewModel.Email))
+            if (string.IsNullOrEmpty(patientUpdateViewModel.Email) || string.IsNullOrWhiteSpace(patientUpdateViewModel.Email))
             {
                 errorMessage.Add("Your email cannot be blank");
             }
 
-            if (!string.IsNullOrEmpty(patientViewModel.PatientDetail.PhoneNumber) && !string.IsNullOrWhiteSpace(patientViewModel.PatientDetail.PhoneNumber))
+            if (!string.IsNullOrEmpty(patientUpdateViewModel.PhoneNumber) && !string.IsNullOrWhiteSpace(patientUpdateViewModel.PhoneNumber))
             {
-                if (!regex.IsMatch(patientViewModel.PatientDetail.PhoneNumber))
+                if (!regex.IsMatch(patientUpdateViewModel.PhoneNumber))
                 {
                     errorMessage.Add("Phone number not valid, please use the following input format: 222-222-2222");
                 }
             }
 
-            //if (dob >= currentDateMinusTwoDays)
-            //{
-            //    errorMessage.Add("Birthday is invalid, your birthday must be at least two days in the past");
-            //}
+            if (dob >= currentDateMinusTwoDays)
+            {
+                errorMessage.Add("Birthday is invalid, your birthday must be at least two days in the past");
+            }
 
-            if (true)
+            if (errorMessage.Count == 0)
             {
                 Patient patient = await _userService.GetUserByEmail(userName);
 
@@ -151,52 +163,58 @@ namespace MediLink.Controllers
                     .Where(pa => pa.Id == patient.Id)
                     .FirstOrDefaultAsync();
 
-
                 if (patient != null && patientDetails != null && patientAddress != null)
                 {
-                    //if (patientViewModel.PatientDetail.DoB.ToString().Contains("0001-01-01"))
-                    //{
-                    //    dob = null;
-                    //}
-
-                    List<PatientSpokenLanguage>? previousSpokenLanguages = await _mediLinkContext.PatientSpokenLanguages
-                        .Where(psl => psl.PatientDetailsId == patientViewModel.PatientDetail.Id).ToListAsync();
-                    foreach (var language in previousSpokenLanguages)
+                    if (patientUpdateViewModel.DoB.ToString().Contains("0001-01-01"))
                     {
-                        _mediLinkContext.PatientSpokenLanguages.Remove(language);
-                        await _mediLinkContext.SaveChangesAsync();
+                        dob = null;
                     }
 
-                    foreach (var language in patientViewModel.SpokenLanguages)
+                    //TODO - Fix patientUpdateViewModel.SpokenLanguageIds it is always null for some reason
+                    if (patientUpdateViewModel.SpokenLanguageIds != null)
                     {
-                        var currentSpokenlanguage = new PatientSpokenLanguage { LanguageId = language.LanguageId, PatientDetailsId = patientViewModel.PatientDetail.Id };
-                        _mediLinkContext.PatientSpokenLanguages.Add(currentSpokenlanguage);
-                        await _mediLinkContext.SaveChangesAsync();
+                        List<PatientSpokenLanguage>? previousSpokenLanguages = await _mediLinkContext.PatientSpokenLanguages
+                        .Where(psl => psl.PatientDetailsId == patientDetails.Id).ToListAsync();
+                        foreach (var language in previousSpokenLanguages)
+                        {
+                            _mediLinkContext.PatientSpokenLanguages.Remove(language);
+                            await _mediLinkContext.SaveChangesAsync();
+                        }
+
+                        foreach (var languageId in patientUpdateViewModel.SpokenLanguageIds)
+                        {
+                            var currentSpokenlanguage = new PatientSpokenLanguage { LanguageId = languageId, PatientDetailsId = patientDetails.Id };
+                            _mediLinkContext.PatientSpokenLanguages.Add(currentSpokenlanguage);
+                            await _mediLinkContext.SaveChangesAsync();
+                        }
                     }
 
-                    patient.Email = patientViewModel.Email;
+                    //TODO - Finish the data save process
+                    patient.Email = patientUpdateViewModel.Email;
                     _mediLinkContext.Update(patient);
                     await _mediLinkContext.SaveChangesAsync();
 
-                    patientDetails.FirstName = patientViewModel.PatientDetail.FirstName;
-                    patientDetails.LastName = patientViewModel.PatientDetail.LastName;
-                    patientDetails.gender = patientViewModel.PatientDetail.gender;
-                    patientDetails.PhoneNumber = patientViewModel.PatientDetail.PhoneNumber;
-                    patientDetails.DoB = null;
+                    patientDetails.FirstName = patientUpdateViewModel.FirstName;
+                    patientDetails.LastName = patientUpdateViewModel.LastName;
+                    patientDetails.gender = patientUpdateViewModel.gender;
+                    patientDetails.PhoneNumber = patientUpdateViewModel.PhoneNumber;
+                    patientDetails.DoB = dob;
+                    _mediLinkContext.Update(patientDetails);
+                    await _mediLinkContext.SaveChangesAsync();
                 }
                 else
                 {
-                    //ViewBag.MyErrorList = errorMessage;
-                    //ViewData["UpdateErrorMessage"] = errorMessage;
-                    return View(patientViewModel);
+                    ViewBag.MyErrorList = errorMessage;
+                    ViewData["UpdateErrorMessage"] = errorMessage;
+                    return View(patientUpdateViewModel);
                 }
 
             }
             else
             {
-                //ViewBag.MyErrorList = errorMessage;
-                //ViewData["UpdateErrorMessage"] = errorMessage;
-                //return View(patientViewModel);
+                ViewBag.MyErrorList = errorMessage;
+                ViewData["UpdateErrorMessage"] = errorMessage;
+                return View(patientUpdateViewModel);
             }
 
             ViewBag.Success = "Your profile has been updated.";
