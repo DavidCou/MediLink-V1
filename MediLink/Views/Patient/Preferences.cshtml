@@ -6,6 +6,42 @@
     ViewData["Title"] = "Preferences";
 }
 
+<nav id="header-st" class="navbar navbar-expand static-top ">
+    <div class="mr=auto">
+        <a class="navbar-brand mx-0" href="#"><img class="ms-5 me-0" src="~/img/logo2.png" alt="Company Logo" width="70" height="60"></a>
+        <h3 id="company-title">MediLink</h3>
+    </div>
+    <div class="ml-auto mt-4">
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto ">
+                <li class="nav-item">
+                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("PatientHomePage", "Patient")">Home</a>
+                </li>
+
+                <li class="nav-item dropdown no-arrow ">
+                    <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 mx-2 d-none d-lg-inline text-white ">@ViewData["userName"]</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
+                         aria-labelledby="userDropdown">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("ChangePassword", "Patients")">
+                            <i class="bi bi-people text-gray-400"></i>
+                            Change Password
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Management")">
+                            <i class="bi bi-box-arrow-in-left text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 @if(ViewData["Message"] != null)
 {
     <div class="alert alert-info" align="center">
@@ -43,22 +79,30 @@
         <div class="col-6">
             <label asp-for="selectedLanguageIds" class="col-auto form-label">Spoken Languages: </label>
             <div class="inputGroupContainer"><div class="input-group">
-                <select asp-for="selectedLanguageIds" data-size="5" data-wrap="true" asp-items="@Model.languages" data-count-selected-text="({0} are chosen)" data-live-search="true" class="selectpicker show-tick checkbox" multiple data-selected-text-format="count" tabindex="-98">
-                </select>
+                    <select class="selectpicker form-control" aria-label="Default select " asp-for="selectedLanguageIds" asp-items="Model.languages" multiple>
+                        <option selected disabled value="noselected" )>Select a Language</option>
+                    </select>
             </div></div>
         </div>
         <div class="col-6">
             <label asp-for="selectedOfficeTypeIds" class="col-auto form-label">Preferred Office Types: </label>
-            <div class="inputGroupContainer"><div class="input-group">
-                <select asp-for="selectedOfficeTypeIds" data-size="5" data-wrap="true" asp-items="@Model.officeTypes" data-count-selected-text="({0} are chosen)" data-live-search="true" class="selectpicker show-tick checkbox" multiple data-selected-text-format="count" tabindex="-98">
-                </select>
-            </div></div>
+            <div class="inputGroupContainer">
+                <div class="input-group">
+                    <select class="selectpicker form-control" aria-label="Default select " asp-for="selectedOfficeTypeIds" multiple>
+                        <option selected disabled value="noselected" )>Select a Language</option>
+                        @foreach(var officeType in Model.officeTypes)
+                        {
+                            <option value="@officeType.Id">@officeType.OfficeTypeName</option>
+                        }
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
 
     <div hidden>
         <select asp-for="previousLanguages" asp-items="Model.languages"></select>
-        <select asp-for="previousOfficeTypes" asp-items="Model.officeTypes"></select>
+        @* <select asp-for="previousOfficeTypes" asp-items="Model.officeTypes" multiple></select> *@
     </div>
 
     <input type="hidden" asp-for="preferences.Id" />

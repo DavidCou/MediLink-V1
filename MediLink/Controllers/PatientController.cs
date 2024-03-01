@@ -149,7 +149,7 @@ namespace MediLink.Controllers
             
             viewModel.languages = new MultiSelectList(languages, "Id", "LanguageName", preferences.PreferedLanguages.Select(pl => pl.LanguageId));
 
-            viewModel.officeTypes = new MultiSelectList(officeTypes, "Id", "OfficeName", preferences.PatientOfficeType.Select(po => po.OfficeTypeId));
+            viewModel.officeTypes = officeTypes;
 
             return View(viewModel);
         }
@@ -215,11 +215,9 @@ namespace MediLink.Controllers
             var languages = _mediLinkContext.Languages.Where(l => l.IsDeleted == false).OrderBy(l => l.LanguageName).ToList();
             var officeTypes = _mediLinkContext.OfficeTypes.Where(ot => ot.IsDeleted == false).OrderBy(ot => ot.OfficeTypeName).ToList();
 
-            languages.Add(new Languages { Id = 0, LanguageName = "" });
             viewModel.languages = new MultiSelectList(languages, "Id", "LanguageName", viewModel.selectedLanguageIds);
 
-            officeTypes.Add(new OfficeType { Id = 0, OfficeTypeName = "" });
-            viewModel.officeTypes = new MultiSelectList(officeTypes, "Id", "OfficeName", viewModel.selectedOfficeTypeIds);
+            viewModel.officeTypes = officeTypes;
 
             ViewData["Message"] = "Your preferences have been updated";
 
