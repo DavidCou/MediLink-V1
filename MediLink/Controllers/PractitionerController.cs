@@ -15,7 +15,7 @@ namespace MediLink.Controllers
             _userService = userService;
         }
 
-        public async IActionResult PractitionerHomePage()
+        public async Task<IActionResult> PractitionerHomePage()
         {
             ClaimsPrincipal claimuser = HttpContext.User;
             string userName = "";
@@ -48,15 +48,29 @@ namespace MediLink.Controllers
                 .Where(pt => pt.Id == practitioner.PractitionerTypeId)
                 .FirstOrDefaultAsync();
 
-            PatientViewModel patientViewModel = new PatientViewModel()
+            string isAcceptingNewPatients = ""; 
+            if (practitioner.IsAcceptingNewPatients = true) 
             {
-                Email = patient.Email,
-                SpokenLanguages = patientSpokenLanguages,
-                PatientDetail = patientDetail,
-                PatientAddress = patientAddress
+                isAcceptingNewPatients = "Currently accepting new patients";
+            }
+            else 
+            {
+                isAcceptingNewPatients = "Currently not accepting new patients";
+            }
+
+            string lastAcceptedPatientDateString = practitioner.lastPatientAcceptedDate.ToString();
+
+            PractitionerViewModel practitionerViewModel = new PractitionerViewModel()
+            {
+                Practitioner = practitioner,
+                OfficeAddresses = officeAddresses,
+                PractitionerSpokenLanguages = practitionerSpokenLanguages,
+                PractitionerType = practitionerType,
+                IsAcceptingNewPatients = isAcceptingNewPatients,
+                LastAcceptedPatientDate = lastAcceptedPatientDateString
             };
 
-            return View(patientViewModel);
+            return View(practitionerViewModel);
            
         }
 
