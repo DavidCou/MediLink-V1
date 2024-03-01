@@ -1,0 +1,99 @@
+﻿@model PractitionerSearchViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Search for Practitioners";
+}
+
+<nav id="header-st" class="navbar navbar-expand static-top ">
+    <div class="mr=auto">
+        <a class="navbar-brand mx-0" href="#"><img class="ms-5 me-0" src="~/img/logo2.png" alt="Company Logo" width="70" height="60"></a>
+        <h3 id="company-title">MediLink</h3>
+    </div>
+    <div class="ml-auto mt-4">
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto ">
+                <li class="nav-item">
+                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("PatientHomePage", "Patient")">Home</a>
+                </li>
+
+                <li class="nav-item dropdown no-arrow ">
+                    <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 mx-2 d-none d-lg-inline text-white ">@ViewData["userName"]</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
+                         aria-labelledby="userDropdown">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("ChangePassword", "Patients")">
+                            <i class="bi bi-people text-gray-400"></i>
+                            Change Password
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Management")">
+                            <i class="bi bi-box-arrow-in-left text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<h1 align="center">Search for Practitioners</h1>
+
+<div class="row">
+    <form asp-controller="Search" asp-action="SearchPractitioners" method="post">
+        <div class="col-3 mb-3">
+            <label asp-for="city" class="control-label">City: </label>
+            <input type="text" asp-for="city" class="form-control" />
+        </div>
+        <div class="col-3 mb-3">
+            <label asp-for="selectedLanguageIds" class="control-label">Spoken Languages: </label>
+            <select asp-for="selectedLanguageIds" data-size="5" data-wrap="true" asp-items="@Model.languages" data-count-selected-text="({0} are chosen)" data-live-search="true" class="selectpicker show-tick checkbox" multiple data-selected-text-format="count" tabindex="-98">
+            </select>
+        </div>
+        <div class="col-3 mb-3">
+            <label asp-for="selectedOfficeTypeIds" class="form-label">Preferred Office Types: </label>
+            <select asp-for="selectedOfficeTypeIds" data-size="5" data-wrap="true" asp-items="@Model.officeTypes" data-count-selected-text="({0} are chosen)" data-live-search="true" class="selectpicker show-tick checkbox" multiple data-selected-text-format="count" tabindex="-98">
+            </select>
+        </div>
+        <div class="col-3 mb-3">
+            <label asp-for="minimumRating" class="control-label">Practitioner Types: </label>
+            <select asp-for="minimumRating">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>>
+        </div>
+        <div class="col">
+            <input type="submit" class="btn btn-primary px-5 w-100" value="Search" />
+        </div>
+    </form>
+
+    @if(Model.practitioners.Count < 0)
+    {
+        <div class="col-12">
+        @foreach(var prac in Model.practitioners)
+        {
+            <div class="row" align="center">
+                <div class="col-4">
+                    <p>@prac.FirstName, @prac.LastName</p>
+                </div>
+                <div class="col-4">
+                    <p>@prac.rating stars</p>
+                </div>
+                <div class="col-4">
+                    <p><a>View Details</a></p>
+                </div>
+            </div>
+            <hr />
+        }
+        </div>
+    }
+</>

@@ -395,6 +395,9 @@ namespace MediLink.Migrations
                     b.Property<bool>("passwordReset")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("rating")
+                        .HasColumnType("int");
+
                     b.Property<string>("token")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

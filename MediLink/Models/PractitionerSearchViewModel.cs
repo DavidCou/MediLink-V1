@@ -3,20 +3,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace MediLink.Models
 {
-    public class PreferencesViewModel
+    public class PractitionerSearchViewModel
     {
-        public PatientPreference preferences { get; set; }
+
+        public string city {  get; set; }
 
         public MultiSelectList languages { get; set; }
 
-        public List<OfficeType> officeTypes { get; set; }
+        public MultiSelectList officeTypes { get; set; }
 
         public List<int> selectedLanguageIds { get; set; } = new List<int>();
 
         public List<int> selectedOfficeTypeIds { get; set; } = new List<int>();
 
-        public List<int> previousLanguages { get; set; }
+        public int minimumRating { get; set; }
 
-        public List<int> previousOfficeTypes { get; set; }
+        public List<Practitioner> practitioners { get; set; }
     }
 }
