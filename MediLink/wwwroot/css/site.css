@@ -222,15 +222,17 @@ details {
     border: 0;
     outline: 0;
     background: none;
-    width: 0;
     caret-color: transparent;
     line-height: 40px;
     transition: width 0.4s linear;
 }
 
+.search_input_width {
+    width: 400px;
+}
+
 .searchbar:hover > .search_input {
     padding: 0 10px;
-    width: 450px;
     caret-color: red;
     transition: width 0.4s linear;
 }
@@ -251,6 +253,21 @@ details {
     color: blue;
     text-decoration: none;
 }
+
+/* -----  Style Walk-in Clinic search   ------------------------- */
+
+#filter-wait-time {
+    width: 300px;
+}
+
+#div-waittime {
+    width: 1em;
+}
+
+#filter-walkin-adddres {
+    width: 400px;
+}
+
 
 
 /* end styles search input */

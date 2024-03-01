@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewData["Title"] = "SearchWalkClinic";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model MediLink.Models.WalkClinicInfo
+<nav id="header-st" class="navbar navbar-expand static-top ">
+    <div class="mr=auto">
+        <a class="navbar-brand mx-0" href="#"><img class="ms-5 me-0" src="~/img/logo2.png" alt="Company Logo" width="70" height="60"></a>
+        <h3 id="company-title">MediLink</h3>
+    </div>
+    <div class="ml-auto mt-4">
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto ">
+                <li class="nav-item dropdown no-arrow ">
+                    <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 mx-2 d-none d-lg-inline text-white ">@ViewData["userName"]</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
+                         aria-labelledby="userDropdown">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("ChangePassword", "Patients")">
+                            <i class="bi bi-people text-gray-400"></i>
+                            Change Password
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Management")">
+                            <i class="bi bi-box-arrow-in-left text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container mt-4">
+
+    <div class="card">
+        <div class="card-header">
+
+            <i class="fas fa-users me-1"></i> Search Walk-Clinic
+            <div class="d-inline text-end">
+                <a class="close" href="@Url.Action("PatientHomePage","Patient")"><span aria-hidden="true">&times;</span></a>
+               
+            </div>
+
+            <div class="card-body">
+
+                <div class="container my-1 mb-2">
+                    <div class="d-flex justify-content-center ">
+                        <div class="searchbar">
+                            <input id="filter-walkin-adddres" class="search_input" type="text" name="" onkeyup="searchWalkInClinicByAddress()" placeholder="Search by address...">
+                            <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+                        </div>
+                        <div id="div-waittime" >                         
+
+                        </div>
+                        <div class="searchbar">
+                            <input id="filter-wait-time" class="search_input " type="number" name="" onchange="searchWalkInClinicByWT()" step="10" placeholder="Search by wait time..">
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+                <table id="data-table-walkinclinic" class="table mx-auto" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>Walk-Clinic Name</th>
+                            <th>Address</th>
+                            <th>WT</th>
+                            <th>WT Max</th>
+                            <th>WT Min</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                        @foreach (var c in ViewBag.WalkClinics)
+                        {
+                            <tr class='mx-2'>
+                                <td id="office-1">@c.OfficeName</td>
+                                <td>@c.fullAddress</td>
+                                <td class="text-center">@c.CurrentWaitTime</td>
+                                <td class="text-center">@c.HistoricalWaitTimeMin</td>
+                                <td class="text-center">@c.HistoricalWaitTimeMax</td>
+
+                                <td>
+                                    <button id="offic-@c.Id" type='button' class='btn btn-primary mr-1 w-75' onclick="addOfficePractitioner(this)">Book</button>
+
+                                </td>
+
+                            </tr>
+
+                        }
+
+
+                    </tbody>
+                </table>
+                <div class="d-block text-left">
+                    <p class="fw-bold"><strong>WT = Wait Time (Minutes)</strong></p>
+                </div>
+                <div class="d-block text-center">
+                    <a class="btn btn-secondary tex" href="@Url.Action("PatientHomePage","Patient")">Return</a>
+                  
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+</div>

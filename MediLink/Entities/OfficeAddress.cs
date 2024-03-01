@@ -29,6 +29,10 @@ namespace MediLink.Entities
         [StringLength(maximumLength: 250)]
         public string StreetAddress { get; set; } = null!;
 
+        [Column(TypeName = "VARCHAR")]
+        [StringLength(maximumLength: 250)]
+        public string? zone { get; set; }
+
         public bool IsDeleted { get; set; }        
 
         public ICollection<PractitionerOfficeAddress>? PractitionerAddress { get; set; }

@@ -29,6 +29,55 @@ function searchOffice() {
     }
 }
 
+//function to search Walk-in Clinic by address
+function searchWalkInClinicByAddress() {
+    //declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("filter-walkin-adddres");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("data-table-walkinclinic");
+    tr = table.getElementsByTagName("tr");
+
+
+    //loop through all table rows and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+            txtValue = td.textContent || td.innerHTML;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+//function to search Walk-in Clinic by address
+function searchWalkInClinicByWT() {
+    //declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("filter-wait-time");
+    filter = input.value;
+    table = document.getElementById("data-table-walkinclinic");
+    tr = table.getElementsByTagName("tr");
+
+
+    //loop through all table rows and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+            txtValue = td.textContent || td.innerHTML;
+            if (parseInt(txtValue) <= parseInt(filter)) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+
 //add the offices id to input
 function addOfficePractitioner(button) {
    

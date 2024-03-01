@@ -50,6 +50,44 @@ namespace MediLink.Controllers
             return View();
         }
 
+        public async Task<IActionResult> SearchWalkClinic()
+        {
+
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+            if (claimuser.Identity.IsAuthenticated)
+            {
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            ViewData["userName"] = userName;
+
+            //get a list all the practitioners tyoes
+            //List<WalkInClinic> walkInClinic = await _mediLinkContext.WalkInClinics.ToListAsync();
+
+            // use the DB contet to query for all Address entities and transform them into
+            // OfficeInf bjects:
+            List<WalkClinicInfo> walkClinics = await _mediLinkContext.WalkInClinics
+                        .Include(t => t.OfficeAddress)
+                        .OrderByDescending(t => t.OfficeAddress.OfficeName)
+                        .Select(t => new WalkClinicInfo()
+                        {
+                            OfficeName = t.OfficeAddress.OfficeName,
+                            fullAddress = t.OfficeAddress.StreetAddress + " " + t.OfficeAddress.City + " " + t.OfficeAddress.zone + " " + t.OfficeAddress.PostalCode,
+                            CurrentWaitTime = t.CurrentWaitTime,
+                            HistoricalWaitTimeMin = t.HistoricalWaitTimeMin,
+                            HistoricalWaitTimeMax = t.HistoricalWaitTimeMax,
+                            Id = t.Id
+
+                        })
+                        .ToListAsync();
+
+            ViewBag.WalkClinics = walkClinics;
+            return View();
+        }
+
         private MediLinkDbContext _mediLinkContext;
         private IUserService _userService;
     }
