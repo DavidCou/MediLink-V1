@@ -178,6 +178,17 @@ footer {
         }
 }
 
+/* -------------------------  Styles Login Walk-in Clinic ------------------------------------------ */
+/* <a href="https://www.freepik.com/free-photo/health-specialist-consulting-woman-with-crutches-hospital-reception-lobby-talking-about-diagnosis-medicine-waiting-room-area-diverse-people-discussing-checkup-appointment_29567755.htm#fromView=search&page=1&position=8&uuid=42eba167-a504-4633-b043-e029b9f158de">Image by DC Studio on Freepik</a> */
+
+.bg-login-image-WalkInClinic {
+    background: url('/img/main_banner-login_walkinclinic.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+
+
 
 /* Styles accordion */
 

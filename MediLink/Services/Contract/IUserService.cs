@@ -34,6 +34,13 @@ namespace MediLink.Services.Contract
 
 
 
+        Task<WalkInClinic> GetWalkInClinic(string correo, string clave);
+
+        Task<WalkInClinic> GetWalkInClinicByEmail(string correo);
+
+
+
+
 
     }
 }

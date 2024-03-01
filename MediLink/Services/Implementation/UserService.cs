@@ -276,6 +276,24 @@ namespace MediLink.Services.Implementation
             return oDoctor;
         }
 
+        // ------------------ Walk-in Clinic ---------------------------------------------
+
+        public async Task<WalkInClinic> GetWalkInClinic(string email, string password)
+        {
+            WalkInClinic clinicFound = await _dbContext.WalkInClinics.Where(p => p.Email == email && p.Password == password)
+                 .FirstOrDefaultAsync();
+
+            return clinicFound;
+        }
+
+        public async Task<WalkInClinic> GetWalkInClinicByEmail(string email)
+        {
+            WalkInClinic clinicFound = await _dbContext.WalkInClinics.Where(p => p.Email == email)
+                 .FirstOrDefaultAsync();
+
+            return clinicFound;
+
+        }
 
     }
 }

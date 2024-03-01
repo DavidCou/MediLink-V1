@@ -45,6 +45,10 @@
       "PackagePath": "staticwebassets\\img\\main_banner-login.jpg"
     },
     {
+      "Id": "C:\\Users\\juane\\source\\repos\\MediLink01032024-1\\MediLink\\wwwroot\\img\\main_banner-login_walkinclinic.jpg",
+      "PackagePath": "staticwebassets\\img\\main_banner-login_walkinclinic.jpg"
+    },
+    {
       "Id": "C:\\Users\\juane\\source\\repos\\MediLink01032024-1\\MediLink\\wwwroot\\img\\main_banner2.jpg",
       "PackagePath": "staticwebassets\\img\\main_banner2.jpg"
     },

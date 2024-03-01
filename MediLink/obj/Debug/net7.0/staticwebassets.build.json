@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "FO+rGtDEzTNnZclUWMtFYhNVEVCO4tCDIQ3aMWPz7ss=",
+  "Hash": "qv5V/pMxph9bjZ/uBnrYhZA9Gfn+nJPze2EusIJ9SsA=",
   "Source": "MediLink",
   "BasePath": "_content/MediLink",
   "Mode": "Default",
@@ -202,6 +202,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\main_banner-login.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\juane\\source\\repos\\MediLink01032024-1\\MediLink\\wwwroot\\img\\main_banner-login_walkinclinic.jpg",
+      "SourceId": "MediLink",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\juane\\source\\repos\\MediLink01032024-1\\MediLink\\wwwroot\\",
+      "BasePath": "_content/MediLink",
+      "RelativePath": "img/main_banner-login_walkinclinic.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\main_banner-login_walkinclinic.jpg"
     },
     {
       "Identity": "C:\\Users\\juane\\source\\repos\\MediLink01032024-1\\MediLink\\wwwroot\\img\\main-banner.jpg",

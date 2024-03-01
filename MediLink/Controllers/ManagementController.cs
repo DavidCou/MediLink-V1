@@ -791,6 +791,259 @@ namespace MediLink.Controllers
 
         }
 
+        // ------------------------- Walk-in Clinic --------------------------------------------------
+
+
+        public ActionResult LoginWalkInClinic()
+        {
+            string mensajeResultLog = TempData["mensajeResultLogin"] as string;
+
+            ViewData["mensajeResultLoginClinic"] = mensajeResultLog;
+
+            return View();
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LoginWalkInClinic(string Email, string Password)
+        {
+
+            WalkInClinic clientFound = await _userService.GetWalkInClinic(Email, Utilities.EncryptPassword(Password));
+
+            if (clientFound == null)
+            {
+                ViewData["mensajeResultLoginClinic"] = "User Not Found";
+                return View();
+            }
+
+
+            if (!clientFound.IsValidated)
+            {
+                ViewData["mensajeResultLoginClinic"] = "Your email has not been confirmed yet. An email has been sent to your account";
+                return View();
+            }
+
+            if (clientFound.passwordReset)
+            {
+                ViewData["mensajeResultLoginClinic"] = "A password reset has been requested for your account and an email has been sent to your account. Please go to the email and reset your password";
+                return View();
+            }
+
+
+            List<Claim> claims = new List<Claim>() {
+                new Claim(ClaimTypes.Name, clientFound.Email)
+            };
+
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            AuthenticationProperties properties = new AuthenticationProperties()
+            {
+                AllowRefresh = true
+            };
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                properties
+                );
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult RegisterWalkInClinic()
+        {
+            WalkClinicInfo oWalkClinicInfo = new WalkClinicInfo();
+            return View(oWalkClinicInfo);
+        }
+             
+
+        //[HttpPost]
+        //public async Task<IActionResult> RegisterWalkInClinic(WalkClinicInfo oWalkClinicInfo)
+        //{
+        //    //verify if the patient already exist 
+        //    WalkInClinic clinicFound = await _userService.GetWalkInClinicByEmail(oWalkClinicInfo.Email);
+
+        //    List<string> errorMessage = new List<string>();
+        //    //string[] errorMessage;
+
+        //    if (oWalkClinicInfo != null)
+        //    {
+        //        ViewData["MessageRegister"] = "User already exists";
+        //        return View();
+        //    }
+
+
+        //    // Regular expression for phone validation
+        //    string phonePattern = @"^\d{3}-\d{3}-\d{4}$";
+
+        //    // Creating Regex object
+        //    Regex regex = new Regex(phonePattern);
+
+        //    if (string.IsNullOrEmpty(oWalkClinicInfo.OfficeName) )
+        //    {
+        //        errorMessage.Add("-Please enter office name");
+        //    }
+                       
+
+        //    if (string.IsNullOrEmpty(oWalkClinicInfo.Email) || string.IsNullOrWhiteSpace(oWalkClinicInfo.Email))
+        //    {
+        //        errorMessage.Add("-Please enter you email");
+        //    }
+
+
+
+        //    if (oWalkClinicInfo.Password != oWalkClinicInfo.ConfirmPassword)
+        //    {
+        //        errorMessage.Add("-Password does not match");
+
+        //    }
+
+        //    if (string.IsNullOrEmpty(oWalkClinicInfo.Password) && string.IsNullOrEmpty(oWalkClinicInfo.ConfirmPassword))
+        //    {
+        //        errorMessage.Add("-Please enter a password");
+
+        //    }
+
+        //    //verify if the user has selected personal infomation tag
+        //    if (!string.IsNullOrEmpty(oWalkClinicInfo.PhoneNumber) || !string.IsNullOrEmpty(oPatientNew.gender) || !oPatientNew.DoB.ToString().Contains("0001-01-01"))
+        //    {
+        //        // Matching the number against the regex pattern
+        //        if (!regex.IsMatch(oPatientNew.PhoneNumber))
+        //        {
+        //            errorMessage.Add("-Phone number not valid, please use the following input format: 222-222-2222");
+
+
+        //        }
+
+        //        // valid if selected a gender
+        //        if (oPatientNew.gender == null)
+        //        {
+        //            errorMessage.Add("-Must select a gender ");
+
+
+        //        }
+
+        //        if (oPatientNew.DoB.ToString().Contains("0001-01-01"))
+        //        {
+        //            errorMessage.Add("-Must select a date of birth");
+
+        //        }
+        //        else
+        //        {
+        //            if (inputDate >= currentDateMinusTwoDays)
+        //            {
+        //                errorMessage.Add("-Birthday is invalid, your birthday must be at least two days in the past");
+
+
+        //            }
+        //        }
+
+        //    }
+
+        //    //verify if the user has selected address infomation tag
+        //    if (!string.IsNullOrEmpty(oPatientNew.StreetAddress) || !string.IsNullOrEmpty(oPatientNew.City) || !string.IsNullOrEmpty(oPatientNew.PostalCode))
+        //    {
+        //        // valid if selected a address
+        //        if (string.IsNullOrEmpty(oPatientNew.StreetAddress))
+        //        {
+        //            errorMessage.Add("-Please enter your street address ");
+
+        //        }
+
+        //        // valid if selected a city
+        //        if (string.IsNullOrEmpty(oPatientNew.City))
+        //        {
+        //            errorMessage.Add("-Please enter your city ");
+
+        //        }
+
+        //        // valid if selected a city
+        //        if (oPatientNew.Province == null)
+        //        {
+        //            errorMessage.Add("-Please select a province");
+
+        //        }
+
+        //        // valid if selected a ;ostcode
+        //        if (string.IsNullOrEmpty(oPatientNew.PostalCode))
+        //        {
+        //            errorMessage.Add("-Please enter your postal code");
+
+        //        }
+
+        //    }
+
+
+
+        //    // valid if there are errors
+        //    if (errorMessage.Count == 0)
+        //    {
+        //        oPatientNew.Password = Utilities.EncryptPassword(oPatientNew.Password);
+
+        //        oPatientNew.token = Utilities.GenerateToken();
+
+        //        PatientNewRequest userCreated = await _userService.SavePatient(oPatientNew);
+
+        //        if (userCreated.Id > 0)
+        //        {
+        //            // Map the path relative to the content root
+        //            string path = Path.Combine(_webHostEnvironment.ContentRootPath, "Templates", "ConfirmEmail.html");
+
+        //            string content = System.IO.File.ReadAllText(path);
+        //            string url = string.Format("{0}://{1}{2}", HttpContext.Request.Scheme, Request.Headers["host"], "/Management/ConfirmRegisterPatient?token=" + oPatientNew.token);
+
+        //            string htmlBody = string.Format(content, oPatientNew.LastName, url);
+
+        //            Email emailDTO = new Email()
+        //            {
+        //                recipient = oPatientNew.Email,
+        //                subject = "Confirmation Email MediLink",
+        //                body = htmlBody
+        //            };
+
+        //            bool sent = EmailService.SendEmail(emailDTO);
+        //            errorMessage.Add($"Your account has been created. We have sent a message to the email {oPatientNew.Email} to confirm your email address");
+
+
+        //        }
+        //        else
+        //        {
+        //            errorMessage.Add("Can not create user");
+
+        //        }
+
+        //        ViewBag.MyErrorList = errorMessage;
+        //        ViewData["MessageRegister"] = errorMessage;
+
+
+        //        PatientNewRequest oPatient = new PatientNewRequest();
+        //        oPatient.FirstName = "";
+        //        oPatient.LastName = "";
+        //        oPatient.Password = "";
+        //        oPatient.ConfirmPassword = "";
+        //        return View(oPatient);
+
+        //    }
+        //    else
+        //    {
+        //        // Pass the error list to the view using ViewBag
+        //        ViewBag.MyErrorList = errorMessage;
+        //        ViewData["MessageRegister"] = errorMessage;
+        //        return View(oPatientNew);
+        //    }
+
+
+
+
+
+
+
+
+
+        //}
+
+
+
+
 
         public async Task<IActionResult> Logout()
         {
