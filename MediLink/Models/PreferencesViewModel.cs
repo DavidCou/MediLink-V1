@@ -11,9 +11,9 @@ namespace MediLink.Models
 
         public List<OfficeType> officeTypes { get; set; }
 
-        public List<int> selectedLanguageIds { get; set; } = new List<int>();
+        public List<int> selectedLanguageIds { get; set; }
 
-        public List<int> selectedOfficeTypeIds { get; set; } = new List<int>();
+        public List<int> selectedOfficeTypeIds { get; set; }
 
         public List<int> previousLanguages { get; set; }
 
