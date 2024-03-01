@@ -29,11 +29,11 @@ namespace MediLink.Entities
 
 		public string? ClinicNotes { get; set; }
 
-		public DateTime? CurrentWaitTime { get; set; }
+		public int? CurrentWaitTime { get; set; }
 
-		public DateTime? HistoricalWaitTimeMin { get; set; }
+		public int? HistoricalWaitTimeMin { get; set; }
 
-		public DateTime? HistoricalWaitTimeMax { get; set; }
+		public int? HistoricalWaitTimeMax { get; set; }
 
 		public ICollection<WalkInPractitionerSpokenLanguages> WalkInPractitionerSpokenLanguages { get; set; }
 		
