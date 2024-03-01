@@ -458,7 +458,7 @@ namespace MediLink.Controllers
                 properties
                 );
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("PractitionerHomePage", "Practitioner");
         }
 
         public async Task<IActionResult> RegisterPractitioner()
