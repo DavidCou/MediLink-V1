@@ -1,15 +1,16 @@
-﻿namespace MediLink.Models
+﻿using MediLink.Entities;
+
+namespace MediLink.Models
 {
     public class PractitionerViewModel
     {
-        public string FirstName { get; set; }
+        public Practitioner Practitioner { get; set; }
 
-        public string LastName { get; set; }
+        public List<OfficeAddress> OfficeAddresses { get; set; }
 
-        public string Email { get; set; }
+        public List<PractitionerSpokenLanguages> PractitionerSpokenLanguages { get; set; }
 
-        public string Gender { get; set; }
+        public PractitionerType PractitionerType { get; set; }
 
-       
     }
 }

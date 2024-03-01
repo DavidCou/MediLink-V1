@@ -59,7 +59,7 @@
                     <strong>Spoken Languages:</strong>
                     @foreach (var language in Model.SpokenLanguages)
                     {
-                        <span>@language</span>
+                        <span>@language.Language.LanguageName</span>
 
                         @(language != Model.SpokenLanguages.Last() ? ", " : "")
                     }

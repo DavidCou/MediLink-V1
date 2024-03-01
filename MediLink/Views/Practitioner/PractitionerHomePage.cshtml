@@ -44,25 +44,35 @@
         <div class="col-sm-4 d-flex align-items-center justify-content-center">
             <div class="btn-group-vertical-center">
                 <h3 class="mb-4 mt-2">Menu</h3>
-                <button type="button" class="btn btn-blue btn-block btn-half-width mb-3">View Your Current Patients</button>
-                <button type="button" class="btn btn-blue btn-block btn-half-width mb-3">View Your Pending New Patient Requests</button>
-                <button type="button" class="btn btn-blue btn-block btn-half-width mb-3">View Your WaitList</button>
-                <button type="button" class="btn btn-blue btn-block btn-half-width mb-3">Edit Your Profile</button>
-                <button type="button" class="btn btn-blue btn-block btn-half-width mb-3">View Your Reviews</button>
+                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewPatients","Practitioner")">View Your Current Patients</a>
+                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewNewPatientRequests","Practitioner")">View Your Pending New Patient Requests</a>
+                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewWaitList","Practitioner")">View Your WaitList</a>
+                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdatePractitionerDetails","Practitioner")">Edit Your Profile</a>
+                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewReviews","Practitioner")">View Your Reviews</a>
             </div>
         </div>
         <div class="col-sm-4 center-content">
             <div class="profile-info mt-2">
-                <h2>Profile Information</h2>
-                <p><strong>Full Name:</strong>@Model.PatientDetail.FirstName @Model.PatientDetail.LastName</p>
-                <p><strong>Email:</strong>@Model.Email</p>
-                <p><strong>Phone Number:</strong>@Model.PatientDetail.PhoneNumber</p>
-                <p><strong>Gender:</strong>@Model.PatientDetail.gender</p>
-                <p><strong>Date Of Birth:</strong>@Model.PatientDetail.DoB</p>
-                <p><strong>Address:</strong>@Model.PatientAddress.StreetAddress, @Model.PatientAddress</p>
+                <h2 class="mb-4">Profile Information</h2>
+                <p><strong>Full Name:</strong> @Model.PatientDetail.FirstName @Model.PatientDetail.LastName</p>
+                <p><strong>Email:</strong> @Model.Email</p>
+                <p><strong>Phone Number:</strong> @Model.PatientDetail.PhoneNumber</p>
+                <p><strong>Gender:</strong> @Model.PatientDetail.gender</p>
+                <p>
+                    <strong>Spoken Languages:</strong>
+                    @foreach (var language in Model.SpokenLanguages)
+                    {
+                        <span>@language.Language.LanguageName</span>
+
+                        @(language != Model.SpokenLanguages.Last() ? ", " : "")
+                    }
+                </p>
+                <p><strong>Date Of Birth:</strong> @Model.PatientDetail.DoB</p>
+                <p><strong>Address:</strong> @Model.PatientAddress.StreetAddress @Model.PatientAddress.City</p>
                 <p><strong>Postal Code:</strong>@Model.PatientAddress.PostalCode</p>
-                <p><strong>Provice Of Residence:@Model.PatientAddress.Province</strong></p>
-                <p><strong>Contry Of Residence:@Model.PatientAddress.country</strong></p>
+                <p><strong>Province Of Residence:</strong> @Model.PatientAddress.Province</p>
+                <p><strong>Country Of Residence:</strong> @Model.PatientAddress.country</p>
+
             </div>
         </div>
         <div class="col-sm-4">
