@@ -1,6 +1,6 @@
 ﻿@model PractitionerUpdateViewModel
 @{
-    ViewData["Title"] = "Update Practition Page";
+    ViewData["Title"] = "Update Practition Profile";
 }
 <nav id="header-st" class="navbar navbar-expand static-top ">
     <div class="mr=auto">
@@ -11,7 +11,7 @@
         <div class=" collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mx-auto ">
                 <li class="nav-item">
-                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("PatientHomePage", "Patient")">Home</a>
+                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("PractitionerHomePage", "Practitioner")">Home</a>
                 </li>
 
                 <li class="nav-item dropdown no-arrow ">
@@ -22,7 +22,7 @@
                     <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
                          aria-labelledby="userDropdown">
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="@Url.Action("ChangePassword", "Patients")">
+                        <a class="dropdown-item" href="@Url.Action("ChangePassword", "Practitioner")">
                             <i class="bi bi-people text-gray-400"></i>
                             Change Password
                         </a>
@@ -39,7 +39,6 @@
 </nav>
 <body class="bg-gradient-login">
     <div class="container">
-        <h4 class="text-center text-black mt-5">Update Your Profile Information</h4>
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-3">
                 @if (ViewBag.MyErrorList != null)
@@ -55,68 +54,86 @@
                     </div>
                 }
                 <h4 class="text-center text-black">General Profile Information</h4>
-                <form asp-controller="Patient" asp-action="UpdatePatientDetails" method="post">
-                    <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label class="control-label">First Name</label>
-                                    <div class="inputGroupContainer">
-                                        <div class="input-group"><input id="firstName" name="FirstName" value="@Model.FirstName" class="form-control" asp-for="FirstName" type="text"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label class="control-label">Last Name</label>
-                                    <div class="inputGroupContainer">
-                                        <div class="input-group"><input id="lastname" name="LastName" value="@Model.LastName" class="form-control" asp-for="LastName" type="text"></div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label class="control-label">Email</label>
-                                    <div class="inputGroupContainer">
-                                        <div class="input-group"><input id="email" name="Email" value="@Model.Email" class="form-control" asp-for="Email" type="text"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label class="control-label">Phone</label>
-                                    <div class="inputGroupContainer">
-                                        <div class="input-group"><input id="phone" name="PhoneNumber" value="@Model.PhoneNumber" placeholder="xxx-xxx-xxxx" class="form-control" asp-for="PhoneNumber" type="text"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Currently Accepting New Patients</label>
-                                            <div class="inputGroupContainer">
-                                                <div class="input-group">
-                                                    <select name="IsAcceptingNewPatients" class="selectpicker form-control" aria-label="Default select " asp-for="IsAcceptingNewPatients">
-                                                        <option selected disabled value="noselected" )>Select a genre</option>
-                                                        <option value="false">No</option>
-                                                        <option value="true">Yes</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                            <div class="col-6">    
-                            </div>
-                        </div>
-                    <h4 class="text-center text-black">Personal Information</h4>
+                <form asp-controller="Practitioner" asp-action="UpdatePractitionerDetails" method="post">
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="control-label">Gender</label>
+                                <label asp-for="FirstName"class ="control-label">First Name</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="firstName" name="FirstName" value="@Model.FirstName" class="form-control" asp-for="FirstName" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="LastName" class="control-label">Last Name</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="lastname" name="LastName" value="@Model.LastName" class="form-control" asp-for="LastName" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="Email" class="control-label">Email</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="email" name="Email" value="@Model.Email" class="form-control" asp-for="Email" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="PhoneNumber" class="control-label">Phone Number</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="phone" name="PhoneNumber" value="@Model.PhoneNumber" placeholder="xxx-xxx-xxxx" class="form-control" asp-for="PhoneNumber" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="IsAcceptingNewPatients" class="control-label">Patient Acceptance Status</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group">
+                                        <select name="IsAcceptingNewPatients" class="selectpicker form-control" aria-label="Default select " asp-for="IsAcceptingNewPatients">
+                                            <option value="true">Currently Accepting New Patients</option>
+                                            <option value="false">Not Currently Accepting New Patients</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @* I have no idea why this is showing up as a multiselect dropdown... - DC*@
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="PractitionerTypes" class="control-label">Type Of Practitioner</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group">
+                                        <select name="PractitionerTypes" class="selectpicker form-control" aria-label="Default select " asp-for="PractitionerTypes">
+                                            @foreach (var type in Model.PractitionerTypes)
+                                            {
+                                                if(type.Id == Model.CurrentPractitionerType.Id)
+                                                {
+                                                    <option selected value="@type.Id">@type.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@type.Id">@type.Name</option>
+                                                }
+                                                
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label asp-for="gender" class="control-label">Gender</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
                                         <select name="gender" class="selectpicker form-control" aria-label="Default select " asp-for="gender">
@@ -130,13 +147,33 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="control-label">Spoken Languages:</label>
+                                <label asp-for="Languages" class="control-label">Spoken Languages:</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
                                         <select name="Languages" class="selectpicker form-control" aria-label="Default select" asp-for="Languages" multiple>
                                         @foreach (var language in Model.Languages)
                                         {
-                                            <option value="@language.Id">@language.LanguageName</option>
+                                            // curently causing nothing to show up, not sure why - I will need to look into it - DC
+                                            @* if(Model.CurrentSpokenLanguages != null)
+                                            {
+                                                foreach (var currentLanguage in Model.CurrentSpokenLanguages)
+                                                {
+                                                    if (language.Id == currentLanguage.LanguageId)
+                                                    {
+                                                        <option selected value="@language.Id">@language.LanguageName</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@language.Id">@language.LanguageName</option>
+                                                    }
+
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <option value="@language.Id">@language.LanguageName</option>
+                                            } *@
+                                                <option value="@language.Id">@language.LanguageName</option>
                                         }
                                         </select>
                                     </div>
@@ -144,12 +181,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        
-                    </div>
-                    <div class="text-center">
-                        <a class="btn-user btn-block mt-3 mb-3" href="@Url.Action("PractitionerHomePage", "Practitioner")">Cancel</a>
-                        <button type="submit" class="btn btn-primary">Update</button>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6 text-center">
+                                <a class="btn-user btn-block mt-3 mb-3" href="@Url.Action("PractitionerHomePage", "Practitioner")">Cancel</a>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                            </div>
+                        </div>
                     </div>
                     <hr>
                 </form>

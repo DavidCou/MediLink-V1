@@ -6,24 +6,28 @@ namespace MediLink.Models
 {
     public class PractitionerUpdateViewModel
     {
-        public int Id { get; set; }
-
-        public string Email { get; set; } = null!;
-
         public string FirstName { get; set; } = null!;
 
         public string LastName { get; set; } = null!;
 
-        public string? gender { get; set; }
+        public string Email { get; set; } = null!;
 
         public string PhoneNumber { get; set; } = null!;
 
-        public string IsAcceptingNewPatients { get; set; }
+        public string? gender { get; set; }
 
-        public int PractitionerTypesId { get; set; }
+        public string IsAcceptingNewPatients { get; set; }
 
         public List<Languages> Languages { get; set; }
 
-        public List<PractitionerType>? practitionerTypes { get; set; }
+        public List<PractitionerSpokenLanguages> CurrentSpokenLanguages {  get; set; } 
+
+        public List<PractitionerType> PractitionerTypes { get; set; }
+
+        public PractitionerType CurrentPractitionerType { get; set; }
+
+
+
+
     }
 }
