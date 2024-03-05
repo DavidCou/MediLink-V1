@@ -72,10 +72,6 @@ namespace MediLink.Controllers
                 .Where(of => of.Id == walkInClinic.OfficeAddressId)
                 .FirstOrDefaultAsync();
 
-            OfficeType officeType = await _mediLinkContext.OfficeTypes
-                .Where(ot => ot.Id == officeAddress.OfficeTypeId)
-                .FirstOrDefaultAsync();
-
             List<Languages> languages = await _mediLinkContext.Languages.ToListAsync();
 
             WalkClinicUpdateViewModel walkClinicUpdateViewModel = new WalkClinicUpdateViewModel()
@@ -90,8 +86,7 @@ namespace MediLink.Controllers
                 Country = officeAddress.country,
                 PostalCode = officeAddress.PostalCode,
                 StreetAddress = officeAddress.StreetAddress,
-                UnitNumber = officeAddress.zone,
-                OfficeType = officeType.OfficeTypeName
+                UnitNumber = officeAddress.zone
             };
 
             return View(walkClinicUpdateViewModel);
@@ -169,7 +164,7 @@ namespace MediLink.Controllers
                 .FirstOrDefaultAsync();
 
                 OfficeType officeType = await _mediLinkContext.OfficeTypes
-                    .Where(ot => ot.Id == officeAddress.OfficeTypeId)
+                    .Where(ot => ot.OfficeTypeName == "Walk In Clinic")
                     .FirstOrDefaultAsync();
 
                 if (walkInClinic != null && officeAddress != null)
@@ -197,7 +192,6 @@ namespace MediLink.Controllers
                     walkInClinic.PhoneNumber = walkClinicUpdateViewModel.PhoneNumber;
                     walkInClinic.Email = walkClinicUpdateViewModel.Email;
                     walkInClinic.ClinicNotes = walkClinicUpdateViewModel.ClinicNotes;
-                    walkInClinic.Email = walkClinicUpdateViewModel.Email;
                     _mediLinkContext.Update(walkInClinic);
                     await _mediLinkContext.SaveChangesAsync();
 

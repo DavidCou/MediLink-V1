@@ -8,8 +8,6 @@ namespace MediLink.Models
     {
         public List<Languages>? Languages { get; set; }
 
-        public List<OfficeType> OfficeTypes { get; set; }
-
         public string PhoneNumber { get; set; }
 
         public string Email { get; set; } = null!;
@@ -29,7 +27,5 @@ namespace MediLink.Models
         public string Province { get; set; }
 
         public string Country { get; set; }
-
-        public string OfficeType { get; set; }
     }
 }
