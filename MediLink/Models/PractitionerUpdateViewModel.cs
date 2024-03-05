@@ -14,7 +14,7 @@ namespace MediLink.Models
 
         public string PhoneNumber { get; set; } = null!;
 
-        public string? gender { get; set; }
+        public string Gender { get; set; }
 
         public string IsAcceptingNewPatients { get; set; }
 
@@ -24,7 +24,7 @@ namespace MediLink.Models
 
         public List<PractitionerType> PractitionerTypes { get; set; }
 
-        public PractitionerType CurrentPractitionerType { get; set; }
+        public int CurrentPractitionerTypeId { get; set; }
 
 
 

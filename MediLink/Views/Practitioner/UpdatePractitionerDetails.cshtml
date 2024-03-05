@@ -105,16 +105,15 @@
                                 </div>
                             </div>
                         </div>
-                        @* I have no idea why this is showing up as a multiselect dropdown... - DC*@
                         <div class="col-6">
                             <div class="form-group">
-                                <label asp-for="PractitionerTypes" class="control-label">Type Of Practitioner</label>
+                                <label asp-for="CurrentPractitionerTypeId" class="control-label">Type Of Practitioner</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
-                                        <select name="PractitionerTypes" class="selectpicker form-control" aria-label="Default select " asp-for="PractitionerTypes">
+                                        <select name="PractitionerType" class="selectpicker form-control" aria-label="Default select " asp-for="CurrentPractitionerTypeId">
                                             @foreach (var type in Model.PractitionerTypes)
                                             {
-                                                if(type.Id == Model.CurrentPractitionerType.Id)
+                                                if(type.Id == Model.CurrentPractitionerTypeId)
                                                 {
                                                     <option selected value="@type.Id">@type.Name</option>
                                                 }
@@ -133,10 +132,10 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label asp-for="gender" class="control-label">Gender</label>
+                                <label asp-for="Gender" class="control-label">Gender</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
-                                        <select name="gender" class="selectpicker form-control" aria-label="Default select " asp-for="gender">
+                                        <select name="Gender" class="selectpicker form-control" aria-label="Default select " asp-for="Gender">
                                             <option selected disabled value="noselected" )>Select a genre</option>
                                             <option value="Female">Female</option>
                                             <option value="Male">Male</option>
@@ -154,7 +153,7 @@
                                         @foreach (var language in Model.Languages)
                                         {
                                             // curently causing nothing to show up, not sure why - I will need to look into it - DC
-                                            @* if(Model.CurrentSpokenLanguages != null)
+                                            @*  if(Model.CurrentSpokenLanguages != null)
                                             {
                                                 foreach (var currentLanguage in Model.CurrentSpokenLanguages)
                                                 {
@@ -172,7 +171,7 @@
                                             else
                                             {
                                                 <option value="@language.Id">@language.LanguageName</option>
-                                            } *@
+                                            }  *@
                                                 <option value="@language.Id">@language.LanguageName</option>
                                         }
                                         </select>

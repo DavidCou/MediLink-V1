@@ -128,13 +128,13 @@ namespace MediLink.Controllers
                 Email = practitioner.Email,
                 FirstName = practitioner.FirstName,
                 LastName = practitioner.LastName,
-                gender = practitioner.gender,
+                Gender = practitioner.gender,
                 PhoneNumber = practitioner.PhoneNumber,
                 IsAcceptingNewPatients = isAcceptingNewPatients,
                 Languages = languages,
                 CurrentSpokenLanguages = practitionerSpokenLanguages,
                 PractitionerTypes = practitionerTypes,
-                CurrentPractitionerType = currentPractitionerType
+                CurrentPractitionerTypeId = currentPractitionerType.Id
 
     };
 
@@ -142,7 +142,7 @@ namespace MediLink.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateWalkInClinicDetails(PractitionerUpdateViewModel practitionerUpdateViewModel)
+        public async Task<IActionResult> UpdatePractitionerDetails(PractitionerUpdateViewModel practitionerUpdateViewModel)
         {
             ClaimsPrincipal claimuser = HttpContext.User;
             string userName = "";
@@ -174,80 +174,82 @@ namespace MediLink.Controllers
                 errorMessage.Add("Phone number cannot be left blank");
             }
 
-            if(practitionerUpdateViewModel.gender == null) 
+            if (practitionerUpdateViewModel.Gender == null)
             {
                 errorMessage.Add("You must select a gender");
             }
 
-            if (practitionerUpdateViewModel.PractitionerTypes == null)
-            {
-                errorMessage.Add("You must select a practitioner type");
-            }
-
-            //if (practitionerUpdateViewModel.Languages == null)
+            // commented out until the practitionertype issue can be solved
+            //if (practitionerUpdateViewModel.CurrentPractitionerTypeId == null || practitionerUpdateViewModel.CurrentPractitionerTypeId == 0)
             //{
-            //    errorMessage.Add("You must select at least one spoken laguage");
+            //    errorMessage.Add("You must select a practitioner type");
             //}
+
+            if (practitionerUpdateViewModel.Languages == null)
+            {
+                errorMessage.Add("You must select at least one spoken laguage");
+            }
+            Practitioner practitioner = await _userService.GetPractitionerByEmail(userName);
+
+            List<PractitionerSpokenLanguages> spokenLanguages = await _mediLinkContext.PractitionerSpokenLanguages
+                    .Where(psl => psl.PractitionerId == practitioner.Id).ToListAsync();
 
             if (errorMessage.Count == 0)
             {
-                Practitioner practitioner = await _userService.GetPractitionerByEmail(userName);
-
-                if (practitioner != null)
+                //This may have the same issue as patients update details but IDK, was not able to test - DC 
+                if (practitionerUpdateViewModel.Languages != null)
                 {
-
-                    ////This may have the same issue as patients update details but IDK, was not able to test - DC 
-                    //if (practitionerUpdateViewModel.Languages != null)
-                    //{
-                    //    List<PractitionerSpokenLanguages> previousSpokenLanguages = await _mediLinkContext.PractitionerSpokenLanguages
-                    //    .Where(psl => psl.PractitionerId == practitioner.Id).ToListAsync();
-                    //    foreach (var language in previousSpokenLanguages)
-                    //    {
-                    //        _mediLinkContext.PractitionerSpokenLanguages.Remove(language);
-                    //        await _mediLinkContext.SaveChangesAsync();
-                    //    }
-
-                    //    foreach (var language in practitionerUpdateViewModel.Languages)
-                    //    {
-                    //        var currentSpokenlanguage = new PractitionerSpokenLanguages { LanguageId = language.Id, PractitionerId = practitioner.Id };
-                    //        _mediLinkContext.PractitionerSpokenLanguages.Add(currentSpokenlanguage);
-                    //        await _mediLinkContext.SaveChangesAsync();
-                    //    }
-                    //}
-
-                    if (practitionerUpdateViewModel.IsAcceptingNewPatients == "true") 
+                    
+                    foreach (var language in spokenLanguages)
                     {
-                        practitioner.IsAcceptingNewPatients = true;
-                    }
-                    else 
-                    {
-                        practitioner.IsAcceptingNewPatients = false;
+                        _mediLinkContext.PractitionerSpokenLanguages.Remove(language);
+                        await _mediLinkContext.SaveChangesAsync();
                     }
 
-                    practitioner.Email = practitionerUpdateViewModel.Email;
-                    practitioner.FirstName = practitionerUpdateViewModel.FirstName;
-                    practitioner.LastName = practitionerUpdateViewModel.LastName;
-                    practitioner.gender = practitionerUpdateViewModel.gender;
-                    practitioner.PhoneNumber = practitionerUpdateViewModel.PhoneNumber;
-                    practitioner.PractitionerTypeId = practitionerUpdateViewModel.PractitionerTypes.First().Id;
-                    _mediLinkContext.Update(practitioner);
-                    await _mediLinkContext.SaveChangesAsync();
+                    foreach (var language in practitionerUpdateViewModel.Languages)
+                    {
+                        var currentSpokenlanguage = new PractitionerSpokenLanguages { LanguageId = language.Id, PractitionerId = practitioner.Id };
+                        _mediLinkContext.PractitionerSpokenLanguages.Add(currentSpokenlanguage);
+                        await _mediLinkContext.SaveChangesAsync();
+                    }
+                }
 
-                    ViewBag.Success = "Your profile has been updated.";
-                    ViewData["UpdateSuccess"] = "Your profile has been updated.";
-
-                    return RedirectToAction("PractitionerHomePage");
+                if (practitionerUpdateViewModel.IsAcceptingNewPatients == "true")
+                {
+                    practitioner.IsAcceptingNewPatients = true;
                 }
                 else
                 {
-                    ViewBag.MyErrorList = errorMessage;
-                    ViewData["UpdateErrorMessage"] = errorMessage;
-                    return View(practitionerUpdateViewModel);
+                    practitioner.IsAcceptingNewPatients = false;
                 }
+
+                practitioner.Email = practitionerUpdateViewModel.Email;
+                practitioner.FirstName = practitionerUpdateViewModel.FirstName;
+                practitioner.LastName = practitionerUpdateViewModel.LastName;
+                practitioner.gender = practitionerUpdateViewModel.Gender;
+                practitioner.PhoneNumber = practitionerUpdateViewModel.PhoneNumber;
+                //practitioner.PractitionerTypeId = practitionerUpdateViewModel.CurrentPractitionerTypeId; // The id is being set to 0 for some reason, probably not being picked up 
+                _mediLinkContext.Update(practitioner);
+                await _mediLinkContext.SaveChangesAsync();
+
+                ViewBag.Success = "Your profile has been updated.";
+                ViewData["UpdateSuccess"] = "Your profile has been updated.";
+
+                return RedirectToAction("PractitionerHomePage");
 
             }
             else
             {
+                List<Languages> languages = await _mediLinkContext.Languages.ToListAsync();
+                List<PractitionerType> practitionerTypes = await _mediLinkContext.PractitionerTypes.ToListAsync();
+                PractitionerType practitionerType = await _mediLinkContext.PractitionerTypes.Where(pt => pt.Id ==practitioner.PractitionerTypeId).FirstOrDefaultAsync();
+
+                practitionerUpdateViewModel.Languages = languages;
+                practitionerUpdateViewModel.CurrentSpokenLanguages = spokenLanguages;
+                practitionerUpdateViewModel.PractitionerTypes = practitionerTypes;
+                practitionerUpdateViewModel.CurrentPractitionerTypeId = practitionerType.Id;
+                
+
                 ViewBag.MyErrorList = errorMessage;
                 ViewData["UpdateErrorMessage"] = errorMessage;
                 return View(practitionerUpdateViewModel);
