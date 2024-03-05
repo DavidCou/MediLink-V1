@@ -1,0 +1,159 @@
+﻿@model PractitionerUpdateViewModel
+@{
+    ViewData["Title"] = "Update Practition Page";
+}
+<nav id="header-st" class="navbar navbar-expand static-top ">
+    <div class="mr=auto">
+        <a class="navbar-brand mx-0" href="#"><img class="ms-5 me-0" src="~/img/logo2.png" alt="Company Logo" width="70" height="60"></a>
+        <h3 id="company-title">MediLink</h3>
+    </div>
+    <div class="ml-auto mt-4">
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto ">
+                <li class="nav-item">
+                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("PatientHomePage", "Patient")">Home</a>
+                </li>
+
+                <li class="nav-item dropdown no-arrow ">
+                    <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 mx-2 d-none d-lg-inline text-white ">@ViewData["userName"]</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
+                         aria-labelledby="userDropdown">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("ChangePassword", "Patients")">
+                            <i class="bi bi-people text-gray-400"></i>
+                            Change Password
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Management")">
+                            <i class="bi bi-box-arrow-in-left text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<body class="bg-gradient-login">
+    <div class="container">
+        <h4 class="text-center text-black mt-5">Update Your Profile Information</h4>
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-3">
+                @if (ViewBag.MyErrorList != null)
+                {
+
+                    <div class="alert alert-danger" role="alert">
+                        @foreach (var item in ViewBag.MyErrorList)
+                        {
+                            <span>@item</span>
+
+                            <br>
+                        }
+                    </div>
+                }
+                <h4 class="text-center text-black">General Profile Information</h4>
+                <form asp-controller="Patient" asp-action="UpdatePatientDetails" method="post">
+                    <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label">First Name</label>
+                                    <div class="inputGroupContainer">
+                                        <div class="input-group"><input id="firstName" name="FirstName" value="@Model.FirstName" class="form-control" asp-for="FirstName" type="text"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label">Last Name</label>
+                                    <div class="inputGroupContainer">
+                                        <div class="input-group"><input id="lastname" name="LastName" value="@Model.LastName" class="form-control" asp-for="LastName" type="text"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label">Email</label>
+                                    <div class="inputGroupContainer">
+                                        <div class="input-group"><input id="email" name="Email" value="@Model.Email" class="form-control" asp-for="Email" type="text"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="control-label">Phone</label>
+                                    <div class="inputGroupContainer">
+                                        <div class="input-group"><input id="phone" name="PhoneNumber" value="@Model.PhoneNumber" placeholder="xxx-xxx-xxxx" class="form-control" asp-for="PhoneNumber" type="text"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Currently Accepting New Patients</label>
+                                            <div class="inputGroupContainer">
+                                                <div class="input-group">
+                                                    <select name="IsAcceptingNewPatients" class="selectpicker form-control" aria-label="Default select " asp-for="IsAcceptingNewPatients">
+                                                        <option selected disabled value="noselected" )>Select a genre</option>
+                                                        <option value="false">No</option>
+                                                        <option value="true">Yes</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                            <div class="col-6">    
+                            </div>
+                        </div>
+                    <h4 class="text-center text-black">Personal Information</h4>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="control-label">Gender</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group">
+                                        <select name="gender" class="selectpicker form-control" aria-label="Default select " asp-for="gender">
+                                            <option selected disabled value="noselected" )>Select a genre</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Male">Male</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="control-label">Spoken Languages:</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group">
+                                        <select name="Languages" class="selectpicker form-control" aria-label="Default select" asp-for="Languages" multiple>
+                                        @foreach (var language in Model.Languages)
+                                        {
+                                            <option value="@language.Id">@language.LanguageName</option>
+                                        }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        
+                    </div>
+                    <div class="text-center">
+                        <a class="btn-user btn-block mt-3 mb-3" href="@Url.Action("PractitionerHomePage", "Practitioner")">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                    <hr>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>

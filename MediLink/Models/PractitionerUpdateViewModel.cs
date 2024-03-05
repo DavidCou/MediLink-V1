@@ -18,9 +18,11 @@ namespace MediLink.Models
 
         public string PhoneNumber { get; set; } = null!;
 
-        public bool IsAcceptingNewPatients { get; set; }
+        public string IsAcceptingNewPatients { get; set; }
 
         public int PractitionerTypesId { get; set; }
+
+        public List<Languages> Languages { get; set; }
 
         public List<PractitionerType>? practitionerTypes { get; set; }
     }
