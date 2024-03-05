@@ -1,0 +1,134 @@
+﻿@model PractitionerSearchViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Search for Practitioners";
+}
+
+<nav id="header-st" class="navbar navbar-expand static-top ">
+    <div class="mr=auto">
+        <a class="navbar-brand mx-0" href="#"><img class="ms-5 me-0" src="~/img/logo2.png" alt="Company Logo" width="70" height="60"></a>
+        <h3 id="company-title">MediLink</h3>
+    </div>
+    <div class="ml-auto mt-4">
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto ">
+                <li class="nav-item">
+                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("PatientHomePage", "Patient")">Home</a>
+                </li>
+
+                <li class="nav-item dropdown no-arrow ">
+                    <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 mx-2 d-none d-lg-inline text-white ">@ViewData["userName"]</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
+                         aria-labelledby="userDropdown">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("ChangePassword", "Patients")">
+                            <i class="bi bi-people text-gray-400"></i>
+                            Change Password
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Management")">
+                            <i class="bi bi-box-arrow-in-left text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    <div class="card">
+        <div class="card-header">
+
+            <i class="fas fa-users me-1"></i> Search for Practitioners
+            <div class="d-inline text-end">
+                <a class="close" href="@Url.Action("PatientHomePage","Patient")"><span aria-hidden="true">&times;</span></a>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="container my-1 mb-2">
+                    <div class="d-flex justify-content-center ">
+                        <form asp-controller="Search" asp-action="SearchPractitioner" method="post">
+                            <div class="row col-12">
+                                <div class="col-3 mb-3 searchbar">
+                                    <input type="text" asp-for="city" class="search_input" placeholder="Enter a city" />
+                                </div>
+                                <div class="col-3 mb-3">
+                                    <label asp-for="selectedLanguageIds" class="control-label">Spoken Languages: </label>
+                                    <select class="selectpicker form-control" aria-label="Default select " asp-for="selectedLanguageIds" asp-items="Model.languages" multiple>
+                                    </select>
+                                </div>
+                                <div class="col-3 mb-3">
+                                    <label asp-for="selectedOfficeTypeIds" class="form-label">Preferred Office Types: </label>
+                                    <select class="selectpicker form-control" aria-label="Default select " asp-for="selectedOfficeTypeIds" asp-items="Model.officeTypes" multiple>
+                                        @* @foreach (var officeType in Model.officeTypes)
+                                        {
+                                        <option value="@officeType.Id">@officeType.OfficeTypeName</option>
+                                        } *@
+                                    </select>
+                                </div>
+                                <div class="col-3 mb-1">
+                                    <label asp-for="minimumRating" class="control-label">Rating: </label>
+                                    <select asp-for="minimumRating">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                            <div class="col-1">
+                                <div style="display: inline-block">
+                                    <input type="submit" class="btn btn-primary px-5 w-100" value="Search" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                @if (Model.practitioners.Count > 0)
+                {
+                    <table class="table mx-auto">
+                        <tr>
+                            <th>Name</th>
+                            <th>Rating</th>
+                            <th>Actions</th>
+                        </tr>
+                        @foreach (var prac in Model.practitioners)
+                        {
+                            <tr>
+                                <td>@prac.FirstName, @prac.LastName</td>
+                                @if (prac.rating != null)
+                                {
+                                    <td>@prac.rating stars</td>
+                                }
+                                else
+                                {
+                                    <td>0 stars</td>
+                                }
+                                <td><a>View Details</a></td>
+                            </tr>
+                        }
+                    </table>
+                }
+                else
+                {
+                    <p>No Practitioners</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+</>

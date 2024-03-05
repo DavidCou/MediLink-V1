@@ -41,7 +41,7 @@ namespace MediLink.Controllers
                 .Where(pa => pa.Id == patientDetail.PatientAddressesId)
                 .FirstOrDefaultAsync();
 
-            List<PatientSpokenLanguage> patientSpokenLanguages = await _mediLinkContext.PatientSpokenLanguages.Where(psl => psl.PatientDetailsId == patientDetail.Id).ToListAsync();
+            List<PatientSpokenLanguage> patientSpokenLanguages = await _mediLinkContext.PatientSpokenLanguages.Where(psl => psl.PatientDetailsId == patientDetail.Id).Include(psl => psl.Language).ToListAsync();
 
             PatientViewModel patientViewModel = new PatientViewModel()
             {
