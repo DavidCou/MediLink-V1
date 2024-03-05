@@ -4,6 +4,7 @@ using MediLink.Services.Contract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 
@@ -170,7 +171,7 @@ namespace MediLink.Controllers
                         dob = null;
                     }
 
-                    //TODO - Fix patientUpdateViewModel.SpokenLanguageIds it is always null for some reason
+                    //TODO - Fix patientUpdateViewModel.SpokenLanguageIds it is always null for some reason and causes errors when reloading the page to show error messages
                     if (patientUpdateViewModel.SpokenLanguageIds != null)
                     {
                         List<PatientSpokenLanguage>? previousSpokenLanguages = await _mediLinkContext.PatientSpokenLanguages
@@ -189,7 +190,6 @@ namespace MediLink.Controllers
                         }
                     }
 
-                    //TODO - Finish the data save process
                     patient.Email = patientUpdateViewModel.Email;
                     _mediLinkContext.Update(patient);
                     await _mediLinkContext.SaveChangesAsync();
@@ -200,6 +200,14 @@ namespace MediLink.Controllers
                     patientDetails.PhoneNumber = patientUpdateViewModel.PhoneNumber;
                     patientDetails.DoB = dob;
                     _mediLinkContext.Update(patientDetails);
+                    await _mediLinkContext.SaveChangesAsync();
+
+                    patientAddress.StreetAddress = patientUpdateViewModel.StreetAddress;
+                    patientAddress.City = patientUpdateViewModel.City;
+                    patientAddress.PostalCode = patientUpdateViewModel.PostalCode;
+                    patientAddress.Province = patientUpdateViewModel.Province;
+                    patientAddress.country = patientUpdateViewModel.country;
+                    _mediLinkContext.Update(patientAddress);
                     await _mediLinkContext.SaveChangesAsync();
                 }
                 else

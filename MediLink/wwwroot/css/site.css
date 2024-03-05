@@ -283,7 +283,12 @@ details {
 
 /* end styles search input */
 
-/* -----  Style homepage buttons   ------------------------- */
+/* -----  Style homepage and homepage buttons   ------------------------- */
+
+.background {
+    background: #FFFFEB;
+    background-attachment: fixed;
+}
 
 .btn-group-vertical-center {
     display: flex;

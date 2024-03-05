@@ -129,11 +129,12 @@
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="form-group">
+                                        @* This is causing issues - DC*@
+                                       @*  <div class="form-group">
                                             <label class="control-label">Spoken Languages:</label>
                                             <div class="inputGroupContainer">
                                                 <div class="input-group">
-                                                    <select name="spokenLanguages" class="selectpicker form-control" aria-label="Default select" asp-for="SpokenLanguageIds" multiple>
+                                                    <select name="Languages" class="selectpicker form-control" aria-label="Default select" asp-for="Languages" multiple>
                                                         @foreach (var language in Model.Languages)
                                                         {
                                                             <option value="@language.Id">@language.LanguageName</option>
@@ -143,7 +144,7 @@
                                             </div>
                                         </div>
 
-                                    </div>
+                                    </div> *@
                                 </div>
                             </details>
                             <details>
@@ -162,7 +163,7 @@
                                                 <div class="inputGroupContainer">
                                                     <label class="control-label">Province</label>
                                                     <div class="input-group">
-                                                        <select id="provinceupd" name="Provinve" class="selectpicker form-control" aria-label="Default select " asp-for="Province">
+                                                        <select id="provinceupd" name="Province" class="selectpicker form-control" aria-label="Default select " asp-for="Province">
                                                             <option selected disabled value="noselected" )>Select a Province</option>
                                                             <option value="Ontario">Ontario</option>
                                                             <option value="Quebec">Quebec</option>
@@ -184,7 +185,6 @@
                                             <div class="form-group">
                                                 <label class="control-label">Country</label>
                                                 <div class="inputGroupContainer">
-                                                    <input id="countryupd" name="Country" placeholder="Country" class="form-control" value="Canada" type="text">
                                                     <div class="input-group"><input id="countryupd" name="Country" placeholder="Country" class="form-control" value="Canada" asp-for="country" type="text"></div>
                                                 </div>
                                             </div>

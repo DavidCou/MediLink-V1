@@ -33,46 +33,61 @@
         </div>
     </div>
 </nav>
-<div class="container-fluid bg-gradient-login">
-    <div class="row">
-        <div class="col-sm-4 d-flex align-items-center justify-content-center">
-            <div class="btn-group-vertical-center">
-                <h3 class="mb-4 mt-2">Menu</h3>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("SearchPractitioner","Patient")">Search For a Practitioner</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("SearchWalkClinic","Search")">Search For a Walk-in Clinic</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewRequestDetails","Patient")">View Your Wait List / New Patient Request Status</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewCurrentPractitioners","Patient")">View Your Current Practitioners</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("Preferences","Patient")">View / Update Your Preferences</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdatePatientDetails","Patient")">Edit Your Profile</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ReviewPractitioner","Patient")">Review Your Current / Past Practitioners</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdateReview","Patient")">View / Update Your Reviews</a>
+<body class="background">
+    <div class="container-fluid">
+        @if (ViewBag.Success != null)
+        {
+            <div class="alert alert-success" role="alertdialog">
+                <span>ViewBag.Success</span>
             </div>
-        </div>
-        <div class="col-sm-4 center-content">
-            <div class="profile-info mt-2">
-                <h2 class="mb-4">Profile Information</h2>
-                <p><strong>Full Name:</strong> @Model.PatientDetail.FirstName @Model.PatientDetail.LastName</p>
-                <p><strong>Email:</strong> @Model.Email</p>
-                <p><strong>Phone Number:</strong> @Model.PatientDetail.PhoneNumber</p>
-                <p><strong>Gender:</strong> @Model.PatientDetail.gender</p>
-                <p>
-                    <strong>Spoken Languages:</strong>
-                    @foreach (var language in Model.SpokenLanguages)
+        }
+        <div class="row">
+            <div class="col-sm-4 d-flex align-items-center justify-content-center">
+                <div class="btn-group-vertical-center">
+                    <h3 class="mb-4 mt-2">Menu</h3>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("SearchPractitioner","Patient")">Search For a Practitioner</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("SearchWalkClinic","Search")">Search For a Walk-in Clinic</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewRequestDetails","Patient")">View Your Wait List / New Patient Request Status</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewCurrentPractitioners","Patient")">View Your Current Practitioners</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("Preferences","Patient")">View / Update Your Preferences</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdatePatientDetails","Patient")">Edit Your Profile</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ReviewPractitioner","Patient")">Review Your Current / Past Practitioners</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdateReview","Patient")">View / Update Your Reviews</a>
+                </div>
+            </div>
+            <div class="col-sm-4 center-content">
+                <div class="profile-info mt-2">
+                    <h2 class="mb-4">Profile Information</h2>
+                    <p><strong>Full Name:</strong> @Model.PatientDetail.FirstName @Model.PatientDetail.LastName</p>
+                    <p><strong>Email:</strong> @Model.Email</p>
+                    <p><strong>Phone Number:</strong> @Model.PatientDetail.PhoneNumber</p>
+                    <p><strong>Gender:</strong> @Model.PatientDetail.gender</p>
+                    <p>
+                        <strong>Spoken Languages:</strong>
+                        @foreach (var language in Model.SpokenLanguages)
+                        {
+                            <span>@language.Language.LanguageName</span>
+
+                            @(language != Model.SpokenLanguages.Last() ? ", " : "")
+                        }
+                    </p>
+                    @if (Model.PatientDetail.DoB != null)
                     {
-                        <span>@language.Language.LanguageName</span>
-
-                        @(language != Model.SpokenLanguages.Last() ? ", " : "")
+                        <p><strong>Date Of Birth:</strong> @Model.PatientDetail.DoB.ToString().Substring(0, 11)</p>
                     }
-                </p>
-                <p><strong>Date Of Birth:</strong> @Model.PatientDetail.DoB</p>
-                <p><strong>Address:</strong> @Model.PatientAddress.StreetAddress @Model.PatientAddress.City</p>
-                <p><strong>Postal Code:</strong>@Model.PatientAddress.PostalCode</p>
-                <p><strong>Province Of Residence:</strong> @Model.PatientAddress.Province</p>
-                <p><strong>Country Of Residence:</strong> @Model.PatientAddress.country</p>
+                    else
+                    {
+                        <p><strong>Date Of Birth:</strong></p>
+                    }
+                    <p><strong>Address:</strong> @Model.PatientAddress.StreetAddress @Model.PatientAddress.City</p>
+                    <p><strong>Postal Code:</strong> @Model.PatientAddress.PostalCode</p>
+                    <p><strong>Province Of Residence:</strong> @Model.PatientAddress.Province</p>
+                    <p><strong>Country Of Residence:</strong> @Model.PatientAddress.country</p>
 
+                </div>
             </div>
-        </div>
-        <div class="col-sm-4">
+            <div class="col-sm-4">
+            </div>
         </div>
     </div>
-</div>
+</body>

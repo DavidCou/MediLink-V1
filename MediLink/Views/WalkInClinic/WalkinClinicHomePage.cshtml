@@ -1,4 +1,4 @@
-﻿@model PatientViewModel
+﻿@model WalkClinicViewModel
 @{
     ViewData["Title"] = "Patient Home Page";
 }
@@ -47,31 +47,46 @@
         </div>
     </div>
 </nav>
-<div id="div-info-one" class="container-fluid">
-    <div class="row">
-        <div class="col-sm-4 d-flex align-items-center justify-content-center">
-            <div class="btn-group-vertical-center">
-                <h3 class="mb-4 mt-2">Menu</h3>
-                <button type="button" class="btn btn-blue btn-block btn-half-width mb-3">Edit Profile</button>
-                <button type="button" class="btn btn-blue btn-block btn-half-width mb-3">Update Operating Hours</button>
-                <button type="button" class="btn btn-blue btn-block btn-half-width mb-3">View Historical Wait Times</button>
+<body class="background">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4 d-flex align-items-center justify-content-center">
+                <div class="btn-group-vertical-center">
+                    <h3 class="mb-4 mt-2">Menu</h3>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdateWalkInClinicDetails","WalkInClinic")">Edit Profile</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("CheckPatientIn","WalkInClinic")">Check A Patient In</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("CheckPatientOut","WalkInClinic")">Check A Patient Out</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdatePractitionerDetails","WalkInClinic")">Update Operating Hours</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdatePractitionerAddress","WalkInClinic")">View Historical Wait Times</a>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-4 center-content">
-            <div class="profile-info mt-2">
-                <h2>Profile Information</h2>
-                <p><strong>Full Name:</strong>@Model.PatientDetail.FirstName @Model.PatientDetail.LastName</p>
-                <p><strong>Email:</strong>@Model.Email</p>
-                <p><strong>Phone Number:</strong>@Model.PatientDetail.PhoneNumber</p>
-                <p><strong>Gender:</strong>@Model.PatientDetail.gender</p>
-                <p><strong>Date Of Birth:</strong>@Model.PatientDetail.DoB</p>
-                <p><strong>Address:</strong>@Model.PatientAddress.StreetAddress, @Model.PatientAddress</p>
-                <p><strong>Postal Code:</strong>@Model.PatientAddress.PostalCode</p>
-                <p><strong>Provice Of Residence:@Model.PatientAddress.Province</strong></p>
-                <p><strong>Contry Of Residence:@Model.PatientAddress.country</strong></p>
+            <div class="col-sm-4 center-content">
+                <div class="profile-info mt-2">
+                    <h2>Profile Information</h2>
+                    <p><strong>Name Of Practice:</strong> @Model.OfficeAddress.OfficeName</p>
+                    <p><strong>Type Of Office:</strong> @Model.OfficeAddress.OfficeType</p>
+                    <p><strong>Current WaitTime:</strong> @Model.WalkInClinic.CurrentWaitTime</p>
+                    <p><strong>Email:</strong> @Model.WalkInClinic.Email</p>
+                    <p><strong>Phone Number:</strong> @Model.WalkInClinic.PhoneNumber</p>
+                    <p><strong>Notes About The Clinic:</strong> @Model.WalkInClinic.ClinicNotes</p>
+                    <p>
+                        <strong>Spoken Languages:</strong>
+                            @foreach (var language in Model.WalkInPractitionerSpokenLanguages)
+                        {
+                            <span>@language.Language.LanguageName</span>
+
+                            @(language != Model.WalkInPractitionerSpokenLanguages.Last() ? ", " : "")
+                        }
+                    </p>
+                    <p><strong>Address:</strong> @Model.OfficeAddress.StreetAddress@Model.OfficeAddress.City</p>
+                    <p><strong>Unit Number:</strong> @Model.OfficeAddress.zone</p>
+                    <p><strong>Postal:</strong> @Model.OfficeAddress.PostalCode</p>
+                    <p><strong>Provice: @Model.OfficeAddress.Province</strong></p>
+                    <p><strong>Contry: @Model.OfficeAddress.country</strong></p>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-4">
+            <div class="col-sm-4">
+            </div>
         </div>
     </div>
-</div>
+</body>

@@ -6,7 +6,7 @@ namespace MediLink.Models
 {
     public class PatientUpdateViewModel
     {
-        public List<Languages> Languages { get; set; }
+        public List<Languages>? Languages { get; set; }
 
         public string Email { get; set; }
 

@@ -11,10 +11,7 @@
         <div class=" collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mx-auto ">
                 <li class="nav-item">
-                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("PatientHomePage", "Patient")">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("Search", "Search")">Search</a>
+                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("PractitionerHomePage", "Practitioner")">Home</a>
                 </li>
                 <li class="nav-item dropdown no-arrow ">
                     <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
@@ -39,55 +36,56 @@
         </div>
     </div>
 </nav>
-<div id="div-info-one" class="container-fluid">
-    <div class="row">
-        <div class="col-sm-4 d-flex align-items-center justify-content-center">
-            <div class="btn-group-vertical-center">
-                <h3 class="mb-4 mt-2">Menu</h3>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewPatients","Practitioner")">View Your Current Patients</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewNewPatientRequests","Practitioner")">View Your Pending New Patient Requests</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewWaitList","Practitioner")">View Your WaitList</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdatePractitionerDetails","Practitioner")">Edit Your Profile</a>
-                <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewReviews","Practitioner")">View Your Reviews</a>
+<body class="background">
+    <div class="container-fluid background">
+        <div class="row">
+            <div class="col-sm-4 d-flex align-items-center justify-content-center">
+                <div class="btn-group-vertical-center">
+                    <h3 class="mb-4 mt-2">Menu</h3>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewPatients","Practitioner")">View Your Current Patients</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewNewPatientRequests","Practitioner")">View Your Pending New Patient Requests</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewWaitList","Practitioner")">View Your WaitList</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdatePractitionerDetails","Practitioner")">Edit Your Profile</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdatePractitionerAddress","Practitioner")">Add / Edit Your Office Address(s)</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewReviews","Practitioner")">View Your Reviews</a>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-4 center-content">
-            <div class="profile-info mt-2">
-                <h2 class="mb-4">Profile Information</h2>
-                <p><strong>Full Name:</strong> @Model.Practitioner.FirstName @Model.Practitioner.LastName</p>
-                <p><strong>Email:</strong> @Model.Practitioner.Email</p>
-                <p><strong>Phone Number:</strong> @Model.Practitioner.PhoneNumber</p>
-                <p><strong>Gender:</strong> @Model.Practitioner.gender</p>
-                <p>
-                    <strong>Spoken Languages:</strong>
-                    @foreach (var language in Model.PractitionerSpokenLanguages)
-                    {
-                        <span>@language.Language.LanguageName</span>
+            <div class="col-sm-4 center-content">
+                <div class="profile-info mt-2">
+                    <h2 class="mb-4">Profile Information</h2>
+                    <p><strong>Full Name:</strong> @Model.Practitioner.FirstName @Model.Practitioner.LastName</p>
+                    <p><strong>Email:</strong> @Model.Practitioner.Email</p>
+                    <p><strong>Phone Number:</strong> @Model.Practitioner.PhoneNumber</p>
+                    <p><strong>Gender:</strong> @Model.Practitioner.gender</p>
+                    <p>
+                        <strong>Spoken Languages:</strong>
+                        @foreach (var language in Model.PractitionerSpokenLanguages)
+                        {
+                            <span>@language.Language.LanguageName</span>
 
-                        @(language != Model.PractitionerSpokenLanguages.Last() ? ", " : "")
-                    }
-                </p>
-                <p><strong>Patient Acceptance Status:</strong> @Model.IsAcceptingNewPatients</p>
-                <p><strong>Last Accepted A Patient On:</strong> @Model.LastAcceptedPatientDate</p>
-                <p><strong>Current Rating:</strong> @Model.Practitioner.rating</p>
+                            @(language != Model.PractitionerSpokenLanguages.Last() ? ", " : "")
+                        }
+                    </p>
+                    <p><strong>Patient Acceptance Status:</strong> @Model.IsAcceptingNewPatients</p>
+                    <p><strong>Last Accepted A Patient On:</strong> @Model.LastAcceptedPatientDate</p>
+                    <p><strong>Current Rating:</strong> @Model.Practitioner.rating</p>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-4">
-            <h2 class="mb-4">Office Information</h2>
-            @foreach (var office in Model.OfficeAddresses)
-            {
-                int officeNum = 1;
-                <h4 class="mb-2">Office @officeNum</h4>
-                <p><strong>Name Of Practice:</strong> @office.OfficeName</p>
-                <p><strong>Type Of Office:</strong> @office.OfficeType.OfficeTypeName</p>
-                <p><strong>Address:</strong> @office.StreetAddress @office.City</p>
-                <p><strong>Postal Code:</strong>@office.PostalCode</p>
-                <p><strong>Province Of Residence:</strong> @office.Province</p>
-                <p><strong>Country Of Residence:</strong> @office.country</p>
-                <p> </p>
-                <p> </p>
-                <p> </p>
-            }
+            <div class="col-sm-4 mt-2">
+                <h2 class="mb-4">Office Information</h2>
+                @foreach (var office in Model.OfficeAddresses)
+                {
+                    <div class="mb-5">
+                        <h4 class="mb-2">Office</h4>
+                        <p><strong>Name Of Practice:</strong> @office.OfficeName</p>
+                        <p><strong>Type Of Office:</strong> @office.OfficeType.OfficeTypeName</p>
+                        <p><strong>Address:</strong> @office.StreetAddress @office.City</p>
+                        <p><strong>Postal Code:</strong>@office.PostalCode</p>
+                        <p><strong>Province:</strong> @office.Province</p>
+                        <p><strong>Country:</strong> @office.country</p>
+                    </div>
+                }
+            </div>
         </div>
     </div>
-</div>
+</body>

@@ -1,0 +1,35 @@
+﻿@model WalkClinicUpdateViewModel
+@{
+    ViewData["Title"] = "Update Walk-in Clinic Details";
+}
+<nav id="header-st" class="navbar navbar-expand static-top ">
+    <div class="mr=auto">
+        <a class="navbar-brand mx-0" href="#"><img class="ms-5 me-0" src="~/img/logo2.png" alt="Company Logo" width="70" height="60"></a>
+        <h3 id="company-title">MediLink</h3>
+    </div>
+    <div class="ml-auto mt-4">
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto ">
+                <li class="nav-item dropdown no-arrow ">
+                    <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 mx-2 d-none d-lg-inline text-white ">@ViewData["userName"]</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
+                         aria-labelledby="userDropdown">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("ChangePassword", "WalkInClinic")">
+                            <i class="bi bi-people text-gray-400"></i>
+                            Change Password
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Management")">
+                            <i class="bi bi-box-arrow-in-left text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
