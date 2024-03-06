@@ -45,11 +45,11 @@
             <div class="col-sm-4 d-flex align-items-center justify-content-center">
                 <div class="btn-group-vertical-center">
                     <h3 class="mb-4 mt-2">Menu</h3>
-                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("SearchPractitioner","Patient")">Search For a Practitioner</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("SearchPractitioner","Search")">Search For a Practitioner</a>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("SearchWalkClinic","Search")">Search For a Walk-in Clinic</a>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewRequestDetails","Patient")">View Your Wait List / New Patient Request Status</a>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewCurrentPractitioners","Patient")">View Your Current Practitioners</a>
-                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("Preferences","Patient")">View / Update Your Preferences</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" data-toggle='modal' data-target='#preferences'>View / Update Your Preferences</a>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdatePatientDetails","Patient")">Edit Your Profile</a>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ReviewPractitioner","Patient")">Review Your Current / Past Practitioners</a>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdateReview","Patient")">View / Update Your Reviews</a>
@@ -87,6 +87,124 @@
                 </div>
             </div>
             <div class="col-sm-4">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Offices -->
+    <div class="modal fade" id="preferences" tabindex="-1" aria-labelledby="editmodal" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                    <div class="card">
+                        <div class="card-header">
+
+                            <i class="fas fa-users me-1"></i> Preferences
+                            <div class="d-inline text-end">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <form asp-controller="Patient" asp-action="Preferences" method="post" align="center">
+                                    <div class="row text-center">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="preferencesCity" class="control-label">City: </label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group">
+                                                        <input type="text" id="preferencesCity" class="form-control" asp-for="Preferences.preferences.location" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Rating: </label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group">
+                                                        <select asp-for="Preferences.preferences.rating">
+                                                            <option value="0">0</option>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row text-center">
+                                        <div class="col-6">
+                                            <label asp-for="Preferences.selectedLanguageIds" class="col-auto form-label">Spoken Languages: </label>
+                                            <div class="inputGroupContainer">
+                                                <div class="input-group">
+                                                    <select class="selectpicker form-control" aria-label="Default select " asp-for="Preferences.selectedLanguageIds" asp-items="Model.Preferences.languages" multiple>
+                                                        <option selected disabled value="noselected" )>Select a Language</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <label asp-for="Preferences.selectedOfficeTypeIds" class="col-auto form-label">Preferred Office Types: </label>
+                                            <div class="inputGroupContainer">
+                                                <div class="input-group">
+                                                    <select class="selectpicker form-control" aria-label="Default select " asp-for="Preferences.selectedOfficeTypeIds" multiple>
+                                                        <option selected disabled value="noselected" )>Select an Office Type</option>
+                                                        @foreach (var officeType in Model.Preferences.officeTypes)
+                                                        {
+                                                            <option value="@officeType.Id">@officeType.OfficeTypeName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div hidden>
+                                        <select asp-for="Preferences.previousLanguages" asp-items="Model.Preferences.languages"></select>
+                                        <select asp-for="Preferences.previousOfficeTypes">
+                                            @foreach (var officeType in Model.Preferences.officeTypes)
+                                            {
+                                                <option value="@officeType.Id">@officeType.OfficeTypeName</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <input type="hidden" asp-for="Preferences.preferences.Id" />
+                                    <input type="hidden" asp-for="Preferences.previousCity" />
+                                    <input type="hidden" asp-for="Preferences.previousRating" />
+                                    <br />
+                                    <div class="d-block text-center">
+                                        <input type="submit" class="btn btn-primary px-5" value="Save" />
+                                    </div>
+                                    
+                                </form>
+
+
+                                <br />
+                                <div class="d-block text-center">
+                                    <button type="button" class="btn btn-secondary tex" data-dismiss="modal" aria-label="Close">
+                                        Close
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </div>

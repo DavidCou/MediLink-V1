@@ -18,5 +18,9 @@ namespace MediLink.Models
         public List<int> previousLanguages { get; set; }
 
         public List<int> previousOfficeTypes { get; set; }
+
+        public string previousCity { get; set; }
+
+        public int previousRating { get; set; }
     }
 }

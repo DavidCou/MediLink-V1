@@ -140,10 +140,6 @@ namespace MediLink.Controllers
                     }
                 }
             }
-            else
-            {
-                viewModel.practitioners = new List<Practitioner>();
-            }
 
             var languages = _mediLinkContext.Languages.Where(l => l.IsDeleted == false).OrderBy(l => l.LanguageName).ToList();
             var officeTypes = _mediLinkContext.OfficeTypes.Where(ot => ot.IsDeleted == false).OrderBy(ot => ot.OfficeTypeName).ToList();
@@ -233,10 +229,6 @@ ClaimsPrincipal claimuser = HttpContext.User;
                         viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners.Where(p => practitionerIds.Contains(p.Id) && p.rating >= viewModel.minimumRating).ToListAsync());
                     }
                 }
-            }
-            else
-            {
-                viewModel.practitioners = new List<Practitioner>();
             }
 
             var languages = _mediLinkContext.Languages.Where(l => l.IsDeleted == false).OrderBy(l => l.LanguageName).ToList();

@@ -43,12 +43,15 @@ namespace MediLink.Controllers
 
             List<PatientSpokenLanguage> patientSpokenLanguages = await _mediLinkContext.PatientSpokenLanguages.Where(psl => psl.PatientDetailsId == patientDetail.Id).Include(psl => psl.Language).ToListAsync();
 
+            PreferencesViewModel preferences = await Preferences(patient);
+
             PatientViewModel patientViewModel = new PatientViewModel()
             {
                 Email = patient.Email,
                 SpokenLanguages = patientSpokenLanguages,
                 PatientDetail = patientDetail,
-                PatientAddress = patientAddress
+                PatientAddress = patientAddress,
+                Preferences = preferences
             };
 
             return View(patientViewModel);
@@ -232,21 +235,8 @@ namespace MediLink.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Preferences()
+        public async Task<PreferencesViewModel> Preferences(Patient patient)
         {
-            ClaimsPrincipal claimuser = HttpContext.User;
-            string userName = "";
-
-            if (claimuser.Identity.IsAuthenticated)
-            {
-                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
-                    .Select(c => c.Value).SingleOrDefault();
-            }
-
-            ViewData["userName"] = userName;
-
-            Patient patient = await _userService.GetUserByEmail(userName);
-
             PatientPreference preferences = await _mediLinkContext.PatientPreferences.Where(p => p.Id == patient.PatientPreferencesId).FirstOrDefaultAsync();
 
             if(preferences == null)
@@ -270,87 +260,85 @@ namespace MediLink.Controllers
                 preferences.PreferedLanguages = await _mediLinkContext.PreferedLanguages.Where(pl => pl.PatientPreferenceId == preferences.Id).ToListAsync();
             }
 
-            var languages = _mediLinkContext.Languages.Where(l => l.IsDeleted == false).OrderBy(l => l.LanguageName).ToList();
-            var officeTypes = _mediLinkContext.OfficeTypes.Where(ot => ot.IsDeleted == false).OrderBy(ot => ot.OfficeTypeName).ToList();
             PreferencesViewModel viewModel = new PreferencesViewModel();
 
+            var languages = _mediLinkContext.Languages.Where(l => l.IsDeleted == false).OrderBy(l => l.LanguageName).ToList();
+            viewModel.officeTypes = _mediLinkContext.OfficeTypes.Where(ot => ot.IsDeleted == false).OrderBy(ot => ot.OfficeTypeName).ToList();
+
             viewModel.preferences = preferences;
-            
+            viewModel.previousOfficeTypes = preferences.PatientOfficeType.Select(pot => pot.OfficeTypeId).ToList();
+            viewModel.selectedOfficeTypeIds = preferences.PatientOfficeType.Select(pot => pot.OfficeTypeId).ToList();
             viewModel.languages = new MultiSelectList(languages, "Id", "LanguageName", preferences.PreferedLanguages.Select(pl => pl.LanguageId));
+            viewModel.previousCity = preferences.location;
+            viewModel.previousRating = preferences.rating??0;
 
-            viewModel.officeTypes = officeTypes;
-
-            return View(viewModel);
+            return viewModel;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Preferences(PreferencesViewModel viewModel)
+        public async Task<IActionResult> Preferences(PatientViewModel viewModel)
         {
-            ClaimsPrincipal claimuser = HttpContext.User;
-            string userName = "";
-
-            if (claimuser.Identity.IsAuthenticated)
+            if(viewModel.Preferences.selectedLanguageIds == null)
             {
-                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
-                    .Select(c => c.Value).SingleOrDefault();
+                viewModel.Preferences.selectedLanguageIds = new List<int>();
             }
 
-            ViewData["userName"] = userName;
-
-            Patient patient = await _userService.GetUserByEmail(userName);
-
-            if (viewModel.previousLanguages != viewModel.selectedLanguageIds)
+            if (viewModel.Preferences.previousLanguages == null)
             {
-                var previousLanguages = await _mediLinkContext.PreferedLanguages.Where(pl => pl.PatientPreferenceId == viewModel.preferences.Id).ToListAsync();
+                viewModel.Preferences.previousLanguages = new List<int>();
+            }
+
+            if (viewModel.Preferences.previousLanguages.Except(viewModel.Preferences.selectedLanguageIds).ToList().Count > 0)
+            {
+                var previousLanguages = await _mediLinkContext.PreferedLanguages.Where(pl => pl.PatientPreferenceId == viewModel.Preferences.preferences.Id).ToListAsync();
                 foreach(var language in previousLanguages)
                 {
                     _mediLinkContext.PreferedLanguages.Remove(language);
                     await _mediLinkContext.SaveChangesAsync();
                 }
 
-                foreach (var languageId in viewModel.selectedLanguageIds)
+                foreach (var languageId in viewModel.Preferences.selectedLanguageIds)
                 {
-                    var language = new PreferedLanguage() { LanguageId = languageId, PatientPreferenceId = viewModel.preferences.Id };
+                    var language = new PreferedLanguage() { LanguageId = languageId, PatientPreferenceId = viewModel.Preferences.preferences.Id };
                     _mediLinkContext.PreferedLanguages.Add(language);
                     await _mediLinkContext.SaveChangesAsync();
                 }
             }
 
-            if(viewModel.previousOfficeTypes != viewModel.selectedOfficeTypeIds)
+            if (viewModel.Preferences.selectedOfficeTypeIds == null)
             {
-                var previousOfficeTypes = await _mediLinkContext.PatientOfficeTypes.Where(po => po.PatientPreferenceId == viewModel.preferences.Id).ToListAsync();
+                viewModel.Preferences.selectedOfficeTypeIds = new List<int>();
+            }
+
+            if (viewModel.Preferences.previousOfficeTypes == null)
+            {
+                viewModel.Preferences.previousOfficeTypes = new List<int>();
+            }
+
+            if (viewModel.Preferences.previousOfficeTypes != viewModel.Preferences.selectedOfficeTypeIds)
+            {
+                var previousOfficeTypes = await _mediLinkContext.PatientOfficeTypes.Where(po => po.PatientPreferenceId == viewModel.Preferences.preferences.Id).ToListAsync();
                 foreach (var officeType in previousOfficeTypes)
                 {
                     _mediLinkContext.PatientOfficeTypes.Remove(officeType);
                     await _mediLinkContext.SaveChangesAsync();
                 }
 
-                foreach(var officeTypeId in viewModel.selectedOfficeTypeIds)
+                foreach(var officeTypeId in viewModel.Preferences.selectedOfficeTypeIds)
                 {
-                    var officeType = new PatientOfficeType() { OfficeTypeId = officeTypeId, PatientPreferenceId = viewModel.preferences.Id };
+                    var officeType = new PatientOfficeType() { OfficeTypeId = officeTypeId, PatientPreferenceId = viewModel.Preferences.preferences.Id };
                     _mediLinkContext.PatientOfficeTypes.Add(officeType);
                     await _mediLinkContext.SaveChangesAsync();
                 }
             }
 
-            if(viewModel.preferences.location == null)
+            if (!viewModel.Preferences.previousCity.Equals(viewModel.Preferences.preferences.location) || !viewModel.Preferences.previousRating.Equals(viewModel.Preferences.preferences.rating))
             {
-                viewModel.preferences.location = "";
+                _mediLinkContext.PatientPreferences.Update(viewModel.Preferences.preferences);
+                await _mediLinkContext.SaveChangesAsync();
             }
 
-            _mediLinkContext.PatientPreferences.Update(viewModel.preferences);
-            await _mediLinkContext.SaveChangesAsync();
-
-            var languages = _mediLinkContext.Languages.Where(l => l.IsDeleted == false).OrderBy(l => l.LanguageName).ToList();
-            var officeTypes = _mediLinkContext.OfficeTypes.Where(ot => ot.IsDeleted == false).OrderBy(ot => ot.OfficeTypeName).ToList();
-
-            viewModel.languages = new MultiSelectList(languages, "Id", "LanguageName", viewModel.selectedLanguageIds);
-
-            viewModel.officeTypes = officeTypes;
-
-            ViewData["Message"] = "Your preferences have been updated";
-
-            return View(viewModel);
+            return RedirectToAction("PatientHomePage");
         }
 
         private MediLinkDbContext _mediLinkContext;

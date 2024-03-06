@@ -18,6 +18,6 @@ namespace MediLink.Models
 
         public int minimumRating { get; set; }
 
-        public List<Practitioner> practitioners { get; set; }
+        public List<Practitioner> practitioners { get; set; } = new List<Practitioner>();
     }
 }

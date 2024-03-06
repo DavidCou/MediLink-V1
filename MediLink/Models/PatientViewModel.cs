@@ -13,5 +13,7 @@ namespace MediLink.Models
         public PatientDetail PatientDetail { get; set; }
 
         public PatientAddress? PatientAddress { get; set; }
+
+        public PreferencesViewModel Preferences { get; set; }
     }
 }
