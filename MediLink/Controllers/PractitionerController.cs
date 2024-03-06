@@ -33,7 +33,9 @@ namespace MediLink.Controllers
             Practitioner practitioner = await _userService.GetPractitionerByEmail(userName);
 
             List<PractitionerOfficeAddress> practitionerOfficeAddresses = await _mediLinkContext.PractitionerAddresses
-                .Where(pa => pa.OfficeAddressesId == practitioner.Id)
+                .Where(pa => pa.PractitionerId == practitioner.Id)
+                .Include(pa => pa.OfficeAddresses)
+                .ThenInclude(oa => oa.OfficeType)
                 .ToListAsync();
 
             List<OfficeAddress> officeAddresses = new List<OfficeAddress>();
@@ -44,7 +46,7 @@ namespace MediLink.Controllers
             }
 
             List<PractitionerSpokenLanguages> practitionerSpokenLanguages = await _mediLinkContext.PractitionerSpokenLanguages
-                .Where(psl => psl.PractitionerId == practitioner.Id).ToListAsync();
+                .Where(psl => psl.PractitionerId == practitioner.Id).Include(psl => psl.Language).ToListAsync();
 
             PractitionerType practitionerType = await _mediLinkContext.PractitionerTypes
                 .Where(pt => pt.Id == practitioner.PractitionerTypeId)

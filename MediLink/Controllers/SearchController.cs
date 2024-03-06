@@ -240,6 +240,76 @@ ClaimsPrincipal claimuser = HttpContext.User;
             return View(viewModel);
         }
 
+        public async Task<IActionResult> PractitionerDetails(string email)
+        {
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+            if (claimuser.Identity.IsAuthenticated)
+            {
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            ViewData["userName"] = userName;
+
+            Practitioner practitioner = await _userService.GetPractitionerByEmail(email);
+
+            List<PractitionerOfficeAddress> practitionerOfficeAddresses = await _mediLinkContext.PractitionerAddresses
+                .Where(pa => pa.PractitionerId == practitioner.Id)
+                .Include(pa => pa.OfficeAddresses)
+                .ThenInclude(oa => oa.OfficeType)
+                .ToListAsync();
+
+            List<OfficeAddress> officeAddresses = new List<OfficeAddress>();
+
+            foreach (var officeAddress in practitionerOfficeAddresses)
+            {
+                officeAddresses.Add(officeAddress.OfficeAddresses);
+            }
+
+            List<PractitionerSpokenLanguages> practitionerSpokenLanguages = await _mediLinkContext.PractitionerSpokenLanguages
+                .Where(psl => psl.PractitionerId == practitioner.Id).Include(psl => psl.Language).ToListAsync();
+
+            PractitionerType practitionerType = await _mediLinkContext.PractitionerTypes
+                .Where(pt => pt.Id == practitioner.PractitionerTypeId)
+                .FirstOrDefaultAsync();
+
+            string isAcceptingNewPatients = "";
+            if (practitioner.IsAcceptingNewPatients = true)
+            {
+                isAcceptingNewPatients = "Currently accepting new patients";
+            }
+            else
+            {
+                isAcceptingNewPatients = "Currently not accepting new patients";
+            }
+
+            string lastAcceptedPatientDateString = practitioner.lastPatientAcceptedDate.ToString();
+
+            if (!string.IsNullOrEmpty(lastAcceptedPatientDateString) || !string.IsNullOrWhiteSpace(lastAcceptedPatientDateString))
+            {
+                lastAcceptedPatientDateString = practitioner.lastPatientAcceptedDate.ToString().Substring(0, 11);
+            }
+            else
+            {
+                lastAcceptedPatientDateString = "No patients accepted yet";
+            }
+
+            PractitionerViewModel practitionerViewModel = new PractitionerViewModel()
+            {
+                Practitioner = practitioner,
+                OfficeAddresses = officeAddresses,
+                PractitionerSpokenLanguages = practitionerSpokenLanguages,
+                PractitionerType = practitionerType,
+                IsAcceptingNewPatients = isAcceptingNewPatients,
+                LastAcceptedPatientDate = lastAcceptedPatientDateString
+            };
+
+            return View(practitionerViewModel);
+
+        }
+
         public async Task<IActionResult> SearchWalkClinic()
         {
 
