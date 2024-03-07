@@ -8,6 +8,8 @@ namespace MediLink.Models
     {
         public List<Languages>? Languages { get; set; }
 
+        public List<WalkInPractitionerSpokenLanguages> CurrentSpokenLanguages { get; set; }
+
         public string PhoneNumber { get; set; }
 
         public string Email { get; set; } = null!;

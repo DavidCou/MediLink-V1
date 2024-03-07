@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
+using System.Collections.Concurrent;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 
@@ -18,7 +19,7 @@ namespace MediLink.Controllers
             _userService = userService;
         }
 
-        public async Task<IActionResult> PatientHomePage()
+        public async Task<IActionResult> WalkInClinicHomePage()
         {
             ClaimsPrincipal claimuser = HttpContext.User;
             string userName = "";
@@ -155,10 +156,14 @@ namespace MediLink.Controllers
                 errorMessage.Add("Country cannot be blank");
             }
 
+            WalkInClinic walkInClinic = await _userService.GetWalkInClinicByEmail(userName);
+
+            List<WalkInPractitionerSpokenLanguages>? currentSpokenLanguages = await _mediLinkContext.WalkInPractitionerSpokenLanguages
+                .Where(wpsl => wpsl.WalkInPractitionerId == walkInClinic.Id).ToListAsync();
+
             if (errorMessage.Count == 0)
             {
-                WalkInClinic walkInClinic = await _userService.GetWalkInClinicByEmail(userName);
-
+                
                 OfficeAddress officeAddress = await _mediLinkContext.OfficeAddresses
                 .Where(of => of.Id == walkInClinic.OfficeAddressId)
                 .FirstOrDefaultAsync();
@@ -167,55 +172,47 @@ namespace MediLink.Controllers
                     .Where(ot => ot.OfficeTypeName == "Walk In Clinic")
                     .FirstOrDefaultAsync();
 
-                if (walkInClinic != null && officeAddress != null)
+                //TODO - Fix patientUpdateViewModel.SpokenLanguageIds it is always null for some reason and causes errors when reloading the page to show error messages
+                if (walkClinicUpdateViewModel.Languages != null)
                 {
-                   
-                    //TODO - Fix patientUpdateViewModel.SpokenLanguageIds it is always null for some reason and causes errors when reloading the page to show error messages
-                    if (walkClinicUpdateViewModel.Languages != null)
+                    foreach (var language in currentSpokenLanguages)
                     {
-                        List<WalkInPractitionerSpokenLanguages>? previousSpokenLanguages = await _mediLinkContext.WalkInPractitionerSpokenLanguages 
-                        .Where(wpsl =>  wpsl.WalkInPractitionerId == walkInClinic.Id).ToListAsync();
-                        foreach (var language in previousSpokenLanguages)
-                        {
-                            _mediLinkContext.WalkInPractitionerSpokenLanguages.Remove(language);
-                            await _mediLinkContext.SaveChangesAsync();
-                        }
-
-                        foreach (var language in walkClinicUpdateViewModel.Languages)
-                        {
-                            var currentSpokenlanguage = new WalkInPractitionerSpokenLanguages { LanguageId = language.Id, WalkInPractitionerId = walkInClinic.Id };
-                            _mediLinkContext.WalkInPractitionerSpokenLanguages.Add(currentSpokenlanguage);
-                            await _mediLinkContext.SaveChangesAsync();
-                        }
+                        _mediLinkContext.WalkInPractitionerSpokenLanguages.Remove(language);
+                        await _mediLinkContext.SaveChangesAsync();
                     }
 
-                    walkInClinic.PhoneNumber = walkClinicUpdateViewModel.PhoneNumber;
-                    walkInClinic.Email = walkClinicUpdateViewModel.Email;
-                    walkInClinic.ClinicNotes = walkClinicUpdateViewModel.ClinicNotes;
-                    _mediLinkContext.Update(walkInClinic);
-                    await _mediLinkContext.SaveChangesAsync();
-
-                    officeAddress.OfficeName = walkClinicUpdateViewModel.OfficeName;
-                    officeAddress.StreetAddress = walkClinicUpdateViewModel.StreetAddress;
-                    officeAddress.zone = walkClinicUpdateViewModel.UnitNumber;
-                    officeAddress.City = walkClinicUpdateViewModel.City;
-                    officeAddress.PostalCode = walkClinicUpdateViewModel.PostalCode;
-                    officeAddress.Province = walkClinicUpdateViewModel.Province;
-                    officeAddress.country = walkClinicUpdateViewModel.Country;
-                    officeAddress.OfficeTypeId = officeType.Id;
-                    _mediLinkContext.Update(officeAddress);
-                    await _mediLinkContext.SaveChangesAsync();
-                }
-                else
-                {
-                    ViewBag.MyErrorList = errorMessage;
-                    ViewData["UpdateErrorMessage"] = errorMessage;
-                    return View(walkClinicUpdateViewModel);
+                    foreach (var language in walkClinicUpdateViewModel.Languages)
+                    {
+                        var currentSpokenlanguage = new WalkInPractitionerSpokenLanguages { LanguageId = language.Id, WalkInPractitionerId = walkInClinic.Id };
+                        _mediLinkContext.WalkInPractitionerSpokenLanguages.Add(currentSpokenlanguage);
+                        await _mediLinkContext.SaveChangesAsync();
+                    }
                 }
 
+                walkInClinic.PhoneNumber = walkClinicUpdateViewModel.PhoneNumber;
+                walkInClinic.Email = walkClinicUpdateViewModel.Email;
+                walkInClinic.ClinicNotes = walkClinicUpdateViewModel.ClinicNotes;
+                _mediLinkContext.Update(walkInClinic);
+                await _mediLinkContext.SaveChangesAsync();
+
+                officeAddress.OfficeName = walkClinicUpdateViewModel.OfficeName;
+                officeAddress.StreetAddress = walkClinicUpdateViewModel.StreetAddress;
+                officeAddress.zone = walkClinicUpdateViewModel.UnitNumber;
+                officeAddress.City = walkClinicUpdateViewModel.City;
+                officeAddress.PostalCode = walkClinicUpdateViewModel.PostalCode;
+                officeAddress.Province = walkClinicUpdateViewModel.Province;
+                officeAddress.country = walkClinicUpdateViewModel.Country;
+                officeAddress.OfficeTypeId = officeType.Id;
+                _mediLinkContext.Update(officeAddress);
+                await _mediLinkContext.SaveChangesAsync();
             }
             else
             {
+                List<Languages> languages = await _mediLinkContext.Languages.ToListAsync();
+
+                walkClinicUpdateViewModel.Languages = languages;
+                walkClinicUpdateViewModel.CurrentSpokenLanguages = currentSpokenLanguages;
+
                 ViewBag.MyErrorList = errorMessage;
                 ViewData["UpdateErrorMessage"] = errorMessage;
                 return View(walkClinicUpdateViewModel);
