@@ -105,7 +105,10 @@ namespace MediLink.Controllers
 
             if (patientFound != null)
             {
-                ViewData["MessageRegister"] = "User already exists";
+                errorMessage.Add($"User already exists");
+
+                ViewBag.MyErrorList = errorMessage;
+                ViewData["MessageRegister"] = errorMessage;
                 return View();
             }
 
@@ -515,7 +518,8 @@ namespace MediLink.Controllers
                     })
                     .ToListAsync();
 
-
+            //set the officess to practitioner instance
+            oPractict.officeInfo = offices;
 
 
             if (practFound != null)
@@ -867,8 +871,13 @@ namespace MediLink.Controllers
 
             if (clinicFound != null)
             {
-                ViewData["MessageRegister"] = "Walk-in Clinic already exists";
-                return View();
+                errorMessage.Add("-Walk-in Clinic already exists");
+
+                // Pass the error list to the view using ViewBag
+                ViewBag.MyErrorList = errorMessage;
+                ViewData["MessageRegister"] = errorMessage;
+                
+                return View(oWalkClinicInfo);
             }
 
 
