@@ -4,6 +4,7 @@ using MediLink.Services.Contract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Claims;
 
@@ -50,27 +51,25 @@ namespace MediLink.Controllers
             }
 
             List<int> practitionerIds = new List<int>();
+            List<int> languagePractitionerIds = new List<int>();
+            List<int> officePractitionerIds = new List<int>();
 
-            if(selectedLanguagesId.Count > 0)
+            if (viewModel.selectedLanguageIds.Count > 0)
             {
-                practitionerIds.AddRange(await _mediLinkContext.PractitionerSpokenLanguages.Where(psl => selectedLanguagesId.Contains(psl.LanguageId)).Select(psl => psl.PractitionerId).Distinct().ToListAsync());
-            }
-            else
-            {
-                practitionerIds.AddRange(await _mediLinkContext.PractitionerSpokenLanguages.Select(psl => psl.PractitionerId).Distinct().ToListAsync());
+                languagePractitionerIds.AddRange(await _mediLinkContext.PractitionerSpokenLanguages.Where(psl => viewModel.selectedLanguageIds.Contains(psl.LanguageId)).Select(psl => psl.PractitionerId).Distinct().ToListAsync());
             }
 
             List<int> addressIds = new List<int>();
 
-            if(selectedOfficeTypesId.Count > 0)
+            if (viewModel.selectedOfficeTypeIds.Count > 0)
             {
                 if (viewModel.city != null)
                 {
-                    addressIds = await _mediLinkContext.OfficeAddresses.Where(oa => oa.City == viewModel.city && selectedOfficeTypesId.Contains(oa.OfficeTypeId)).Select(oa => oa.Id).Distinct().ToListAsync();
+                    addressIds = await _mediLinkContext.OfficeAddresses.Where(oa => oa.City == viewModel.city && viewModel.selectedOfficeTypeIds.Contains(oa.OfficeTypeId)).Select(oa => oa.Id).Distinct().ToListAsync();
                 }
                 else
                 {
-                    addressIds = await _mediLinkContext.OfficeAddresses.Where(oa => selectedOfficeTypesId.Contains(oa.OfficeTypeId)).Select(oa => oa.OfficeTypeId).Distinct().ToListAsync();
+                    addressIds = await _mediLinkContext.OfficeAddresses.Where(oa => viewModel.selectedOfficeTypeIds.Contains(oa.OfficeTypeId)).Select(oa => oa.Id).Distinct().ToListAsync();
                 }
             }
             else
@@ -81,63 +80,34 @@ namespace MediLink.Controllers
                 }
                 else
                 {
-                    addressIds = await _mediLinkContext.OfficeAddresses.Select(oa => oa.OfficeTypeId).Distinct().ToListAsync();
+                    addressIds = await _mediLinkContext.OfficeAddresses.Select(oa => oa.Id).Distinct().ToListAsync();
                 }
             }
 
-
-            for (int i = 0; i < Math.Ceiling((double)addressIds.Count / 2100); i++)
+            if (addressIds.Count > 0)
             {
-                if (Math.Floor((double)addressIds.Count / 2100) > 0)
-                {
-                    var currentIds = addressIds.Take(2100).ToList();
-                    practitionerIds.AddRange(await _mediLinkContext.PractitionerAddresses.Where(oa => currentIds.Contains(oa.OfficeAddressesId)).Select(oa => oa.PractitionerId).ToListAsync());
-                }
-                else
-                {
-                    practitionerIds.AddRange(await _mediLinkContext.PractitionerAddresses.Where(oa => addressIds.Contains(oa.OfficeAddressesId)).Select(oa => oa.PractitionerId).ToListAsync());
-                }
-
-                if (addressIds.Count > 2100)
-                {
-                    addressIds.RemoveRange(0, 2100);
-                }
+                officePractitionerIds = await _mediLinkContext.PractitionerAddresses.Where(pa => addressIds.Contains(pa.OfficeAddressesId)).Select(pa => pa.PractitionerId).Distinct().ToListAsync();
             }
+
+            if (viewModel.selectedLanguageIds.Count > 0)
+            {
+                practitionerIds = officePractitionerIds.Intersect(languagePractitionerIds).ToList();
+            }
+            else
+            {
+                practitionerIds = officePractitionerIds;
+            }
+
 
             if (practitionerIds.Count > 0)
             {
-                practitionerIds = practitionerIds.Distinct().ToList();
-
-                for (int i = 0; i < Math.Ceiling((double)practitionerIds.Count / 2100); i++)
+                if (viewModel.minimumRating == 0)
                 {
-                    if (Math.Floor((double)practitionerIds.Count / 2100) > 0)
-                    {
-                        var currentIds = practitionerIds.Take(2100).ToList();
-                        if (viewModel.minimumRating == 0)
-                        {
-                            viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners.Where(p => currentIds.Contains(p.Id)).ToListAsync());
-                        }
-                        else
-                        {
-                            viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners.Where(p => currentIds.Contains(p.Id) && p.rating >= viewModel.minimumRating).ToListAsync());
-                        }
-                    }
-                    else
-                    {
-                        if (viewModel.minimumRating == 0)
-                        {
-                            viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners.Where(p => practitionerIds.Contains(p.Id)).ToListAsync());
-                        }
-                        else
-                        {
-                            viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners.Where(p => practitionerIds.Contains(p.Id) && p.rating >= viewModel.minimumRating).ToListAsync());
-                        }
-                    }
-
-                    if (practitionerIds.Count > 2100)
-                    {
-                        practitionerIds.RemoveRange(0, 2100);
-                    }
+                    viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners.Where(p => practitionerIds.Contains(p.Id)).OrderBy(p => p.FirstName + p.LastName).ToListAsync());
+                }
+                else
+                {
+                    viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners.Where(p => practitionerIds.Contains(p.Id) && p.rating >= viewModel.minimumRating).OrderBy(p => p.FirstName + p.LastName).ToListAsync());
                 }
             }
 
@@ -155,7 +125,7 @@ namespace MediLink.Controllers
         [HttpPost]
         public async Task<IActionResult> SearchPractitioner(PractitionerSearchViewModel viewModel)
         {
-ClaimsPrincipal claimuser = HttpContext.User;
+            ClaimsPrincipal claimuser = HttpContext.User;
             string userName = "";
 
             if (claimuser.Identity.IsAuthenticated)
@@ -167,14 +137,12 @@ ClaimsPrincipal claimuser = HttpContext.User;
             ViewData["userName"] = userName;
 
             List<int> practitionerIds = new List<int>();
+            List<int> languagePractitionerIds = new List<int>();
+            List<int> officePractitionerIds = new List<int>();
 
             if (viewModel.selectedLanguageIds.Count > 0)
             {
-                practitionerIds.AddRange(await _mediLinkContext.PractitionerSpokenLanguages.Where(psl => viewModel.selectedLanguageIds.Contains(psl.LanguageId)).Select(psl => psl.PractitionerId).Distinct().ToListAsync());
-            }
-            else
-            {
-                practitionerIds.AddRange(await _mediLinkContext.PractitionerSpokenLanguages.Select(psl => psl.PractitionerId).Distinct().ToListAsync());
+                languagePractitionerIds.AddRange(await _mediLinkContext.PractitionerSpokenLanguages.Where(psl => viewModel.selectedLanguageIds.Contains(psl.LanguageId)).Select(psl => psl.PractitionerId).Distinct().ToListAsync());
             }
 
             List<int> addressIds = new List<int>();
@@ -187,7 +155,7 @@ ClaimsPrincipal claimuser = HttpContext.User;
                 }
                 else
                 {
-                    addressIds = await _mediLinkContext.OfficeAddresses.Where(oa => viewModel.selectedOfficeTypeIds.Contains(oa.OfficeTypeId)).Select(oa => oa.OfficeTypeId).Distinct().ToListAsync();
+                    addressIds = await _mediLinkContext.OfficeAddresses.Where(oa => viewModel.selectedOfficeTypeIds.Contains(oa.OfficeTypeId)).Select(oa => oa.Id).Distinct().ToListAsync();
                 }
             }
             else
@@ -198,36 +166,34 @@ ClaimsPrincipal claimuser = HttpContext.User;
                 }
                 else
                 {
-                    addressIds = await _mediLinkContext.OfficeAddresses.Select(oa => oa.OfficeTypeId).Distinct().ToListAsync();
+                    addressIds = await _mediLinkContext.OfficeAddresses.Select(oa => oa.Id).Distinct().ToListAsync();
                 }
             }
 
+            if (addressIds.Count > 0)
+            {
+                officePractitionerIds = await _mediLinkContext.PractitionerAddresses.Where(pa => addressIds.Contains(pa.OfficeAddressesId)).Select(pa => pa.PractitionerId).Distinct().ToListAsync();
+            }
+
+            if(viewModel.selectedLanguageIds.Count > 0)
+            {
+                practitionerIds = officePractitionerIds.Intersect(languagePractitionerIds).ToList();
+            }
+            else
+            {
+                practitionerIds = officePractitionerIds;
+            }
+            
+
             if (practitionerIds.Count > 0)
             {
-                practitionerIds = practitionerIds.Distinct().ToList();
-
-                if (Math.Floor((double)practitionerIds.Count / 2100) > 0)
+                if (viewModel.minimumRating == 0)
                 {
-                    var currentIds = practitionerIds.Take(2100).ToList();
-                    if (viewModel.minimumRating == 0)
-                    {
-                        viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners.Where(p => currentIds.Contains(p.Id)).ToListAsync());
-                    }
-                    else
-                    {
-                        viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners.Where(p => currentIds.Contains(p.Id) && p.rating >= viewModel.minimumRating).ToListAsync());
-                    }
+                    viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners.Where(p => practitionerIds.Contains(p.Id)).OrderBy(p => p.FirstName + p.LastName).ToListAsync());
                 }
                 else
                 {
-                    if (viewModel.minimumRating == 0)
-                    {
-                        viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners.Where(p => practitionerIds.Contains(p.Id)).ToListAsync());
-                    }
-                    else
-                    {
-                        viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners.Where(p => practitionerIds.Contains(p.Id) && p.rating >= viewModel.minimumRating).ToListAsync());
-                    }
+                    viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners.Where(p => practitionerIds.Contains(p.Id) && p.rating >= viewModel.minimumRating).OrderBy(p => p.FirstName + p.LastName).ToListAsync());
                 }
             }
 
