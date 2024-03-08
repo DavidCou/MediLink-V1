@@ -32,9 +32,11 @@ function searchOffice() {
 //function to search Walk-in Clinic by address
 function searchWalkInClinicByAddress() {
     //declare variables
-    var input, filter, table, tr, td, i, txtValue;
+    var inputTime, filter, table, tr, td, tdTime, i, txtValue, txtValueTime, filterTime;
     input = document.getElementById("filter-walkin-adddres");
+    inputTime = document.getElementById("filter-wait-time");
     filter = input.value.toUpperCase();
+    filterTime = inputTime.Value;
     table = document.getElementById("data-table-walkinclinic");
     tr = table.getElementsByTagName("tr");
 
@@ -42,12 +44,29 @@ function searchWalkInClinicByAddress() {
     //loop through all table rows and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[1];
+        tdTime = tr[i].getElementsByTagName("td")[2];
         if (td) {
             txtValue = td.textContent || td.innerHTML;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
+            txtValueTime = tdTime.textContent || tdTime.innerHTML;
+            console.log("paso")
+            console.log(filterTime)
+            if (filterTime > 0 ) {
+                console.log("paso 1")
+                if (parseInt(txtValueTime) <= parseInt(filterTime) && txtValue.toUpperCase().indexOf(filter) > -1) {
+
+                    tr[i].style.display = "";
+                } else {
+
+                    tr[i].style.display = "none";
+                }
+
             } else {
-                tr[i].style.display = "none";
+                console.log("paso 2")
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
             }
         }
     }
@@ -56,22 +75,39 @@ function searchWalkInClinicByAddress() {
 //function to search Walk-in Clinic by address
 function searchWalkInClinicByWT() {
     //declare variables
-    var input, filter, table, tr, td, i, txtValue;
+    var input, filter, filterAddress, table, tr, td, tdAddress, i, txtValue, txtValueAddress;
     input = document.getElementById("filter-wait-time");
     filter = input.value;
     table = document.getElementById("data-table-walkinclinic");
     tr = table.getElementsByTagName("tr");
 
+    inputAddress = document.getElementById("filter-walkin-adddres");
+    filterAddress = inputAddress.value.toUpperCase();
 
     //loop through all table rows and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[2];
+        tdAddress = tr[i].getElementsByTagName("td")[1];
         if (td) {
             txtValue = td.textContent || td.innerHTML;
-            if (parseInt(txtValue) <= parseInt(filter)) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
+            txtValueAddress = tdAddress.textContent || tdAddress.innerHTML;
+            if (inputAddress.value != "") {               
+                 
+                if (parseInt(txtValue) <= parseInt(filter) && txtValueAddress.toUpperCase().indexOf(filterAddress) > -1) {
+                    
+                    tr[i].style.display = "";
+                } else {
+                   
+                    tr[i].style.display = "none";
+                }
+            }
+            else {
+                
+                if (parseInt(txtValue) <= parseInt(filter)) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
             }
         }
     }

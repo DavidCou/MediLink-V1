@@ -38,6 +38,13 @@ namespace MediLink.Services.Contract
 
         Task<WalkInClinic> GetWalkInClinicByEmail(string correo);
 
+        Task<WalkClinicInfo> SaveWalkInClinic(WalkClinicInfo oWalkClinicInfo);
+
+        Task<WalkInClinic> ConfirmRegisterWalkinClinic(string token);
+
+        Task<WalkInClinic> ResetPasswordWalkinClinic(string emai);
+
+        Task<WalkInClinic> UpdatePasswordWalkinClinic(WalkClinicInfo oWalkClinicInfo);
 
 
 

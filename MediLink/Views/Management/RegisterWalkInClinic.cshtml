@@ -1,0 +1,251 @@
+﻿@{
+    Layout = null;
+}
+@model MediLink.Models.WalkClinicInfo
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Register Walk-in Clinic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">  <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/MediLink.styles.css" asp-append-version="true" />
+</head>
+<body class="bg-gradient-login">
+
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-login-image-WalkInClinic" title="Register Walk-in Clinic"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                            </div>
+                            @if (ViewBag.MyErrorList != null)
+                            {
+
+                                <div class="alert alert-danger" role="alert">
+                                    <ul>
+
+                                        @foreach (var item in ViewBag.MyErrorList)
+                                        {
+                                            <li>@item</li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                            <form class="user" action="@Url.Action("RegisterWalkInClinic","Management")" method="post">
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Walk-in Clinic Name</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="OfficeName" name="OfficeName" placeholder="Walk-in Clinic Name" class="form-control" value="@Model.OfficeName" type="text"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Email</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="email" name="Email" placeholder="your@email.com" class="form-control" value="@Model.Email" type="text"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Phone Number</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="phone" name="PhoneNumber" placeholder="xxx-xxx-xxxx" class="form-control" value="@Model.PhoneNumber" type="text"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Password</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="password" name="Password" placeholder="Password" class="form-control" value="" type="password"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Confirm Password</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" class="form-control" value="" type="password"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Current Wait Time</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group">
+                                                        <input id="CurrentWaitTime" name="CurrentWaitTime" placeholder="" class="form-control " value="@Model.CurrentWaitTime" type="number" step="10" min="10">
+                                                        <p class="d-inline pt-1 mx-5"><strong>Minutes</strong></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Minimun Historical Wait Time </label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group">
+                                                        <input id="HistoricalWaitTimeMin" name="HistoricalWaitTimeMin" placeholder="" class="form-control" value="@Model.HistoricalWaitTimeMin" type="number" step="10" min="10">
+                                                        <p class="d-inline pt-1 mx-5"><strong>Minutes</strong></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Maximun Historical Wait Time</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group">
+                                                        <input id="HistoricalWaitTimeMax" name="HistoricalWaitTimeMax" placeholder="" class="form-control" value="@Model.HistoricalWaitTimeMax" type="number" step="10" min="10">
+                                                        <p class="d-inline pt-1 mx-5"><strong>Minutes</strong></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="control-label">Clinic Notes </label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="ClinicNotes" name="ClinicNotes" placeholder="Clinic Notes" class="form-control" value="@Model.ClinicNotes" type="text"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+
+                                                <div class="inputGroupContainer">
+                                                    <label class="control-label">Province</label>
+                                                    <div class="input-group">
+                                                        <select id="provinceupd" name="Province" class="selectpicker form-control" aria-label="Default select " asp-for="@Model.Province">
+                                                            <option selected disabled value="noselected" )>Select a Province</option>
+                                                            <option value="Ontario">Ontario</option>
+                                                            <option value="Quebec">Quebec</option>
+                                                            <option value="New Brunswick">New Brunswick</option>
+                                                            <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+                                                            <option value="Alberta">Alberta</option>
+                                                            <option value="British Columbia">British Columbia</option>
+                                                            <option value="Nova Scotia">Nova Scotia</option>
+                                                            <option value="Manitoba">Manitoba</option>
+                                                            <option value="Prince Edward Island">Prince Edward Island</option>
+                                                            <option value="Saskatchewan">Saskatchewan</option>
+                                                            <option value="Northwest Territories">Northwest Territories</option>
+                                                            <option value="Nunavut">Nunavut</option>
+                                                            <option value="Yukon">Yukon</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">City</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="cityupd" name="City" placeholder="City" class="form-control" asp-for="City" type="text"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Street Address</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="street-address" name="streetaddress" placeholder="Number" class="form-control" asp-for="StreetAddress" type="text"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Postal Code</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="postal_Codeupd" name="PostalCode" placeholder="Postal Code/ZIP" class="form-control" asp-for="PostalCode" type="text"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </fieldset>
+
+
+                                <div class="text-center my-5">
+                                    <a class="btn-user btn-block" href="@Url.Action("Index", "Home")">Return</a>
+                                    <button type="submit" class="btn btn-primary px-5 w-100">Register</button>
+                                </div>
+
+
+
+                            </form>
+                            <hr>
+
+                            <div class="text-center">
+                                <a class="small" href="@Url.Action("LoginWalkInClinic", "Management")">Already have an account? Login!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+
+</html>
+
+
+

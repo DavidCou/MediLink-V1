@@ -295,5 +295,109 @@ namespace MediLink.Services.Implementation
 
         }
 
+        public async Task<WalkClinicInfo> SaveWalkInClinic(WalkClinicInfo oWalkClinicInfo)
+        {
+            //create patient instance
+            WalkInClinic walkInClinic = new WalkInClinic();
+
+            OfficeAddress officeAddress = new OfficeAddress();
+
+            officeAddress.City = oWalkClinicInfo.City;
+            officeAddress.StreetAddress = oWalkClinicInfo.StreetAddress;
+            officeAddress.PostalCode = oWalkClinicInfo.PostalCode;
+            officeAddress.Province = oWalkClinicInfo.Province;
+            officeAddress.OfficeName = oWalkClinicInfo.OfficeName;
+            officeAddress.OfficeTypeId = 2;
+            _dbContext.OfficeAddresses.Add(officeAddress);
+
+            await _dbContext.SaveChangesAsync();
+
+            //create Walk-in clinic  
+
+            walkInClinic.Email = oWalkClinicInfo.Email;
+            walkInClinic.PhoneNumber = oWalkClinicInfo.PhoneNumber;
+            walkInClinic.Password = oWalkClinicInfo.Password;
+            walkInClinic.ClinicNotes = oWalkClinicInfo.ClinicNotes;
+            walkInClinic.OfficeAddressId = officeAddress.Id;
+            walkInClinic.token = oWalkClinicInfo.token;
+            walkInClinic.CurrentWaitTime = oWalkClinicInfo.CurrentWaitTime;
+            walkInClinic.HistoricalWaitTimeMax = oWalkClinicInfo.HistoricalWaitTimeMax;
+            walkInClinic.HistoricalWaitTimeMin = oWalkClinicInfo.HistoricalWaitTimeMin;
+            _dbContext.WalkInClinics.Add(walkInClinic);
+
+            await _dbContext.SaveChangesAsync();
+
+
+            oWalkClinicInfo.Id = walkInClinic.Id;
+
+            return oWalkClinicInfo;
+
+
+        }
+
+        public async Task<WalkInClinic> ConfirmRegisterWalkinClinic(string token)
+        {
+            WalkInClinic clinicFound = await _dbContext.WalkInClinics.Where(p => p.token == token)
+                 .FirstOrDefaultAsync();
+
+            if (clinicFound != null)
+            {
+                // Update the value
+                clinicFound.IsValidated = true;
+
+                // Save the changes back to the database
+                _dbContext.SaveChanges();
+
+                return clinicFound;
+            }
+            else
+            {
+                return clinicFound;
+            }
+        }
+
+        public async Task<WalkInClinic> ResetPasswordWalkinClinic(string email)
+        {
+            WalkInClinic clinicFound = await _dbContext.WalkInClinics.Where(p => p.Email == email)
+                 .FirstOrDefaultAsync();
+
+            if (clinicFound != null)
+            {
+                // Update the value
+                clinicFound.passwordReset = true;
+
+                // Save the changes back to the database
+                _dbContext.SaveChanges();
+
+                return clinicFound;
+            }
+            else
+            {
+                return clinicFound;
+            }
+        }
+
+        public async Task<WalkInClinic> UpdatePasswordWalkinClinic(WalkClinicInfo oWalkClinicInfo)
+        {
+            WalkInClinic userFound = await _dbContext.WalkInClinics.Where(p => p.token == oWalkClinicInfo.token)
+                 .FirstOrDefaultAsync();
+
+            if (userFound != null)
+            {
+                // Update the value
+                userFound.Password = oWalkClinicInfo.Password;
+                userFound.passwordReset = false;
+
+                // Save the changes back to the database
+                _dbContext.SaveChanges();
+
+                return userFound;
+            }
+            else
+            {
+                return userFound;
+            }
+        }
+
     }
 }
