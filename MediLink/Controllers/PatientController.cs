@@ -54,6 +54,11 @@ namespace MediLink.Controllers
                 Preferences = preferences
             };
 
+            if(TempData["UpdateSuccess"] != null)
+            {
+                ViewBag.Success = TempData["UpdateSuccess"];
+            }
+
             return View(patientViewModel);
         }
 
@@ -228,8 +233,7 @@ namespace MediLink.Controllers
                 return View(patientUpdateViewModel);
             }
 
-            ViewBag.Success = "Your profile has been updated.";
-            ViewData["UpdateSuccess"] = "Your profile has been updated.";
+            TempData["UpdateSuccess"] = "Your profile has been updated.";
 
             return RedirectToAction("PatientHomePage");
         }
@@ -237,7 +241,7 @@ namespace MediLink.Controllers
         [HttpGet]
         public async Task<PreferencesViewModel> Preferences(Patient patient)
         {
-            PatientPreference preferences = await _mediLinkContext.PatientPreferences.Where(p => p.Id == patient.PatientPreferencesId).FirstOrDefaultAsync();
+            PatientPreference preferences = await _mediLinkContext.PatientPreferences.Where(p => p.Id == patient.PatientPreferencesId).Include(p => p.PatientOfficeType).Include(p => p.PreferedLanguages).FirstOrDefaultAsync();
 
             if(preferences == null)
             {
@@ -253,11 +257,6 @@ namespace MediLink.Controllers
                 patient.PatientPreferencesId = preferences.Id;
                 _mediLinkContext.Patients.Update(patient);
                 await _mediLinkContext.SaveChangesAsync();
-            }
-            else
-            {
-                preferences.PatientOfficeType = await _mediLinkContext.PatientOfficeTypes.Where(po => po.PatientPreferenceId == preferences.Id).ToListAsync();
-                preferences.PreferedLanguages = await _mediLinkContext.PreferedLanguages.Where(pl => pl.PatientPreferenceId == preferences.Id).ToListAsync();
             }
 
             PreferencesViewModel viewModel = new PreferencesViewModel();
@@ -283,12 +282,7 @@ namespace MediLink.Controllers
                 viewModel.Preferences.selectedLanguageIds = new List<int>();
             }
 
-            if (viewModel.Preferences.previousLanguages == null)
-            {
-                viewModel.Preferences.previousLanguages = new List<int>();
-            }
-
-            if (viewModel.Preferences.previousLanguages.Except(viewModel.Preferences.selectedLanguageIds).ToList().Count > 0)
+            if (viewModel.Preferences.previousLanguages.Except(viewModel.Preferences.selectedLanguageIds).ToList().Count > 0 || viewModel.Preferences.selectedLanguageIds.Except(viewModel.Preferences.previousLanguages).ToList().Count > 0)
             {
                 var previousLanguages = await _mediLinkContext.PreferedLanguages.Where(pl => pl.PatientPreferenceId == viewModel.Preferences.preferences.Id).ToListAsync();
                 foreach(var language in previousLanguages)
@@ -305,17 +299,7 @@ namespace MediLink.Controllers
                 }
             }
 
-            if (viewModel.Preferences.selectedOfficeTypeIds == null)
-            {
-                viewModel.Preferences.selectedOfficeTypeIds = new List<int>();
-            }
-
-            if (viewModel.Preferences.previousOfficeTypes == null)
-            {
-                viewModel.Preferences.previousOfficeTypes = new List<int>();
-            }
-
-            if (viewModel.Preferences.previousOfficeTypes != viewModel.Preferences.selectedOfficeTypeIds)
+            if (viewModel.Preferences.previousOfficeTypes.Except(viewModel.Preferences.selectedOfficeTypeIds).ToList().Count > 0 || viewModel.Preferences.selectedOfficeTypeIds.Except(viewModel.Preferences.previousOfficeTypes).ToList().Count > 0)
             {
                 var previousOfficeTypes = await _mediLinkContext.PatientOfficeTypes.Where(po => po.PatientPreferenceId == viewModel.Preferences.preferences.Id).ToListAsync();
                 foreach (var officeType in previousOfficeTypes)
@@ -337,6 +321,8 @@ namespace MediLink.Controllers
                 _mediLinkContext.PatientPreferences.Update(viewModel.Preferences.preferences);
                 await _mediLinkContext.SaveChangesAsync();
             }
+
+            TempData["UpdateSuccess"] = "Your preferences have been updated.";
 
             return RedirectToAction("PatientHomePage");
         }

@@ -13,11 +13,11 @@ namespace MediLink.Models
 
         public List<int> selectedLanguageIds { get; set; }
 
-        public List<int> selectedOfficeTypeIds { get; set; }
+        public List<int> selectedOfficeTypeIds { get; set; } = new List<int>();
 
-        public List<int> previousLanguages { get; set; }
+        public List<int> previousLanguages { get; set; } = new List<int>();
 
-        public List<int> previousOfficeTypes { get; set; }
+        public List<int> previousOfficeTypes { get; set; } = new List<int>();
 
         public string previousCity { get; set; }
 
