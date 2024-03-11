@@ -47,5 +47,9 @@ namespace MediLink.Models
         public string? StreetAddress { get; set; }
 
         public string? zone { get; set; }
+
+        public string? listLanguages { get; set; }
+
+        public List<Languages>? languagesInfo { get; set; }
     }
 }

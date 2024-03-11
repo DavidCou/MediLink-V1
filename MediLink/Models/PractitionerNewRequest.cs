@@ -40,7 +40,11 @@ namespace MediLink.Models
 
         public List<OfficeInfo>? officeInfo { get; set; }
 
+        public List<Languages>? languagesInfo { get; set; }
+
         public string? listOffices { get; set; }
+
+        public string? listLanguages { get; set; }
 
     }
 }

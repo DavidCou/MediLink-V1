@@ -484,11 +484,16 @@ namespace MediLink.Controllers
                     })
                     .ToListAsync();
 
+            // use the DB contet to query for all languages entities and transform them into
+            // Language objects:
+            List<Languages> languages = await _mediLinkContext.Languages.ToListAsync();
+
 
             PractitionerNewRequest oPractitioner = new PractitionerNewRequest();
 
             oPractitioner.practitionerTypes = practitionerTypes;
             oPractitioner.officeInfo = offices;
+            oPractitioner.languagesInfo = languages;
 
             return View(oPractitioner);
         }
@@ -518,8 +523,13 @@ namespace MediLink.Controllers
                     })
                     .ToListAsync();
 
+            // use the DB contet to query for all languages entities and transform them into
+            // Language objects:
+            List<Languages> languages = await _mediLinkContext.Languages.ToListAsync();
+
             //set the officess to practitioner instance
             oPractict.officeInfo = offices;
+            oPractict.languagesInfo = languages;
 
 
             if (practFound != null)
@@ -599,6 +609,11 @@ namespace MediLink.Controllers
 
             }
 
+            if (string.IsNullOrEmpty(oPractict.listLanguages))
+            {
+                errorMessage.Add("-Please Select Spoken Languages");
+            }
+
             //assign list of practitioner types
             oPractict.practitionerTypes = practitionerTypes;
 
@@ -656,6 +671,7 @@ namespace MediLink.Controllers
                 oNewPract.ConfirmPassword = "";
                 oNewPract.practitionerTypes = practitionerTypes;
                 oNewPract.officeInfo = offices;
+                oNewPract.languagesInfo = languages;
 
 
                 return View(oNewPract);
@@ -853,9 +869,17 @@ namespace MediLink.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult RegisterWalkInClinic()
+        public async Task<IActionResult> RegisterWalkInClinic()
         {
             WalkClinicInfo oWalkClinicInfo = new WalkClinicInfo();
+
+            // use the DB contet to query for all languages entities and transform them into
+            // Language objects:
+            List<Languages> languages = await _mediLinkContext.Languages.ToListAsync();
+
+
+            oWalkClinicInfo.languagesInfo = languages;
+
             return View(oWalkClinicInfo);
         }
 
@@ -865,6 +889,10 @@ namespace MediLink.Controllers
         {
             //verify if the Walk-in Clinic already exist 
             WalkInClinic clinicFound = await _userService.GetWalkInClinicByEmail(oWalkClinicInfo.Email);
+
+            // use the DB contet to query for all languages entities and transform them into
+            // Language objects:
+            List<Languages> languages = await _mediLinkContext.Languages.ToListAsync();
 
             List<string> errorMessage = new List<string>();
             //string[] errorMessage;
@@ -958,6 +986,11 @@ namespace MediLink.Controllers
 
             }
 
+            if (string.IsNullOrEmpty(oWalkClinicInfo.listLanguages))
+            {
+                errorMessage.Add("-Please Select Spoken Languages");
+            }
+
 
 
             // valid if there are errors
@@ -1006,6 +1039,7 @@ namespace MediLink.Controllers
                 oWalkClinicInfo2.Email = "";
                 oWalkClinicInfo2.Password = "";
                 oWalkClinicInfo2.ConfirmPassword = "";
+                oWalkClinicInfo2.languagesInfo = languages;
 
                 return View(oWalkClinicInfo2);
 
@@ -1015,6 +1049,7 @@ namespace MediLink.Controllers
                 // Pass the error list to the view using ViewBag
                 ViewBag.MyErrorList = errorMessage;
                 ViewData["MessageRegister"] = errorMessage;
+                oWalkClinicInfo.languagesInfo = languages;
                 return View(oWalkClinicInfo);
             }
 

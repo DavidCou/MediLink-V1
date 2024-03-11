@@ -4,6 +4,7 @@
 // Write your JavaScript code.
 
 let arrayIdOffice = [];
+let arrayIdLanguage = [];
 
 //function to search medical offices
 function searchOffice() {
@@ -149,4 +150,67 @@ function addOfficePractitioner(button) {
     
 
 
+}
+
+
+//add the languages id to input
+function addLangPractitioner(button) {
+
+    var id = button.id;
+    var idclean = button.id.replace("lang-", "");
+    var valueText = button.textContent;
+
+    var btnClicked = document.getElementById(id);
+
+    var inputListLang = document.getElementById('list-id-languages');
+
+
+
+    if (valueText == "Add") {
+        btnClicked.textContent = "Remove";
+        arrayIdLanguage.push(idclean);
+        btnClicked.classList.remove("btn-primary");
+        btnClicked.classList.add("btn-danger");
+    } else {
+        btnClicked.textContent = "Add";
+        arrayIdLanguage = arrayIdLanguage.filter(item => item != idclean);
+        btnClicked.classList.remove("btn-danger");
+        btnClicked.classList.add("btn-primary");
+    }
+
+    //set the list of lang id in the input
+    if (arrayIdLanguage.length > 0) {
+        inputListLang.value = arrayIdLanguage.join(',');
+    } else {
+        inputListLang.value = "";
+    }
+
+    console.log("array languages")
+    console.log(arrayIdLanguage);
+   
+
+}
+
+//function to search languages
+function searchLanguage() {
+    //declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("filterInputLang");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("data-table-languages");
+    tr = table.getElementsByTagName("tr");
+
+
+    //loop through all table rows and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            txtValue = td.textContent || td.innerHTML;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
 }

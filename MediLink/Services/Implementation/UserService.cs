@@ -5,6 +5,7 @@ using MediLink.Entities;
 using MediLink.Models;
 using MediLink.Services.Contract;
 using NuGet.Common;
+using System.Collections.Concurrent;
 
 namespace MediLink.Services.Implementation
 {
@@ -233,6 +234,10 @@ namespace MediLink.Services.Implementation
             //create PractitionerOfficeAddress instance
             List<PractitionerOfficeAddress> practitionerOfficeAddress = new List<PractitionerOfficeAddress>();
 
+            //create PratitionerSpoken instance
+            List<PractitionerSpokenLanguages> practitionerSpokenLanguages = new List<PractitionerSpokenLanguages>();
+
+
             //assing the value to the new instance created
             practitioner.Email = oDoctor.Email;
             practitioner.Password = oDoctor.Password;
@@ -273,6 +278,29 @@ namespace MediLink.Services.Implementation
 
             }
 
+            //verify if the user add offices address to the new practitioner
+            if (oDoctor.listLanguages != null)
+            {
+                //convert the string to array to iterate over each office id added
+                string[] languages = oDoctor.listLanguages.Split(",");
+
+                //iterate over each office id added and save the address
+                foreach (string lang in languages)
+                {
+                    int idLang = Convert.ToInt32(lang);
+
+                    practitionerSpokenLanguages.Add(new PractitionerSpokenLanguages { PractitionerId = oDoctor.Id, LanguageId = idLang });
+
+
+                }
+
+                _dbContext.PractitionerSpokenLanguages.AddRange(practitionerSpokenLanguages);
+
+                await _dbContext.SaveChangesAsync();
+
+
+            }
+
             return oDoctor;
         }
 
@@ -302,6 +330,10 @@ namespace MediLink.Services.Implementation
 
             OfficeAddress officeAddress = new OfficeAddress();
 
+            //create PratitionerSpoken instance
+            List<WalkInPractitionerSpokenLanguages> walkInPractitionerSpokenLanguages = new List<WalkInPractitionerSpokenLanguages>();
+
+
             officeAddress.City = oWalkClinicInfo.City;
             officeAddress.StreetAddress = oWalkClinicInfo.StreetAddress;
             officeAddress.PostalCode = oWalkClinicInfo.PostalCode;
@@ -329,6 +361,30 @@ namespace MediLink.Services.Implementation
 
 
             oWalkClinicInfo.Id = walkInClinic.Id;
+                      
+
+            //verify if the user add offices address to the new practitioner
+            if (oWalkClinicInfo.listLanguages != null)
+            {
+                //convert the string to array to iterate over each office id added
+                string[] languages = oWalkClinicInfo.listLanguages.Split(",");
+
+                //iterate over each office id added and save the address
+                foreach (string lang in languages)
+                {
+                    int idLang = Convert.ToInt32(lang);
+
+                    walkInPractitionerSpokenLanguages.Add(new WalkInPractitionerSpokenLanguages { WalkInPractitionerId = oWalkClinicInfo.Id, LanguageId = idLang });
+
+
+                }
+
+                _dbContext.WalkInPractitionerSpokenLanguages.AddRange(walkInPractitionerSpokenLanguages);
+
+                await _dbContext.SaveChangesAsync();
+
+
+            }
 
             return oWalkClinicInfo;
 
