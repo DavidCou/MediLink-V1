@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "vD03LBHPzSXftSn9m5SWMVykh2QYtFrMOm06KctcjQg=",
+  "Hash": "Ze/6jHZ+1Dl3y9EcQ2taa5bP+M8/EzOn71NbQKaUW8E=",
   "Source": "MediLink",
   "BasePath": "_content/MediLink",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "MediLink\\wwwroot",
       "Source": "MediLink",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\obj\\Debug\\net7.0\\scopedcss\\bundle\\MediLink.styles.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\obj\\Debug\\net7.0\\scopedcss\\bundle\\MediLink.styles.css",
       "SourceId": "MediLink",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\obj\\Debug\\net7.0\\scopedcss\\bundle\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\obj\\Debug\\net7.0\\scopedcss\\bundle\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "MediLink.styles.css",
       "AssetKind": "All",
@@ -33,13 +33,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\obj\\Debug\\net7.0\\scopedcss\\bundle\\MediLink.styles.css"
+      "OriginalItemSpec": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\obj\\Debug\\net7.0\\scopedcss\\bundle\\MediLink.styles.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\MediLink.bundle.scp.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\MediLink.bundle.scp.css",
       "SourceId": "MediLink",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "MediLink.bundle.scp.css",
       "AssetKind": "All",
@@ -52,13 +52,13 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\MediLink.bundle.scp.css"
+      "OriginalItemSpec": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\MediLink.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\css\\bootstrap-multiselect.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\css\\bootstrap-multiselect.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "css/bootstrap-multiselect.css",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap-multiselect.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\css\\site.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\css\\site.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -93,10 +93,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\favicon.ico",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\favicon.ico",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",
@@ -112,10 +112,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\img\\Healthcare-img-two.png",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\Healthcare-img-two.png",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "img/Healthcare-img-two.png",
       "AssetKind": "All",
@@ -131,10 +131,10 @@
       "OriginalItemSpec": "wwwroot\\img\\Healthcare-img-two.png"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\img\\logo.png",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\logo.png",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "img/logo.png",
       "AssetKind": "All",
@@ -150,10 +150,10 @@
       "OriginalItemSpec": "wwwroot\\img\\logo.png"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\img\\logo2.png",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\logo2.png",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "img/logo2.png",
       "AssetKind": "All",
@@ -169,10 +169,10 @@
       "OriginalItemSpec": "wwwroot\\img\\logo2.png"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\img\\logo3.png",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\logo3.png",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "img/logo3.png",
       "AssetKind": "All",
@@ -188,10 +188,10 @@
       "OriginalItemSpec": "wwwroot\\img\\logo3.png"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\img\\main_banner2.jpg",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\main_banner2.jpg",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "img/main_banner2.jpg",
       "AssetKind": "All",
@@ -207,10 +207,10 @@
       "OriginalItemSpec": "wwwroot\\img\\main_banner2.jpg"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\img\\main_banner-login.jpg",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\main_banner-login.jpg",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "img/main_banner-login.jpg",
       "AssetKind": "All",
@@ -226,10 +226,10 @@
       "OriginalItemSpec": "wwwroot\\img\\main_banner-login.jpg"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\img\\main_banner-login_walkinclinic.jpg",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\main_banner-login_walkinclinic.jpg",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "img/main_banner-login_walkinclinic.jpg",
       "AssetKind": "All",
@@ -245,10 +245,10 @@
       "OriginalItemSpec": "wwwroot\\img\\main_banner-login_walkinclinic.jpg"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\img\\main-banner.jpg",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\main-banner.jpg",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "img/main-banner.jpg",
       "AssetKind": "All",
@@ -264,10 +264,10 @@
       "OriginalItemSpec": "wwwroot\\img\\main-banner.jpg"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\img\\medical-information.jpg",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\medical-information.jpg",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "img/medical-information.jpg",
       "AssetKind": "All",
@@ -283,10 +283,10 @@
       "OriginalItemSpec": "wwwroot\\img\\medical-information.jpg"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\img\\medical-information-one.jpg",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\medical-information-one.jpg",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "img/medical-information-one.jpg",
       "AssetKind": "All",
@@ -302,10 +302,10 @@
       "OriginalItemSpec": "wwwroot\\img\\medical-information-one.jpg"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\img\\medical-information-three.jpg",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\medical-information-three.jpg",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "img/medical-information-three.jpg",
       "AssetKind": "All",
@@ -321,10 +321,10 @@
       "OriginalItemSpec": "wwwroot\\img\\medical-information-three.jpg"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\img\\medical-information-two.jpg",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\medical-information-two.jpg",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "img/medical-information-two.jpg",
       "AssetKind": "All",
@@ -340,10 +340,10 @@
       "OriginalItemSpec": "wwwroot\\img\\medical-information-two.jpg"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\img\\undraw_profile.svg",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\undraw_profile.svg",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "img/undraw_profile.svg",
       "AssetKind": "All",
@@ -359,10 +359,10 @@
       "OriginalItemSpec": "wwwroot\\img\\undraw_profile.svg"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\img\\Walk-in Clinic Waiting Room.jpg",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\img\\Walk-in Clinic Waiting Room.jpg",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "img/Walk-in Clinic Waiting Room.jpg",
       "AssetKind": "All",
@@ -378,10 +378,10 @@
       "OriginalItemSpec": "wwwroot\\img\\Walk-in Clinic Waiting Room.jpg"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\js\\bootstrap-multiselect.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\js\\bootstrap-multiselect.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "js/bootstrap-multiselect.js",
       "AssetKind": "All",
@@ -397,10 +397,10 @@
       "OriginalItemSpec": "wwwroot\\js\\bootstrap-multiselect.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\js\\site.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\js\\site.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "js/site.js",
       "AssetKind": "All",
@@ -416,10 +416,10 @@
       "OriginalItemSpec": "wwwroot\\js\\site.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.css",
       "AssetKind": "All",
@@ -435,10 +435,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.css.map",
       "AssetKind": "All",
@@ -454,10 +454,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.min.css",
       "AssetKind": "All",
@@ -473,10 +473,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -492,10 +492,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.css",
       "AssetKind": "All",
@@ -511,10 +511,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.css.map",
       "AssetKind": "All",
@@ -530,10 +530,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.min.css",
       "AssetKind": "All",
@@ -549,10 +549,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap.rtl.min.css.map",
       "AssetKind": "All",
@@ -568,10 +568,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.css",
       "AssetKind": "All",
@@ -587,10 +587,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.css.map",
       "AssetKind": "All",
@@ -606,10 +606,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.min.css",
       "AssetKind": "All",
@@ -625,10 +625,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.min.css.map",
       "AssetKind": "All",
@@ -644,10 +644,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.css",
       "AssetKind": "All",
@@ -663,10 +663,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.css.map",
       "AssetKind": "All",
@@ -682,10 +682,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css",
       "AssetKind": "All",
@@ -701,10 +701,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-grid.rtl.min.css.map",
       "AssetKind": "All",
@@ -720,10 +720,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.css",
       "AssetKind": "All",
@@ -739,10 +739,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.css.map",
       "AssetKind": "All",
@@ -758,10 +758,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.min.css",
       "AssetKind": "All",
@@ -777,10 +777,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.min.css.map",
       "AssetKind": "All",
@@ -796,10 +796,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.css",
       "AssetKind": "All",
@@ -815,10 +815,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.css.map",
       "AssetKind": "All",
@@ -834,10 +834,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css",
       "AssetKind": "All",
@@ -853,10 +853,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css.map",
       "AssetKind": "All",
@@ -872,10 +872,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.css",
       "AssetKind": "All",
@@ -891,10 +891,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.css.map",
       "AssetKind": "All",
@@ -910,10 +910,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.min.css",
       "AssetKind": "All",
@@ -929,10 +929,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.min.css.map",
       "AssetKind": "All",
@@ -948,10 +948,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.css",
       "AssetKind": "All",
@@ -967,10 +967,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.css.map",
       "AssetKind": "All",
@@ -986,10 +986,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css",
       "AssetKind": "All",
@@ -1005,10 +1005,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/css/bootstrap-utilities.rtl.min.css.map",
       "AssetKind": "All",
@@ -1024,10 +1024,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.js",
       "AssetKind": "All",
@@ -1043,10 +1043,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.js.map",
       "AssetKind": "All",
@@ -1062,10 +1062,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.min.js",
       "AssetKind": "All",
@@ -1081,10 +1081,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.bundle.min.js.map",
       "AssetKind": "All",
@@ -1100,10 +1100,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.js",
       "AssetKind": "All",
@@ -1119,10 +1119,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.js.map",
       "AssetKind": "All",
@@ -1138,10 +1138,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.min.js",
       "AssetKind": "All",
@@ -1157,10 +1157,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.esm.min.js.map",
       "AssetKind": "All",
@@ -1176,10 +1176,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.js",
       "AssetKind": "All",
@@ -1195,10 +1195,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.js.map",
       "AssetKind": "All",
@@ -1214,10 +1214,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.min.js",
       "AssetKind": "All",
@@ -1233,10 +1233,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/dist/js/bootstrap.min.js.map",
       "AssetKind": "All",
@@ -1252,10 +1252,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\bootstrap\\LICENSE",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/bootstrap/LICENSE",
       "AssetKind": "All",
@@ -1271,10 +1271,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\LICENSE"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/jquery/dist/jquery.js",
       "AssetKind": "All",
@@ -1290,10 +1290,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/jquery/dist/jquery.min.js",
       "AssetKind": "All",
@@ -1309,10 +1309,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/jquery/dist/jquery.min.map",
       "AssetKind": "All",
@@ -1328,10 +1328,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/jquery/LICENSE.txt",
       "AssetKind": "All",
@@ -1347,10 +1347,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.js",
       "AssetKind": "All",
@@ -1366,10 +1366,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.min.js",
       "AssetKind": "All",
@@ -1385,10 +1385,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.js",
       "AssetKind": "All",
@@ -1404,10 +1404,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.min.js",
       "AssetKind": "All",
@@ -1423,10 +1423,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/jquery-validation/LICENSE.md",
       "AssetKind": "All",
@@ -1442,10 +1442,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "AssetKind": "All",
@@ -1461,10 +1461,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
       "AssetKind": "All",
@@ -1480,10 +1480,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Identity": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Identity": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "SourceId": "MediLink",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\wwwroot\\",
+      "ContentRoot": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\wwwroot\\",
       "BasePath": "_content/MediLink",
       "RelativePath": "lib/jquery-validation-unobtrusive/LICENSE.txt",
       "AssetKind": "All",

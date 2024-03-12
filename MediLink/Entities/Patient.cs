@@ -27,9 +27,13 @@ namespace MediLink.Entities
 
 		public PatientDetail? PatientDetails { get; set; }
 
-        
+        public ICollection<NewPatientRequest>? NewPatientRequests { get; set; }
 
-		
+        public ICollection<PractitionerPatient>? PractitionerPatients { get; set; }
+
+        public ICollection<PractitionerReview>? PractitionerReviews { get; set; }
+
+		public ICollection<WaitList>? WaitLists { get; set; }
 
 
 	}

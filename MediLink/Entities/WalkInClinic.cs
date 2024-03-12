@@ -31,13 +31,19 @@ namespace MediLink.Entities
 
 		public int? CurrentWaitTime { get; set; }
 
-		public int? HistoricalWaitTimeMin { get; set; }
+		public int? HistoricalWaitTimeMin { get; set; } //To Be Removed - No longer needed
 
-		public int? HistoricalWaitTimeMax { get; set; }
+		public int? HistoricalWaitTimeMax { get; set; } //To Be Removed - No longer needed
 
-		public ICollection<WalkInPractitionerSpokenLanguages> WalkInPractitionerSpokenLanguages { get; set; }
-		
-		public int OfficeAddressId {  get; set; }
+        public ICollection<WalkInPractitionerSpokenLanguages> WalkInPractitionerSpokenLanguages { get; set; }
+
+        public ICollection<WalkInClinicHours>? WalkInClinicHours { get; set; }
+
+        public ICollection<WalkInClinicCheckedInPatient>? WalkInClinicCheckedInPatients { get; set; }
+
+        public ICollection<WalkInClinicHistoricalWaitTimes> WalkInClinicHistoricalWaitTimes { get; set; }
+
+        public int OfficeAddressId {  get; set; }
 
 		public OfficeAddress OfficeAddress { get; set; }
     }

@@ -45,6 +45,14 @@ namespace MediLink.Entities
 				
 		public ICollection<PractitionerOfficeAddress> PractitionerAddress { get; set; }
 
+        public ICollection<NewPatientRequest>? NewPatientRequests { get; set; }
+
+        public ICollection<PractitionerPatient>? PractitionerPatients { get; set; }
+
+        public ICollection<PractitionerReview>? PractitionerReviews { get; set; }
+
+        public ICollection<WaitList>? WaitLists { get; set; }
+
         public int PractitionerTypeId { get; set; }
 
 		public PractitionerType PractitionerType { get; set; } = null!;
