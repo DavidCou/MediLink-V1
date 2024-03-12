@@ -19,6 +19,11 @@ namespace MediLink.Controllers
 
         public async Task<IActionResult> PractitionerHomePage()
         {
+            //created by juan quintana -setup a message to inforn status for add or remove address
+            string mensajeResultSave = TempData["mensajeResultSaveAddress"] as string;
+            ViewData["messageUpdatePract"] = mensajeResultSave;
+
+
             ClaimsPrincipal claimuser = HttpContext.User;
             string userName = "";
 
@@ -257,6 +262,192 @@ namespace MediLink.Controllers
                 return View(practitionerUpdateViewModel);
             }
         }
+
+
+
+        //created by juan quintana
+        //remove an existing address in the practictioner profile
+        [HttpGet("/RemovePractitionerAddress/{id}")]
+        public async Task<IActionResult> RemovePractitionerAddress(int id)
+        {
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+            if (claimuser.Identity.IsAuthenticated)
+            {
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            //get the current practitioner
+            Practitioner practitioner = await _userService.GetPractitionerByEmail(userName);
+
+
+            //create an instace of practitioneraddress
+            PractitionerOfficeAddress practitionerOfficeAddress = new PractitionerOfficeAddress();
+
+            //verify if exist a practitioner
+            if (practitioner != null)
+            {
+
+                //set the values of address and practitioner
+                practitionerOfficeAddress.PractitionerId = practitioner.Id;
+                practitionerOfficeAddress.OfficeAddressesId = id;
+
+                // Remove the record from the DbSet
+                _mediLinkContext.PractitionerAddresses.Remove(practitionerOfficeAddress);
+
+                // Save changes to persist the deletion
+                _mediLinkContext.SaveChanges();
+
+            }
+
+            return Ok();
+        }
+
+        //get all the offices availables
+        [HttpGet("/ListOffices")]
+        public async Task<IActionResult> ListOffices()
+        {
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+            if (claimuser.Identity.IsAuthenticated)
+            {
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            ViewData["userName"] = userName;
+
+            Practitioner practitioner = await _userService.GetPractitionerByEmail(userName);
+
+
+            // use the DB contet to query for all Address entities and transform them into
+            // OfficeInf bjects:
+            List<OfficeInfo> practitionerOfficeAddresses = await _mediLinkContext.PractitionerAddresses
+                    .Where(t => t.PractitionerId == practitioner.Id)
+                    .Include(t => t.OfficeAddresses)
+                    .Include(t => t.OfficeAddresses.OfficeType)
+                    .Select(t => new OfficeInfo()
+                    {
+                        fullAddress = t.OfficeAddresses.StreetAddress + " " + t.OfficeAddresses.City + " " + t.OfficeAddresses.PostalCode,
+                        OfficeName = t.OfficeAddresses.OfficeName,
+                        OfficeTypeName = t.OfficeAddresses.OfficeType.OfficeTypeName,
+                        Id = t.OfficeAddresses.Id
+
+                    })
+                    .ToListAsync();
+
+
+            // use the DB contet to query for all Address entities and transform them into
+            // OfficeInf bjects:
+            List<OfficeInfo> offices = await _mediLinkContext.OfficeAddresses
+                    .Include(t => t.OfficeType)
+                    .OrderByDescending(t => t.StreetAddress)
+                    .Select(t => new OfficeInfo()
+                    {
+                        fullAddress = t.StreetAddress + " " + t.City + " " + t.PostalCode,
+                        OfficeName = t.OfficeName,
+                        OfficeTypeName = t.OfficeType.OfficeTypeName,
+                        Id = t.Id
+
+                    })
+                    .ToListAsync();
+
+
+
+            // Compare the two lists and remove duplicates
+            // Check if the id is present in the list
+            bool isIdPresent = false;
+            List<OfficeInfo> uniqueList = new List<OfficeInfo>();
+
+            foreach (OfficeInfo off in practitionerOfficeAddresses)
+            {
+                isIdPresent = offices.Any(obj => obj.Id == off.Id);
+
+                if (isIdPresent)
+                {
+
+                    OfficeInfo officeInfoToRemove = offices.FirstOrDefault(o => o.Id == off.Id);
+                    if (officeInfoToRemove != null)
+                    {
+                        // Remove the person from the list
+                        offices.Remove(officeInfoToRemove);
+                    }
+
+
+
+                }
+            }
+
+
+
+            return Json(offices);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SavePractitionerAddress(string listOffices)
+        {
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+            if (claimuser.Identity.IsAuthenticated)
+            {
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            ViewData["userName"] = userName;
+
+            Practitioner practitioner = await _userService.GetPractitionerByEmail(userName);
+
+            //create PractitionerOfficeAddress instance
+            List<PractitionerOfficeAddress> practitionerOfficeAddress = new List<PractitionerOfficeAddress>();
+
+            //verify if the user add offices address to the new practitioner
+            if (!string.IsNullOrEmpty(listOffices))
+            {
+                //convert the string to array to iterate over each office id added
+                string[] offices = listOffices.Split(",");
+
+                //iterate over each office id added and save the address
+                foreach (string office in offices)
+                {
+                    int idOffice = Convert.ToInt32(office);
+
+                    practitionerOfficeAddress.Add(new PractitionerOfficeAddress { PractitionerId = practitioner.Id, OfficeAddressesId = idOffice });
+
+
+                }
+
+                _mediLinkContext.PractitionerAddresses.AddRange(practitionerOfficeAddress);
+
+                await _mediLinkContext.SaveChangesAsync();
+
+                if (offices.Length > 0 && offices.Length < 2)
+                {
+                    TempData["mensajeResultSaveAddress"] = "One address has been added successfully";
+                }
+                else
+                {
+                    TempData["mensajeResultSaveAddress"] = $"{offices.Length} addresses has been added successfully";
+                }
+
+
+
+
+
+
+            }
+
+
+
+            return RedirectToAction("PractitionerHomePage");
+        }
+
+
 
         private MediLinkDbContext _mediLinkContext;
         private IUserService _userService;

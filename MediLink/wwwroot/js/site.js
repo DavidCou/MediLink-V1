@@ -6,6 +6,10 @@
 let arrayIdOffice = [];
 let arrayIdLanguage = [];
 
+//disable save button in the Practictioner Home Page
+document.getElementById("btn-save-address").disabled = true;
+
+
 //function to search medical offices
 function searchOffice() {
     //declare variables
@@ -140,11 +144,27 @@ function addOfficePractitioner(button) {
         btnClicked.classList.add("btn-primary");
     }
 
+    //get the btn save button
+    var btnSaveAdre = document.getElementById("btn-save-address");
+
     //set the list of address id in the input
     if (arrayIdOffice.length > 0) {
         inputListOffices.value = arrayIdOffice.join(',');
+
+        ///verify if exist the btn
+        if (btnSaveAdre != undefined) {
+
+            btnSaveAdre.disabled = false;
+        }
+
     } else {
+
         inputListOffices.value = "";
+
+        if (btnSaveAdre != undefined) {
+
+            btnSaveAdre.disabled = true;
+        }
     }
 
     
@@ -214,3 +234,64 @@ function searchLanguage() {
         }
     }
 }
+
+
+$(document).ready(function () {
+
+    $('.btnRemoveAddress').click(function () {
+        var parameterValue = $(this).data('parameter');
+
+        var idRow = "#offic-tr-" + parameterValue;
+        var idOfficeNameRow = "#office-name-" + parameterValue;
+
+        
+        var contentOfficeName = $(idOfficeNameRow).text();
+
+        
+
+        $.ajax({
+            url: 'http://localhost:5220/RemovePractitionerAddress/' + parameterValue,
+            type: 'GET',
+            success: function (response) {
+                // Handle the response data
+
+
+
+                $(idRow).remove();
+
+
+
+                var finalName = contentOfficeName + " has been removed "
+
+                $('#message-home-pract').text(finalName);
+                $('#message-home-pract2').text(finalName);
+                console.log(response);
+
+
+            },
+            error: function (xhr, status, error) {
+                // Handle errors
+
+                console.error('AJAX request failed:', error);
+            }
+        });
+    });
+
+    $('#btn-add-address').click(function () {
+
+        $.ajax({
+            url: 'http://localhost:5220/ListOffices',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+
+                $.each(data, function (index, item) {
+
+                    var newRow = "<tr class='mx-2'><td>" + item.officeName + "</td><td>" + item.officeTypeName + "</td><td>" + item.fullAddress + "</td><td><button id='offic-" + item.id + "' type='button' class='btn btn-primary mr-1 w-75' onclick='addOfficePractitioner(this)'>Add</button></td></tr>";
+                    $("#data-table-add-offices tbody").append(newRow);
+                });
+            }
+        });
+    });
+
+});

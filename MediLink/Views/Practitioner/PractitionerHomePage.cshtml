@@ -51,7 +51,14 @@
                 </div>
             </div>
             <div class="col-sm-4 center-content">
+
                 <div class="profile-info mt-2">
+                    @if (ViewData["messageUpdatePract"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <p id="message-home-pract">@ViewData["messageUpdatePract"]</p>
+                        </div>
+                    }
                     <h2 class="mb-4">Profile Information</h2>
                     <p><strong>Full Name:</strong> @Model.Practitioner.FirstName @Model.Practitioner.LastName</p>
                     <p><strong>Email:</strong> @Model.Practitioner.Email</p>
@@ -69,22 +76,186 @@
                     <p><strong>Patient Acceptance Status:</strong> @Model.IsAcceptingNewPatients</p>
                     <p><strong>Last Accepted A Patient On:</strong> @Model.LastAcceptedPatientDate</p>
                     <p><strong>Current Rating:</strong> @Model.Practitioner.rating</p>
+
+                    <div class="text-center mt-3">
+
+                        <button type='button' class='btn btn-warning mx-5 w-75 mt-2' data-toggle='modal' data-target='#editoffices'>Practitioner Office(s)</button>
+
+                    </div>
                 </div>
             </div>
             <div class="col-sm-4 mt-2">
-                <h2 class="mb-4">Office Information</h2>
-                @foreach (var office in Model.OfficeAddresses)
-                {
-                    <div class="mb-5">
-                        <h4 class="mb-2">Office</h4>
-                        <p><strong>Name Of Practice:</strong> @office.OfficeName</p>
-                        <p><strong>Type Of Office:</strong> @office.OfficeType.OfficeTypeName</p>
-                        <p><strong>Address:</strong> @office.StreetAddress @office.City</p>
-                        <p><strong>Postal Code:</strong>@office.PostalCode</p>
-                        <p><strong>Province:</strong> @office.Province</p>
-                        <p><strong>Country:</strong> @office.country</p>
+            </div>
+        </div>
+    </div>
+
+ <!-- Modal Edit Offices -->
+    <div class="modal fade" id="editoffices" tabindex="-1" aria-labelledby="editmodal" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                    <div class="card">
+                        <div class="card-header">
+
+                            <i class="fas fa-users me-1"></i> List of Offices
+                            <div class="d-inline text-end">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+
+                            <div class="card-body">
+                                @if (ViewData["messageUpdatePract"] != null)
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                        <p id="message-home-pract2">@ViewData["messageUpdatePract"]</p>
+                                    </div>
+                                }
+                                <div class="container my-1 position-relative">
+                                    <div class="d-flex justify-content-center ">
+                                        <div class="searchbar">
+                                            <input id="filterInputOffice" class="search_input search_input_width" type="text" name="" onkeyup="searchOffice()" placeholder="Search a office name...">
+                                            <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end ">
+                                        <div >
+
+                                            <button id="btn-add-address" type='button' class='btn btn-primary' data-toggle='modal' data-target='#addoffices'>ADD</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <table id="data-table-offices" class="table mx-auto" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Office Name</th>
+                                            <th>Type</th>
+                                            <th>Address</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var office in Model.OfficeAddresses)
+                                        {
+                                            <tr class='mx-2' id="offic-tr-@office.Id">
+                                                <td id="office-name-@office.Id">@office.OfficeName</td>
+                                                <td>@office.OfficeType.OfficeTypeName</td>
+                                                <td> @office.StreetAddress @office.City @office.PostalCode  @office.Province</td>
+
+                                                <td>
+                                                    <button id="exit-offic-@office.Id" type='button' data-parameter="@office.Id" class='btn btn-danger mr-1 w-75 btnRemoveAddress'>Remove</button>
+
+                                                </td>
+
+                                            </tr>
+
+                                        }
+
+
+                                    </tbody>
+                                </table>
+                                <div class="d-block text-center">
+                                    <button type="button" class="btn btn-secondary tex" data-dismiss="modal" aria-label="Close">
+                                        Close
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
-                }
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Add Offices -->
+    <div class="modal fade" id="addoffices" tabindex="-1" aria-labelledby="editmodal" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                    <div class="card">
+                        <div class="card-header">
+
+                            <i class="fas fa-users me-1"></i> Add new Office(s)
+                            <div class="d-inline text-end">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="container my-1">
+                                    <div class="d-flex justify-content-center ">
+                                        <div class="searchbar">
+                                            <input id="filterInputOffice" class="search_input search_input_width" type="text" name="" onkeyup="searchOffice()" placeholder="Search a office name...">
+                                            <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                                               
+
+
+                                <table id="data-table-add-offices" class="table mx-auto" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Office Name</th>
+                                            <th>Type</th>
+                                            <th>Address</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>                                      
+
+
+                                    </tbody>
+                                </table>
+                                <div class="d-block text-center">
+
+                                    <form class="d-inline" action="@Url.Action("SavePractitionerAddress","Practitioner")" method="post">
+                                        <!--input to store the offide ids selected-->
+                                        <input type="hidden" id="list-id-offices" name="listOffices" />
+
+                                        <button id="btn-save-address" type="submit" class="btn btn-success mx-2">
+                                            Save
+                                        </button>
+
+                                    </form>
+                                   
+
+                                    <button type="button" class="btn btn-secondary tex" data-dismiss="modal" aria-label="Close">
+                                        Close
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+                </div>
+
             </div>
         </div>
     </div>

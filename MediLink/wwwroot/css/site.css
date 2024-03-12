@@ -326,6 +326,18 @@ details {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
+
+#btn-add-address {
+    position: absolute;
+    top: .5em;
+    right: .3em;
+    width: 5.5em;
+}
+
+#btn-save-address {
+    width: 6em;
+}
+
 html {
     position: relative;
     min-height: 100%;
