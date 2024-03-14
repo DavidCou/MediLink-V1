@@ -4,14 +4,6 @@
     {
         public int Id { get; set; }
 
-        public string PractitionerFirstName { get; set; }
-
-        public string PractitionerLastName { get; set; }
-
-        public string PractitionerEmail { get; set; }
-
-        public string PatientFirstName { get; set; }
-
         public string? Review { get; set; }
 
         public bool IsPractitionerOnTime { get; set; }

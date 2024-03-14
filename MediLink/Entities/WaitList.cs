@@ -4,11 +4,7 @@
     {
         public int Id { get; set; }
 
-        public string PatientFirstName { get; set; }
-
-        public string PatientLastName { get; set; }
-
-        public string PatientEmail { get; set; } 
+        public DateTime DateAdded { get; set; } 
 
         public int PatientId { get; set; }
 

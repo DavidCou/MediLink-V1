@@ -97,8 +97,5 @@ namespace MediLink.Entities
 
 		}
 
-
-
-
     }
 }
