@@ -866,7 +866,7 @@ namespace MediLink.Controllers
                 properties
                 );
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("WalkinClinicHomePage", "WalkinClinic");
         }
 
         public async Task<IActionResult> RegisterWalkInClinic()
