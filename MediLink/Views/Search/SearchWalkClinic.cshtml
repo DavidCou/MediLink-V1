@@ -71,10 +71,9 @@
                         <tr>
                             <th>Walk-Clinic Name</th>
                             <th>Address</th>
-                            <th>WT</th>
-                            <th>WT Max</th>
-                            <th>WT Min</th>
-                            <th>Action</th>
+                            <th>Current Wait Time (In Miniutes)</th>
+                            <th>View Historical Wait Times</th>
+                            <th>View Clinic Hours</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,14 +84,6 @@
                                 <td id="office-1">@c.OfficeName</td>
                                 <td>@c.fullAddress</td>
                                 <td class="text-center">@c.CurrentWaitTime</td>
-                                <td class="text-center">@c.HistoricalWaitTimeMin</td>
-                                <td class="text-center">@c.HistoricalWaitTimeMax</td>
-
-                                <td>
-                                    <button id="offic-@c.Id" type='button' class='btn btn-primary mr-1 w-75' onclick="addOfficePractitioner(this)">Book</button>
-
-                                </td>
-
                             </tr>
 
                         }
@@ -100,9 +91,6 @@
 
                     </tbody>
                 </table>
-                <div class="d-block text-left">
-                    <p class="fw-bold"><strong>WT = Wait Time (Minutes)</strong></p>
-                </div>
                 <div class="d-block text-center">
                     <a class="btn btn-secondary tex" href="@Url.Action("PatientHomePage","Patient")">Return</a>
                   

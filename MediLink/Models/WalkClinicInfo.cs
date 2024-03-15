@@ -28,10 +28,6 @@ namespace MediLink.Models
 
         public int? CurrentWaitTime { get; set; }
 
-        public int? HistoricalWaitTimeMin { get; set; }
-
-        public int? HistoricalWaitTimeMax { get; set; }
-
         public string? fullAddress { get; set; }
 
         public string? OfficeName { get; set; }

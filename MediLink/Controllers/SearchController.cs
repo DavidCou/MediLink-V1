@@ -303,8 +303,6 @@ namespace MediLink.Controllers
                             OfficeName = t.OfficeAddress.OfficeName,
                             fullAddress = t.OfficeAddress.StreetAddress + " " + t.OfficeAddress.City + " " + t.OfficeAddress.zone + " " + t.OfficeAddress.PostalCode,
                             CurrentWaitTime = t.CurrentWaitTime,
-                            HistoricalWaitTimeMin = t.HistoricalWaitTimeMin, // To Be Removed, no longer needed, I will need to test first - DC
-                            HistoricalWaitTimeMax = t.HistoricalWaitTimeMax, // To Be Removed, no longer needed, I will need to test first - DC
                             Id = t.Id
 
                         })

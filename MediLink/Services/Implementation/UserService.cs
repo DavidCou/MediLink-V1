@@ -352,9 +352,6 @@ namespace MediLink.Services.Implementation
             walkInClinic.ClinicNotes = oWalkClinicInfo.ClinicNotes;
             walkInClinic.OfficeAddressId = officeAddress.Id;
             walkInClinic.token = oWalkClinicInfo.token;
-            walkInClinic.CurrentWaitTime = oWalkClinicInfo.CurrentWaitTime;
-            walkInClinic.HistoricalWaitTimeMax = oWalkClinicInfo.HistoricalWaitTimeMax;
-            walkInClinic.HistoricalWaitTimeMin = oWalkClinicInfo.HistoricalWaitTimeMin;
             _dbContext.WalkInClinics.Add(walkInClinic);
 
             await _dbContext.SaveChangesAsync();
