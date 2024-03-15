@@ -145,19 +145,17 @@
                             </div>
                         </div>
                         <div class="col-6">
-                            <div class="form-group">
-                                <label asp-for="Languages" class="control-label">Spoken Languages:</label>
-                                <div class="inputGroupContainer">
-                                    <div class="input-group">
-                                        <select name="Languages" class="selectpicker form-control" aria-label="Default select" asp-for="Languages" multiple>
+                            <div class="inputGroupContainer">
+                                <label class="control-label">Spoken Languages</label>
+                                <div class="input-group">
+                                    <select name="CurrentSpokenLanguageIds" class="selectpicker form-control" aria-label="Default select" asp-for="CurrentSpokenLanguageIds" multiple>
                                         @foreach (var language in Model.Languages)
                                         {
-                                            // curently causing nothing to show up, not sure why - I will need to look into it - DC
-                                            @*  if(Model.CurrentSpokenLanguages != null)
+                                            if (Model.CurrentSpokenLanguageIds != null)
                                             {
-                                                foreach (var currentLanguage in Model.CurrentSpokenLanguages)
+                                                foreach (var currentLanguageId in Model.CurrentSpokenLanguageIds)
                                                 {
-                                                    if (language.Id == currentLanguage.LanguageId)
+                                                    if (language.Id == currentLanguageId)
                                                     {
                                                         <option selected value="@language.Id">@language.LanguageName</option>
                                                     }
@@ -171,11 +169,9 @@
                                             else
                                             {
                                                 <option value="@language.Id">@language.LanguageName</option>
-                                            }  *@
-                                                <option value="@language.Id">@language.LanguageName</option>
+                                            }
                                         }
-                                        </select>
-                                    </div>
+                                    </select>
                                 </div>
                             </div>
                         </div>

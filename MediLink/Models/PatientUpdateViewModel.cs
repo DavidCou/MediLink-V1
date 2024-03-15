@@ -10,7 +10,7 @@ namespace MediLink.Models
 
         public string Email { get; set; }
 
-        public List<int>? SpokenLanguageIds { get; set; }
+        public List<int>? CurrentSpokenLanguageIds { get; set; }
 
         public string FirstName { get; set; }
 

@@ -8,7 +8,7 @@ namespace MediLink.Models
     {
         public List<Languages>? Languages { get; set; }
 
-        public List<WalkInPractitionerSpokenLanguages> CurrentSpokenLanguages { get; set; }
+        public List<int> CurrentSpokenLanguageIds { get; set; }
 
         public string PhoneNumber { get; set; }
 
@@ -20,7 +20,7 @@ namespace MediLink.Models
 
         public string StreetAddress { get; set; }
 
-        public string? UnitNumber { get; set; }
+        public string? CityRegion { get; set; }
 
         public string City { get; set; }
 

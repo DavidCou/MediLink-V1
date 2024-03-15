@@ -63,7 +63,7 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="control-label">Phone</label>
+                                <label class="control-label">Phone Number</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group"><input id="phone" name="PhoneNumber" value="@Model.PhoneNumber" placeholder="xxx-xxx-xxxx" class="form-control" asp-for="PhoneNumber" type="text"></div>
                                 </div>
@@ -73,7 +73,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label class="control-label">Name Of Office</label>
+                                <label class="control-label">Clinic Name</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group"><input id="officeName" name="OfficeName" value="@Model.OfficeName" class="form-control" asp-for="OfficeName" type="text"></div>
                                 </div>
@@ -90,15 +90,32 @@
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            @* This is untested*@
                             <div class="form-group">
-                                <label class="control-label">Clinic Practitioners Spoken Languages:</label>
+                                <label class="control-label">Clinic Practitioners Spoken Languages</label>
                                 <div class="inputGroupContainer">
                                     <div class="input-group">
-                                        <select name="Languages" class="selectpicker form-control" aria-label="Default select" asp-for="Languages" multiple>
+                                        <select name="CurrentSpokenLanguageIds" class="selectpicker form-control" aria-label="Default select" asp-for="CurrentSpokenLanguageIds" multiple>
                                             @foreach (var language in Model.Languages)
                                             {
-                                                <option value="@language.Id">@language.LanguageName</option>
+                                                if(Model.CurrentSpokenLanguageIds != null)
+                                                {
+                                                    foreach (var currentLanguageId in Model.CurrentSpokenLanguageIds)
+                                                    {
+                                                        if (language.Id == currentLanguageId)
+                                                        {
+                                                            <option selected value="@language.Id">@language.LanguageName</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@language.Id">@language.LanguageName</option>
+                                                        }
+
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <option value="@language.Id">@language.LanguageName</option>
+                                                } 
                                             }
                                         </select>
                                     </div>

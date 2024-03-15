@@ -116,6 +116,13 @@ namespace MediLink.Controllers
                 .Where(psl => psl.PractitionerId == practitioner.Id)
                 .ToListAsync();
 
+            List<int> currentSpokenLanguageIds = new List<int>();
+
+            foreach (var language in practitionerSpokenLanguages)
+            {
+                currentSpokenLanguageIds.Add(language.LanguageId);
+            }
+
             List<PractitionerType> practitionerTypes = await _mediLinkContext.PractitionerTypes.ToListAsync();
 
             List<Languages> languages = await _mediLinkContext.Languages.ToListAsync();
@@ -139,7 +146,7 @@ namespace MediLink.Controllers
                 PhoneNumber = practitioner.PhoneNumber,
                 IsAcceptingNewPatients = isAcceptingNewPatients,
                 Languages = languages,
-                CurrentSpokenLanguages = practitionerSpokenLanguages,
+                CurrentSpokenLanguageIds = currentSpokenLanguageIds,
                 PractitionerTypes = practitionerTypes,
                 CurrentPractitionerTypeId = currentPractitionerType.Id
 
@@ -192,19 +199,21 @@ namespace MediLink.Controllers
             //    errorMessage.Add("You must select a practitioner type");
             //}
 
-            if (practitionerUpdateViewModel.Languages == null)
+            if (practitionerUpdateViewModel.CurrentSpokenLanguageIds == null)
             {
-                errorMessage.Add("You must select at least one spoken laguage");
+                errorMessage.Add("There must be at least one selected spoken language");
             }
             Practitioner practitioner = await _userService.GetPractitionerByEmail(userName);
 
             List<PractitionerSpokenLanguages> spokenLanguages = await _mediLinkContext.PractitionerSpokenLanguages
-                    .Where(psl => psl.PractitionerId == practitioner.Id).ToListAsync();
+                    .Where(psl => psl.PractitionerId == practitioner.Id)
+                    .Include(psl => psl.Language)
+                    .ToListAsync();
 
             if (errorMessage.Count == 0)
             {
                 //This may have the same issue as patients update details but IDK, was not able to test - DC 
-                if (practitionerUpdateViewModel.Languages != null)
+                if (practitionerUpdateViewModel.CurrentSpokenLanguageIds != null)
                 {
                     
                     foreach (var language in spokenLanguages)
@@ -213,9 +222,9 @@ namespace MediLink.Controllers
                         await _mediLinkContext.SaveChangesAsync();
                     }
 
-                    foreach (var language in practitionerUpdateViewModel.Languages)
+                    foreach (var languageId in practitionerUpdateViewModel.CurrentSpokenLanguageIds)
                     {
-                        var currentSpokenlanguage = new PractitionerSpokenLanguages { LanguageId = language.Id, PractitionerId = practitioner.Id };
+                        var currentSpokenlanguage = new PractitionerSpokenLanguages { LanguageId = languageId, PractitionerId = practitioner.Id };
                         _mediLinkContext.PractitionerSpokenLanguages.Add(currentSpokenlanguage);
                         await _mediLinkContext.SaveChangesAsync();
                     }
@@ -251,8 +260,15 @@ namespace MediLink.Controllers
                 List<PractitionerType> practitionerTypes = await _mediLinkContext.PractitionerTypes.ToListAsync();
                 PractitionerType practitionerType = await _mediLinkContext.PractitionerTypes.Where(pt => pt.Id ==practitioner.PractitionerTypeId).FirstOrDefaultAsync();
 
+                List<int> currentSpokenLanguageIds = new List<int>();
+
+                foreach (var currentLanguage in spokenLanguages)
+                {
+                    currentSpokenLanguageIds.Add(currentLanguage.LanguageId);
+                }
+
                 practitionerUpdateViewModel.Languages = languages;
-                practitionerUpdateViewModel.CurrentSpokenLanguages = spokenLanguages;
+                practitionerUpdateViewModel.CurrentSpokenLanguageIds = currentSpokenLanguageIds;
                 practitionerUpdateViewModel.PractitionerTypes = practitionerTypes;
                 practitionerUpdateViewModel.CurrentPractitionerTypeId = practitionerType.Id;
                 

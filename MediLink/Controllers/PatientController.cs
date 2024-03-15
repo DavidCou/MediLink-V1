@@ -180,7 +180,7 @@ namespace MediLink.Controllers
                     }
 
                     //TODO - Fix patientUpdateViewModel.SpokenLanguageIds it is always null for some reason and causes errors when reloading the page to show error messages
-                    if (patientUpdateViewModel.SpokenLanguageIds != null)
+                    if (patientUpdateViewModel.CurrentSpokenLanguageIds != null)
                     {
                         List<PatientSpokenLanguage>? previousSpokenLanguages = await _mediLinkContext.PatientSpokenLanguages
                         .Where(psl => psl.PatientDetailsId == patientDetails.Id).ToListAsync();
@@ -190,7 +190,7 @@ namespace MediLink.Controllers
                             await _mediLinkContext.SaveChangesAsync();
                         }
 
-                        foreach (var languageId in patientUpdateViewModel.SpokenLanguageIds)
+                        foreach (var languageId in patientUpdateViewModel.CurrentSpokenLanguageIds)
                         {
                             var currentSpokenlanguage = new PatientSpokenLanguage { LanguageId = languageId, PatientDetailsId = patientDetails.Id };
                             _mediLinkContext.PatientSpokenLanguages.Add(currentSpokenlanguage);

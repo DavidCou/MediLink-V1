@@ -20,7 +20,7 @@ namespace MediLink.Models
 
         public List<Languages> Languages { get; set; }
 
-        public List<PractitionerSpokenLanguages> CurrentSpokenLanguages {  get; set; } 
+        public List<int> CurrentSpokenLanguageIds { get; set; }
 
         public List<PractitionerType> PractitionerTypes { get; set; }
 
