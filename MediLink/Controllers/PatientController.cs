@@ -86,11 +86,24 @@ namespace MediLink.Controllers
                 .Where(pa => pa.Id == patientDetail.PatientAddressesId)
                 .FirstOrDefaultAsync();
 
-            List<Languages> languages = await _mediLinkContext.Languages.ToListAsync();
+            List<Languages> languages = await _mediLinkContext.Languages
+                .ToListAsync();
+
+            List<PatientSpokenLanguage> patientSpokenLanguages = await _mediLinkContext.PatientSpokenLanguages
+                .Where(psl => psl.PatientDetailsId == patientDetail.Id)
+                .ToListAsync();
+
+            List<int> currentSpokenLanguageIds = new List<int>();
+
+            foreach (var language in patientSpokenLanguages)
+            {
+                currentSpokenLanguageIds.Add(language.LanguageId);
+            }
 
             PatientUpdateViewModel patientUpdateViewModel = new PatientUpdateViewModel()
             {
                 Languages = languages,
+                CurrentSpokenLanguageIds = currentSpokenLanguageIds,
                 Email = patient.Email,
                 FirstName = patientDetail.FirstName,
                 LastName = patientDetail.LastName,
@@ -160,18 +173,23 @@ namespace MediLink.Controllers
                 errorMessage.Add("Birthday is invalid, your birthday must be at least two days in the past");
             }
 
+            Patient patient = await _userService.GetUserByEmail(userName);
+
+            PatientDetail patientDetails = await _mediLinkContext.PatientDetails
+                .Where(pd => pd.Id == patient.Id)
+                .FirstOrDefaultAsync();
+
+            PatientAddress patientAddress = await _mediLinkContext.PatientAddress
+                .Where(pa => pa.Id == patient.Id)
+                .FirstOrDefaultAsync();
+
+            List<PatientSpokenLanguage>? currentSpokenLanguages = await _mediLinkContext.PatientSpokenLanguages
+                .Include(psl => psl.Language)
+                .Where(psl => psl.PatientDetailsId == patientDetails.Id)
+                .ToListAsync();
+
             if (errorMessage.Count == 0)
             {
-                Patient patient = await _userService.GetUserByEmail(userName);
-
-                PatientDetail patientDetails = await _mediLinkContext.PatientDetails
-                    .Where(pd => pd.Id == patient.Id)
-                    .FirstOrDefaultAsync();
-
-                PatientAddress patientAddress = await _mediLinkContext.PatientAddress
-                    .Where(pa => pa.Id == patient.Id)
-                    .FirstOrDefaultAsync();
-
                 if (patient != null && patientDetails != null && patientAddress != null)
                 {
                     if (patientUpdateViewModel.DoB.ToString().Contains("0001-01-01"))
@@ -179,12 +197,9 @@ namespace MediLink.Controllers
                         dob = null;
                     }
 
-                    //TODO - Fix patientUpdateViewModel.SpokenLanguageIds it is always null for some reason and causes errors when reloading the page to show error messages
                     if (patientUpdateViewModel.CurrentSpokenLanguageIds != null)
                     {
-                        List<PatientSpokenLanguage>? previousSpokenLanguages = await _mediLinkContext.PatientSpokenLanguages
-                        .Where(psl => psl.PatientDetailsId == patientDetails.Id).ToListAsync();
-                        foreach (var language in previousSpokenLanguages)
+                        foreach (var language in currentSpokenLanguages)
                         {
                             _mediLinkContext.PatientSpokenLanguages.Remove(language);
                             await _mediLinkContext.SaveChangesAsync();
@@ -220,6 +235,17 @@ namespace MediLink.Controllers
                 }
                 else
                 {
+                    List<Languages> languages = await _mediLinkContext.Languages.ToListAsync();
+                    List<int> currentSpokenLanguageIds = new List<int>();
+
+                    foreach (var currentLanguage in currentSpokenLanguages)
+                    {
+                        currentSpokenLanguageIds.Add(currentLanguage.LanguageId);
+                    }
+
+                    patientUpdateViewModel.Languages = languages;
+                    patientUpdateViewModel.CurrentSpokenLanguageIds = currentSpokenLanguageIds;
+
                     ViewBag.MyErrorList = errorMessage;
                     ViewData["UpdateErrorMessage"] = errorMessage;
                     return View(patientUpdateViewModel);
@@ -228,6 +254,17 @@ namespace MediLink.Controllers
             }
             else
             {
+                List<Languages> languages = await _mediLinkContext.Languages.ToListAsync();
+                List<int> currentSpokenLanguageIds = new List<int>();
+
+                foreach (var currentLanguage in currentSpokenLanguages)
+                {
+                    currentSpokenLanguageIds.Add(currentLanguage.LanguageId);
+                }
+
+                patientUpdateViewModel.Languages = languages;
+                patientUpdateViewModel.CurrentSpokenLanguageIds = currentSpokenLanguageIds;
+
                 ViewBag.MyErrorList = errorMessage;
                 ViewData["UpdateErrorMessage"] = errorMessage;
                 return View(patientUpdateViewModel);

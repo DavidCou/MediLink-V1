@@ -8,9 +8,9 @@ namespace MediLink.Models
     {
         public List<Languages>? Languages { get; set; }
 
-        public string Email { get; set; }
-
         public List<int>? CurrentSpokenLanguageIds { get; set; }
+
+        public string Email { get; set; }
 
         public string FirstName { get; set; }
 

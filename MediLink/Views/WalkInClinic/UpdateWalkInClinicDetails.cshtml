@@ -97,31 +97,19 @@
                                         <select name="CurrentSpokenLanguageIds" class="selectpicker form-control" aria-label="Default select" asp-for="CurrentSpokenLanguageIds" multiple>
                                             @foreach (var language in Model.Languages)
                                             {
-                                                if(Model.CurrentSpokenLanguageIds != null)
+                                                if (Model.CurrentSpokenLanguageIds != null && Model.CurrentSpokenLanguageIds.Contains(language.Id))
                                                 {
-                                                    foreach (var currentLanguageId in Model.CurrentSpokenLanguageIds)
-                                                    {
-                                                        if (language.Id == currentLanguageId)
-                                                        {
-                                                            <option selected value="@language.Id">@language.LanguageName</option>
-                                                        }
-                                                        else
-                                                        {
-                                                            <option value="@language.Id">@language.LanguageName</option>
-                                                        }
-
-                                                    }
+                                                    <option selected value="@language.Id">@language.LanguageName</option>
                                                 }
                                                 else
                                                 {
                                                     <option value="@language.Id">@language.LanguageName</option>
-                                                } 
+                                                }
                                             }
                                         </select>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 

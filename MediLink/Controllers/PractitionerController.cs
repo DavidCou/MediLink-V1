@@ -193,11 +193,10 @@ namespace MediLink.Controllers
                 errorMessage.Add("You must select a gender");
             }
 
-            // commented out until the practitionertype issue can be solved
-            //if (practitionerUpdateViewModel.CurrentPractitionerTypeId == null || practitionerUpdateViewModel.CurrentPractitionerTypeId == 0)
-            //{
-            //    errorMessage.Add("You must select a practitioner type");
-            //}
+            if (practitionerUpdateViewModel.CurrentPractitionerTypeId == null || practitionerUpdateViewModel.CurrentPractitionerTypeId == 0)
+            {
+                errorMessage.Add("You must select a practitioner type");
+            }
 
             if (practitionerUpdateViewModel.CurrentSpokenLanguageIds == null)
             {
@@ -212,7 +211,6 @@ namespace MediLink.Controllers
 
             if (errorMessage.Count == 0)
             {
-                //This may have the same issue as patients update details but IDK, was not able to test - DC 
                 if (practitionerUpdateViewModel.CurrentSpokenLanguageIds != null)
                 {
                     
@@ -244,7 +242,7 @@ namespace MediLink.Controllers
                 practitioner.LastName = practitionerUpdateViewModel.LastName;
                 practitioner.gender = practitionerUpdateViewModel.Gender;
                 practitioner.PhoneNumber = practitionerUpdateViewModel.PhoneNumber;
-                //practitioner.PractitionerTypeId = practitionerUpdateViewModel.CurrentPractitionerTypeId; // The id is being set to 0 for some reason, probably not being picked up 
+                practitioner.PractitionerTypeId = practitionerUpdateViewModel.CurrentPractitionerTypeId; 
                 _mediLinkContext.Update(practitioner);
                 await _mediLinkContext.SaveChangesAsync();
 
