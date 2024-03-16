@@ -54,7 +54,12 @@
             </div>
 
             <div class="card-body">
-
+                @if (ViewData["mensajeResultPract"] != null)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        <p id="message-home-pract">@ViewData["mensajeResultPract"]</p>
+                    </div>
+                }
                 <div class="container my-1 mb-2">
                     <div class="d-flex justify-content-center ">
                         <form asp-controller="Search" asp-action="SearchPractitioner" method="post">
@@ -87,7 +92,7 @@
                                         <option value="5">5</option>
                                     </select>
                                 </div>
-                                
+
                             </div>
                             <div class="d-block text-center">
                                 <input type="submit" class="btn btn-primary px-5" value="Search" />
@@ -116,7 +121,7 @@
                                 {
                                     <td>0 stars</td>
                                 }
-                                <td><a asp-controller="Search" asp-action="PractitionerDetails" asp-route-email="@prac.Email">View Details</a></td>
+                                <td><button type='button' class='btn btn-link btnShowDetails' data-parameter="@prac.Email">View Details</button></td>
                             </tr>
                         }
                     </table>
@@ -129,4 +134,156 @@
         </div>
     </div>
 </div>
+<!-- Modal Practictioner details -->
+<div class="modal fade" id="practdetails" tabindex="-1" aria-labelledby="editmodal" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="container">
+                <h4 id="tiltle-search-pract" class="text-center text-black mt-5">Juan Quintana</h4>
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-3">
+                        <div>
+                            <div class="profile-info mt-2">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p><strong>Practitioner Type:</strong><span id="pract-type"></span>   </p>
+
+                                    </div>
+                                    <div class="col-4">
+                                        <p><strong>Gender:</strong> <span id="gender-pract"></span></p>
+                                    </div>
+                                    <div class="col-4">
+                                        <p class=""><strong>Phone Number:</strong> <span id="phone-pract"></span></p>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p><strong>Patient Acceptance Status:</strong> <span id="patient-acep-pract"></span></p>
+                                    </div>
+                                    <div class="col-6">
+
+                                        <p><strong>Last Accepted A Patient On:</strong> <span id="patient-last-pract"></span></p>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p><strong>Spoken Languages: </strong><span id="pract-lang"></span>  </p>
+
+                                    </div>
+                                    <div class="col-6">
+                                        <p><strong>Current Rating:</strong><span id="rating-pract"></span></p>
+
+                                    </div>
+
+                                </div>
+
+
+
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <h2 class="mb-4">Office Information</h2>
+
+                        </div>
+                        <div>
+                            <div class="modal-body">
+
+                                <div class="card">
+                                    <div class="card-header">
+
+                                        <i class="fas fa-users me-1"></i> List of Offices
+                                        <div class="d-inline text-end">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+
+                                        </div>
+
+                                        <div class="card-body">
+                                            @if (ViewData["messageUpdateSearchPract"] != null)
+                                            {
+                                                <div class="alert alert-danger" role="alert">
+                                                    <p id="message-home-pract2">@ViewData["messageUpdateSearchPract"]</p>
+                                                </div>
+                                            }
+                                            <div class="container my-1 position-relative">
+                                                <div class="d-flex justify-content-center ">
+                                                    <div class="searchbar">
+                                                        <input id="filterInputOffice" class="search_input search_input_width" type="text" name="" onkeyup="searchOffice()" placeholder="Search a office name...">
+                                                        <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+                                            <table id="searchpractoffices" class="table mx-auto" style="width: 100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Office Name</th>
+                                                        <th>Type</th>
+                                                        <th>Address</th>
+                                                        <th>Date Request</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+
+                                            <div class="d-block text-center">
+
+                                                <form class="d-inline" action="@Url.Action("SaveRequestPractictioner","Search")" method="post">
+                                                    <!--inputs to store the ids selected-->
+                                                    <input type="hidden" id="id-pract" name="idpractictioner" />
+                                                    <input type="hidden" id="id-patient" name="idpatient" />
+                                                    <input type="hidden" id="id-office-add" name="listofficeaddrequest" />
+                                                    <input type="hidden" id="id-office-remove" name="listofficeremoverequest" />
+                                                    <input type="hidden" id="practemail" name="practemail" />
+
+                                                    <button id="btn-save-request-pract" type="submit" class="btn btn-success mx-2">
+                                                        Save
+                                                    </button>
+
+                                                </form>
+
+
+                                                <button type="button" class="btn btn-secondary tex" data-dismiss="modal" aria-label="Close">
+                                                    Close
+                                                </button>
+
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 </>

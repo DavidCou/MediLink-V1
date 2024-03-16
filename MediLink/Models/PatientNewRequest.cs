@@ -23,23 +23,23 @@ namespace MediLink.Models
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(maximumLength: 100)]
-        public string? FirstName { get; set; } 
+        public string? FirstName { get; set; }
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(maximumLength: 100)]
-        public string? LastName { get; set; }  
+        public string? LastName { get; set; }
 
-        public string? gender { get; set; } 
+        public string? gender { get; set; }
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(maximumLength: 17)]
-        public string? PhoneNumber { get; set; } 
+        public string? PhoneNumber { get; set; }
 
         public DateTime DoB { get; set; }
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(maximumLength: 150)]
-        public string? City { get; set; } 
+        public string? City { get; set; }
 
         [Column(TypeName = "VARCHAR")]
         [StringLength(maximumLength: 50)]

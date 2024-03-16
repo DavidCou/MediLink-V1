@@ -93,9 +93,14 @@ namespace MediLink.Entities
 				new PractitionerType() { Id = 2, Name = "Pediatrician", Description = "A general health practitioner that specializes in child healthcare" },
 				new PractitionerType() { Id = 3, Name = "Walk-in Clinic", Description = "" }
 
-			); 
+			);
 
-		}
+            //set the current date by default in the field
+            modelBuilder.Entity<NewPatientRequest>()
+           .Property(s => s.DateRequest)
+           .HasDefaultValueSql("GETDATE()");
+
+        }
 
     }
 }

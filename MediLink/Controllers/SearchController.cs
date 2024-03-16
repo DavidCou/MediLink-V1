@@ -1,5 +1,6 @@
 ﻿using MediLink.Entities;
 using MediLink.Models;
+using MediLink.Services;
 using MediLink.Services.Contract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,10 +13,11 @@ namespace MediLink.Controllers
 {
     public class SearchController : Controller
     {
-        public SearchController(MediLinkDbContext mediLinkContext, IUserService userService)
+        public SearchController(MediLinkDbContext mediLinkContext, IUserService userService, IWebHostEnvironment webHostEnvironment)
         {
             _mediLinkContext = mediLinkContext;
             _userService = userService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
@@ -29,6 +31,10 @@ namespace MediLink.Controllers
                 userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
                     .Select(c => c.Value).SingleOrDefault();
             }
+
+            string mensajeResultPract = TempData["mensajeRequestPract"] as string;
+
+            ViewData["mensajeResultPract"] = mensajeResultPract;
 
             ViewData["userName"] = userName;
 
@@ -206,10 +212,12 @@ namespace MediLink.Controllers
             return View(viewModel);
         }
 
+        [HttpGet("/PractitionerDetails/{email}")]
         public async Task<IActionResult> PractitionerDetails(string email)
         {
             ClaimsPrincipal claimuser = HttpContext.User;
             string userName = "";
+
 
             if (claimuser.Identity.IsAuthenticated)
             {
@@ -218,6 +226,8 @@ namespace MediLink.Controllers
             }
 
             ViewData["userName"] = userName;
+
+            Patient oPatient = await _userService.GetUserByEmail(userName);
 
             Practitioner practitioner = await _userService.GetPractitionerByEmail(email);
 
@@ -229,13 +239,45 @@ namespace MediLink.Controllers
 
             List<OfficeAddress> officeAddresses = new List<OfficeAddress>();
 
+            List<OfficeInfo> listOfficeInfo = new List<OfficeInfo>();
+
+
+            //foreach (var officeAddress in practitionerOfficeAddresses)
+            //{
+            //    officeAddresses.Add(officeAddress.OfficeAddresses);
+            //}
+
             foreach (var officeAddress in practitionerOfficeAddresses)
             {
-                officeAddresses.Add(officeAddress.OfficeAddresses);
+                OfficeInfo oOfficeInfo = new OfficeInfo();
+
+                oOfficeInfo.Id = officeAddress.OfficeAddresses.Id;
+                oOfficeInfo.OfficeName = officeAddress.OfficeAddresses.OfficeName;
+                oOfficeInfo.Street = officeAddress.OfficeAddresses.StreetAddress;
+                oOfficeInfo.City = officeAddress.OfficeAddresses.City;
+                oOfficeInfo.Province = officeAddress.OfficeAddresses.Province;
+                oOfficeInfo.PostalCode = officeAddress.OfficeAddresses.PostalCode;
+                oOfficeInfo.country = officeAddress.OfficeAddresses.country;
+                oOfficeInfo.OfficeTypeName = officeAddress.OfficeAddresses.OfficeType.OfficeTypeName;
+                oOfficeInfo.fullAddress = officeAddress.OfficeAddresses.StreetAddress + " " + officeAddress.OfficeAddresses.City + " " + officeAddress.OfficeAddresses.Province;
+
+                listOfficeInfo.Add(oOfficeInfo);
             }
+
+
+            //get the list of new request by patient to get practitioner
+            List<NewPatientRequest> ListNewPatientRequest = await _mediLinkContext.NewPatientRequests
+                .Where(pat => pat.PatientId == oPatient.Id).ToListAsync();
 
             List<PractitionerSpokenLanguages> practitionerSpokenLanguages = await _mediLinkContext.PractitionerSpokenLanguages
                 .Where(psl => psl.PractitionerId == practitioner.Id).Include(psl => psl.Language).ToListAsync();
+
+            List<string> spokenLanguages = new List<string>();
+
+            foreach (var practSpoken in practitionerSpokenLanguages)
+            {
+                spokenLanguages.Add(practSpoken.Language.LanguageName);
+            }
 
             PractitionerType practitionerType = await _mediLinkContext.PractitionerTypes
                 .Where(pt => pt.Id == practitioner.PractitionerTypeId)
@@ -262,17 +304,58 @@ namespace MediLink.Controllers
                 lastAcceptedPatientDateString = "No patients accepted yet";
             }
 
-            PractitionerViewModel practitionerViewModel = new PractitionerViewModel()
+            // start Compare the two lists and remove duplicates
+            // Check if the id is present in the list of new request
+
+            bool isIdPresent = false;
+
+            //verify ig the office id exist in the list of patient request exist in the ;ist of practictioner office
+            foreach (OfficeInfo officeInfo in listOfficeInfo)
             {
-                Practitioner = practitioner,
-                OfficeAddresses = officeAddresses,
-                PractitionerSpokenLanguages = practitionerSpokenLanguages,
-                PractitionerType = practitionerType,
+                isIdPresent = ListNewPatientRequest.Any(obj => obj.officePractitionerId == officeInfo.Id);
+
+
+                if (isIdPresent)
+                {
+                    // Find the record(s) you want to delete using a where statement
+                    NewPatientRequest oNewPatientRequest = await _mediLinkContext.NewPatientRequests.Where(e => e.PractitionerId == Convert.ToInt32(practitioner.Id) && e.PatientId == Convert.ToInt32(oPatient.Id) && e.officePractitionerId == officeInfo.Id).FirstAsync();
+
+                    officeInfo.isRequested = true;
+
+                    var dateReq = oNewPatientRequest.DateRequest.ToShortDateString();
+                    if (dateReq != null)
+                    {
+                        officeInfo.DateRequest = dateReq;
+                    }
+                    else
+                    {
+                        officeInfo.DateRequest = "";
+                    }
+
+
+                }
+            }
+            //end
+
+            SearchPractitionerRequest oSearchPractitionerRequest = new SearchPractitionerRequest()
+            {
+                Id = practitioner.Id,
+                Email = practitioner.Email,
+                FirstName = practitioner.FirstName,
+                LastName = practitioner.LastName,
+                PhoneNumber = practitioner.PhoneNumber,
+                gender = practitioner.gender,
+                OfficeAddresses = listOfficeInfo,
+                Rating = practitioner.rating,
+                PractitionerSpokenLanguages = string.Join(", ", spokenLanguages),
+                PractitionerType = practitionerType.Name,
                 IsAcceptingNewPatients = isAcceptingNewPatients,
-                LastAcceptedPatientDate = lastAcceptedPatientDateString
+                LastAcceptedPatientDate = lastAcceptedPatientDateString,
+                PatientId = oPatient.Id
+
             };
 
-            return View(practitionerViewModel);
+            return Json(oSearchPractitionerRequest);
 
         }
 
@@ -312,7 +395,119 @@ namespace MediLink.Controllers
             return View();
         }
 
+        [HttpPost("/newRequestPractictioner")]
+        public async Task<IActionResult> SaveRequestPractictioner()
+        {
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+
+            if (claimuser.Identity.IsAuthenticated)
+            {
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            // Access form fields using FormCollection
+            string idpractictioner = Request.Form["idpractictioner"];
+            string idpatient = Request.Form["idpatient"];
+            string listofficeaddrequest = Request.Form["listofficeaddrequest"];
+            string listofficeremoverequest = Request.Form["listofficeremoverequest"];
+            string practictionerEmail = Request.Form["practemail"];
+
+            Patient oPatient = await _mediLinkContext.Patients
+               .Where(pa => pa.Id == Convert.ToInt32(idpatient))
+               .Include(pa => pa.PatientDetails)
+               .FirstAsync();
+
+            Practitioner oPractitioner = await _mediLinkContext.Practitioners
+              .Where(pa => pa.Id == Convert.ToInt32(idpractictioner))
+              .FirstAsync();
+
+
+
+            List<NewPatientRequest> ListNewPatientRequest = new List<NewPatientRequest>();
+
+
+            //verify if the user add offices address to the new practitioner
+            if (!string.IsNullOrEmpty(listofficeaddrequest))
+            {
+                //convert the string to array to iterate over each office id added
+                string[] ListAddNewRequest = listofficeaddrequest.Split(",");
+
+                //iterate over each office id added and save the address
+                foreach (string office in ListAddNewRequest)
+                {
+                    int idOffice = Convert.ToInt32(office);
+
+                    ListNewPatientRequest.Add(new NewPatientRequest { PractitionerId = Convert.ToInt32(idpractictioner), PatientId = Convert.ToInt32(idpatient), officePractitionerId = idOffice });
+
+
+                }
+
+                _mediLinkContext.NewPatientRequests.AddRange(ListNewPatientRequest);
+
+                await _mediLinkContext.SaveChangesAsync();
+
+                TempData["mensajeRequestPract"] = "the Request for Add a New Practitioner has been created succesfully";
+
+                // Map the path relative to the content root
+                string path = Path.Combine(_webHostEnvironment.ContentRootPath, "Templates", "PractitionerRequestNotification.html");
+
+                string content = System.IO.File.ReadAllText(path);
+
+                string fullnamePract = oPractitioner.FirstName + " " + oPractitioner.LastName;
+
+                string fullnamePatient = oPatient.PatientDetails.FirstName + " " + oPatient.PatientDetails.LastName;
+
+
+                string htmlBody = string.Format(content, fullnamePract, fullnamePatient);
+
+                Email emailDTO = new Email()
+                {
+                    recipient = oPractitioner.Email,
+                    subject = "Notification New Patient Request MediLink",
+                    body = htmlBody
+                };
+
+                bool sent = EmailService.SendEmail(emailDTO);
+
+            }
+
+            //verify if the user add offices address to the new practitioner
+            if (!string.IsNullOrEmpty(listofficeremoverequest))
+            {
+                //convert the string to array to iterate over each office id removed
+                string[] ListRemovedNewRequest = listofficeremoverequest.Split(",");
+
+                //iterate over each office id added and save the address
+                foreach (string office in ListRemovedNewRequest)
+                {
+                    int idOffice = Convert.ToInt32(office);
+
+                    // Find the record(s) you want to delete using a where statement
+                    var recordsToDelete = _mediLinkContext.NewPatientRequests.Where(e => e.PractitionerId == Convert.ToInt32(idpractictioner) && e.PatientId == Convert.ToInt32(idpatient) && e.officePractitionerId == idOffice).ToList();
+
+                    // Delete the record(s)
+                    _mediLinkContext.NewPatientRequests.RemoveRange(recordsToDelete);
+
+
+                    await _mediLinkContext.SaveChangesAsync();
+                }
+
+
+                TempData["mensajeRequestPract"] = "the Request for Remove Practitioner has been created succesfully";
+
+            }
+
+
+
+            return RedirectToAction("SearchPractitioner", "Search");
+
+        }
+
         private MediLinkDbContext _mediLinkContext;
         private IUserService _userService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
     }
 }

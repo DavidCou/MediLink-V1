@@ -6,6 +6,8 @@ namespace MediLink.Models
     {
         public int Id { get; set; }
 
+        public string? Street { get; set; }
+
         public string? City { get; set; }
 
         public string Province { get; set; } = "Ontario";
@@ -23,5 +25,9 @@ namespace MediLink.Models
         public OfficeType? OfficeType { get; set; }
 
         public string? fullAddress { get; set; }
+
+        public bool isRequested { get; set; } = false;
+
+        public string DateRequest { get; set; } = "";
     }
 }

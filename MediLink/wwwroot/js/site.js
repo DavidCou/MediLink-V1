@@ -6,8 +6,22 @@
 let arrayIdOffice = [];
 let arrayIdLanguage = [];
 
+let arrayIdAddRequestPract = [];
+let arrayIdRemoveRequestPract = [];
+
 //disable save button in the Practictioner Home Page
-document.getElementById("btn-save-address").disabled = true;
+var btnSaveAddres = document.getElementById("btn-save-address");
+//disable save button in the Patien Request Practictioner Page
+var btnSaveRequest = document.getElementById("btn-save-request-pract");
+
+
+if (btnSaveAddres != undefined) {
+    btnSaveAddres.disabled = true;
+}
+
+if (btnSaveRequest != undefined) {
+    btnSaveRequest.disabled = true;
+}
 
 
 //function to search medical offices
@@ -294,4 +308,148 @@ $(document).ready(function () {
         });
     });
 
+
+
+
+    $('.btnShowDetails').click(function () {
+        var parameterValue = $(this).data('parameter');
+
+
+
+
+        $.ajax({
+            url: 'http://localhost:5220/PractitionerDetails/' + parameterValue,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+
+                console.log("Data");
+                console.log(data)
+
+                $('#phone-pract').text(data.phoneNumber);
+                $('#gender-pract').text(data.gender);
+                $('#rating-pract').text(data.rating);
+                $('#patient-acep-pract').text(data.isAcceptingNewPatients);
+                $('#patient-last-pract').text(data.lastAcceptedPatientDate);
+                $('#pract-type').text(data.practitionerType);
+                $('#pract-lang').text(data.practitionerSpokenLanguages);
+                $('#practemail').text(data.email);
+                $('#id-patient').val(data.patientId);
+                $('#id-pract').val(data.id);
+
+
+                $.each(data.officeAddresses, function (index, item) {
+
+                    if (item.isRequested == true) {
+                        var newRow = "<tr class='mx-2'><td>" + item.officeName + "</td><td>" + item.officeTypeName + "</td><td>" + item.fullAddress + "</td><td>" + item.dateRequest + "</td><td><button id='offic-pract-" + item.id + "' type='button' class='btn btn-danger mr-1 w-75' onclick='RequestPractitioner(this)'>Remove Request</button></td></tr>";
+                    } else {
+                        var newRow = "<tr class='mx-2'><td>" + item.officeName + "</td><td>" + item.officeTypeName + "</td><td>" + item.fullAddress + "</td><td>" + item.dateRequest + "</td><td><button id='offic-pract-" + item.id + "' type='button' class='btn btn-primary mr-1 w-75' onclick='RequestPractitioner(this)'>Add Request</button></td></tr>";
+                    }
+
+
+                    $("#searchpractoffices tbody").append(newRow);
+
+                });
+
+                $('#practdetails').modal('show');
+
+            }
+        });
+    });
+
+
+
+
+
+
+
 });
+
+
+
+
+//add request patient for practictioner by offices id to input
+function RequestPractitioner(button) {
+
+    var id = button.id;
+    var idclean = button.id.replace("offic-pract-", "");
+    var valueText = button.textContent;
+    var btnClicked = document.getElementById(id);
+
+    var inputListAddRequest = document.getElementById('id-office-add');
+    var inputListRemoveRequest = document.getElementById('id-office-remove');
+
+    if (valueText == "Add Request") {
+
+        btnClicked.textContent = "Remove Request";
+        btnClicked.classList.remove("btn-primary");
+        btnClicked.classList.add("btn-danger");
+
+        ;
+
+        if (arrayIdRemoveRequestPract.includes(idclean)) {
+
+            arrayIdRemoveRequestPract = arrayIdRemoveRequestPract.filter(item => item != idclean);
+
+
+
+
+        } else {
+
+            arrayIdAddRequestPract.push(idclean);
+
+
+
+        }
+
+
+
+    } else {
+
+
+        btnClicked.textContent = "Add Request";
+        btnClicked.classList.remove("btn-danger");
+        btnClicked.classList.add("btn-primary");
+
+        if (arrayIdAddRequestPract.includes(idclean)) {
+
+            arrayIdAddRequestPract = arrayIdAddRequestPract.filter(item => item != idclean);
+
+
+
+        } else {
+
+            arrayIdRemoveRequestPract.push(idclean);
+
+
+
+        }
+
+    }
+    console.log("values array remove request ");
+    console.log(arrayIdRemoveRequestPract);
+
+
+    console.log("values array add request ");
+    console.log(arrayIdAddRequestPract);
+
+    inputListRemoveRequest.value = arrayIdRemoveRequestPract.join(",");
+    inputListAddRequest.value = arrayIdAddRequestPract.join(",");
+
+    //disable save button in the Practictioner Home Page
+    // var btnSaveRequest = document.getElementById("btn-save-address");
+
+
+    if (arrayIdAddRequestPract.length > 0 || arrayIdRemoveRequestPract.length > 0) {
+
+        btnSaveRequest.disabled = false;
+    }
+    else {
+        btnSaveRequest.disabled = true;
+    }
+
+
+
+
+}
+
