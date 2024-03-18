@@ -121,6 +121,7 @@ namespace MediLink.Services.Implementation
             patientDetail.FirstName = oPatientNew.FirstName;
             patientDetail.LastName = oPatientNew.LastName;
             patientDetail.gender = oPatientNew.gender;
+            patientDetail.DoB = oPatientNew.DoB;
             patientDetail.PhoneNumber = oPatientNew.PhoneNumber;
             patientDetail.PatientAddressesId = patientAddress.Id;
             _dbContext.PatientDetails.Add(patientDetail);

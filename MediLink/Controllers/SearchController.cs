@@ -267,7 +267,7 @@ namespace MediLink.Controllers
 
             //get the list of new request by patient to get practitioner
             List<NewPatientRequest> ListNewPatientRequest = await _mediLinkContext.NewPatientRequests
-                .Where(pat => pat.PatientId == oPatient.Id).ToListAsync();
+                .Where(pat => pat.PatientId == oPatient.Id && pat.PractitionerId == practitioner.Id).ToListAsync();
 
             List<PractitionerSpokenLanguages> practitionerSpokenLanguages = await _mediLinkContext.PractitionerSpokenLanguages
                 .Where(psl => psl.PractitionerId == practitioner.Id).Include(psl => psl.Language).ToListAsync();
@@ -284,7 +284,7 @@ namespace MediLink.Controllers
                 .FirstOrDefaultAsync();
 
             string isAcceptingNewPatients = "";
-            if (practitioner.IsAcceptingNewPatients = true)
+            if (practitioner.IsAcceptingNewPatients == true)
             {
                 isAcceptingNewPatients = "Currently accepting new patients";
             }
@@ -309,34 +309,53 @@ namespace MediLink.Controllers
 
             bool isIdPresent = false;
 
-            //verify ig the office id exist in the list of patient request exist in the ;ist of practictioner office
+            //verify ig the office id exist in the list of patient request
             foreach (OfficeInfo officeInfo in listOfficeInfo)
             {
                 isIdPresent = ListNewPatientRequest.Any(obj => obj.officePractitionerId == officeInfo.Id);
-
-
+                                
                 if (isIdPresent)
                 {
-                    // Find the record(s) you want to delete using a where statement
-                    NewPatientRequest oNewPatientRequest = await _mediLinkContext.NewPatientRequests.Where(e => e.PractitionerId == Convert.ToInt32(practitioner.Id) && e.PatientId == Convert.ToInt32(oPatient.Id) && e.officePractitionerId == officeInfo.Id).FirstAsync();
+                    int practId = Convert.ToInt32(practitioner.Id);
+                    int patId = Convert.ToInt32(oPatient.Id);
+                    int offiID = officeInfo.Id;
 
-                    officeInfo.isRequested = true;
-                    officeInfo.statusRequest = oNewPatientRequest.status;
+                    // Find the record(s)  using a where statement
+                    NewPatientRequest oNewPatientRequest = await _mediLinkContext.NewPatientRequests.Where(e => e.PractitionerId == practId && e.PatientId == patId && e.officePractitionerId == offiID).FirstAsync();
 
-                    var dateReq = oNewPatientRequest.DateRequest.ToShortDateString();
-                    if (dateReq != null)
+                    if (oNewPatientRequest != null)
                     {
-                        officeInfo.DateRequest = dateReq;
+                        // Update the entity
+                        officeInfo.isRequested = true;
+                        officeInfo.statusRequest = oNewPatientRequest.status;
+
+                        var dateReq = oNewPatientRequest.DateRequest.ToShortDateString();
+                        if (dateReq != null)
+                        {
+                            officeInfo.DateRequest = dateReq;
+                        }
+                        else
+                        {
+                            officeInfo.DateRequest = "";
+                        }
                     }
                     else
                     {
-                        officeInfo.DateRequest = "";
+                        // Handle the case where no entity is found with the specified ID
+                        // For example: return an error message or display a user-friendly message
                     }
+                  
 
 
                 }
             }
             //end
+
+           
+            if(practitioner.rating == null)
+            {
+                practitioner.rating = 0;
+            }
 
             SearchPractitionerRequest oSearchPractitionerRequest = new SearchPractitionerRequest()
             {
@@ -352,7 +371,8 @@ namespace MediLink.Controllers
                 PractitionerType = practitionerType.Name,
                 IsAcceptingNewPatients = isAcceptingNewPatients,
                 LastAcceptedPatientDate = lastAcceptedPatientDateString,
-                PatientId = oPatient.Id
+                PatientId = oPatient.Id,
+                
 
             };
 
@@ -441,7 +461,18 @@ namespace MediLink.Controllers
                 {
                     int idOffice = Convert.ToInt32(office);
 
-                    ListNewPatientRequest.Add(new NewPatientRequest { PractitionerId = Convert.ToInt32(idpractictioner), PatientId = Convert.ToInt32(idpatient), officePractitionerId = idOffice });
+                    string statusPract = "";
+
+                    if (oPractitioner.IsAcceptingNewPatients)
+                    {
+                        statusPract = "pending";
+                    }
+                    else
+                    {
+                        statusPract = "waitlist";
+                    }
+
+                    ListNewPatientRequest.Add(new NewPatientRequest { PractitionerId = Convert.ToInt32(idpractictioner), PatientId = Convert.ToInt32(idpatient), officePractitionerId = idOffice, status = statusPract });
 
 
                 }
@@ -475,7 +506,7 @@ namespace MediLink.Controllers
 
             }
 
-            //verify if the user add offices address to the new practitioner
+            //verify if the user wants remove offices address to the practitioner
             if (!string.IsNullOrEmpty(listofficeremoverequest))
             {
                 //convert the string to array to iterate over each office id removed

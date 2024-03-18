@@ -42,9 +42,11 @@
             <div class="col-sm-4 d-flex align-items-center justify-content-center">
                 <div class="btn-group-vertical-center">
                     <h3 class="mb-4 mt-2">Menu</h3>
-                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewPatients","Practitioner")">View Your Current Patients</a>
-                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewNewPatientRequests","Practitioner")">View Your Pending New Patient Requests</a>
-                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewWaitList","Practitioner")">View Your WaitList</a>
+                  
+                    <button id="btnPatientaApproved" type='button' class='btn btn-blue btn-block btn-half-width mb-3' data-parameter="approve" data-toggle='modal'>View Your Current Patients</button>
+                    <button id="btnPatientRequests2" type='button' class='btn btn-blue btn-block btn-half-width mb-3 btnPatientRequests' data-parameter="pending" data-toggle='modal'>View Your Pending New Patient Requests</button>
+                    <button id="btnPatientWaitList" type='button' class='btn btn-blue btn-block btn-half-width mb-3 btnPatientRequests' data-parameter="waitlist" data-toggle='modal'>View Your WaitList</button>
+                    
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdatePractitionerDetails","Practitioner")">Edit Your Profile</a>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdatePractitionerAddress","Practitioner")">Add / Edit Your Office Address(s)</a>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewReviews","Practitioner")">View Your Reviews</a>
@@ -162,6 +164,9 @@
                                     </tbody>
                                 </table>
                                 <div class="d-block text-center">
+
+                                   
+
                                     <button type="button" class="btn btn-secondary tex" data-dismiss="modal" aria-label="Close">
                                         Close
                                     </button>
@@ -260,4 +265,148 @@
             </div>
         </div>
     </div>
+
+
+    <!-- Modal Patient Requests -->
+    <div class="modal fade" id="patientrequests" tabindex="-1" aria-labelledby="editmodal" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                    <div class="card">
+                        <div class="card-header">
+
+                            <i class="fas fa-users me-1"></i> List of Patient Requests
+                            <div class="d-inline text-end">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="container my-1">
+                                    <div class="d-flex justify-content-center ">
+                                       
+                                    </div>
+                                </div>
+
+
+                                <table id="data-table-patient-requests" class="table mx-auto" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Patient Fullname</th>
+                                            <th>Age</th>
+                                            <th>Gender</th>
+                                            <th>Address</th>
+                                            <th>Office Name</th>
+                                            <th>Date Request</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                      
+
+                                    </tbody>
+                                </table>
+                                <div class="d-block text-center">
+
+                                    <form id="update-req-patient" class="d-inline" action="@Url.Action("SaveRequestPatient","Practitioner")" method="post">
+                                        <!--inputs to store the ids selected-->
+                                                                              
+                                        <input type="hidden" id="status-pat-req" name="status-pat-req" />
+
+                                        <button id="btn-save-request-pat" type="button" class="btn btn-success mx-2" onclick="updatePatientNewRequest()">
+                                            Save
+                                        </button>
+
+                                    </form>
+
+                                    <button type="button" class="btn btn-secondary tex" data-dismiss="modal" aria-label="Close">
+                                        Close
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Patient Requests Approved-->
+    <div class="modal fade" id="patientrequestsapproved" tabindex="-1" aria-labelledby="editmodal" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                    <div class="card">
+                        <div class="card-header">
+
+                            <i class="fas fa-users me-1"></i> List of Patients
+                            <div class="d-inline text-end">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="container my-1">
+                                    <div class="d-flex justify-content-center ">
+                                    </div>
+                                </div>
+
+
+                                <table id="data-table-patient-approved" class="table mx-auto" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Patient Fullname</th>
+                                            <th>Age</th>
+                                            <th>Gender</th>
+                                            <th>Address</th>
+                                            <th>Office Name</th>
+                                            <th>Date Request</th>
+                                            <th>Date Approved</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                                <div class="d-block text-center">
+                                                                      
+
+                                    <button type="button" class="btn btn-secondary tex" data-dismiss="modal" aria-label="Close">
+                                        Close
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </body>

@@ -461,6 +461,8 @@ namespace MediLink.Controllers
                 properties
                 );
 
+            TempData["practictionerUser"] = practFound.Email;
+
             return RedirectToAction("PractitionerHomePage", "Practitioner");
         }
 

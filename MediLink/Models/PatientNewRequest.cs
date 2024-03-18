@@ -57,5 +57,18 @@ namespace MediLink.Models
         [StringLength(maximumLength: 250)]
         public string? StreetAddress { get; set; } = null!;
 
+        public string? officeName { get; set; }
+
+        public int officeId { get; set; }
+
+        public string? dateRequest { get; set; }
+
+        public int age { get; set; }
+
+        public string? fullname { get; set; }
+
+        public string? fullAddress { get; set; }
+
+
     }
 }
