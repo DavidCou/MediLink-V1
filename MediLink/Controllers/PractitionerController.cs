@@ -521,7 +521,7 @@ namespace MediLink.Controllers
                 oPatientNewRequest.dateRequest = item.DateRequest.ToShortDateString();
                 oPatientNewRequest.age = patientAge;
                 oPatientNewRequest.gender = item.Patient.PatientDetails.gender;
-                oPatientNewRequest.officeId = oPatientAddress.Id;
+                oPatientNewRequest.officeId = oOfficeAddress.Id;
 
                 ListPatientReq.Add(oPatientNewRequest);
 
