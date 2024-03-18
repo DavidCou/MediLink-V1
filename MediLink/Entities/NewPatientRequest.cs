@@ -18,5 +18,7 @@ namespace MediLink.Entities
         public Practitioner Practitioner { get; set; }
 
         public Patient Patient { get; set; }
+
+        public string status { get; set; } = "pending";
     }
 }

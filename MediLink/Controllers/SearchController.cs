@@ -321,6 +321,7 @@ namespace MediLink.Controllers
                     NewPatientRequest oNewPatientRequest = await _mediLinkContext.NewPatientRequests.Where(e => e.PractitionerId == Convert.ToInt32(practitioner.Id) && e.PatientId == Convert.ToInt32(oPatient.Id) && e.officePractitionerId == officeInfo.Id).FirstAsync();
 
                     officeInfo.isRequested = true;
+                    officeInfo.statusRequest = oNewPatientRequest.status;
 
                     var dateReq = oNewPatientRequest.DateRequest.ToShortDateString();
                     if (dateReq != null)

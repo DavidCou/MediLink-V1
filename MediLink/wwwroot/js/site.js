@@ -337,13 +337,14 @@ $(document).ready(function () {
                 $('#id-patient').val(data.patientId);
                 $('#id-pract').val(data.id);
 
+                $("#searchpractoffices tbody").empty();
 
                 $.each(data.officeAddresses, function (index, item) {
 
                     if (item.isRequested == true) {
-                        var newRow = "<tr class='mx-2'><td>" + item.officeName + "</td><td>" + item.officeTypeName + "</td><td>" + item.fullAddress + "</td><td>" + item.dateRequest + "</td><td><button id='offic-pract-" + item.id + "' type='button' class='btn btn-danger mr-1 w-75' onclick='RequestPractitioner(this)'>Remove Request</button></td></tr>";
+                        var newRow = "<tr id='row-offic-pract-" + item.id + "' class='mx-2'><td>" + item.officeName + "</td><td>" + item.officeTypeName + "</td><td>" + item.fullAddress + "</td><td>" + item.dateRequest + "</td><td>" + item.statusRequest + "</td><td><button id='offic-pract-" + item.id + "' type='button' class='btn btn-danger mr-1 w-75' onclick='RequestPractitioner(this)'>Remove Request</button></td></tr>";
                     } else {
-                        var newRow = "<tr class='mx-2'><td>" + item.officeName + "</td><td>" + item.officeTypeName + "</td><td>" + item.fullAddress + "</td><td>" + item.dateRequest + "</td><td><button id='offic-pract-" + item.id + "' type='button' class='btn btn-primary mr-1 w-75' onclick='RequestPractitioner(this)'>Add Request</button></td></tr>";
+                        var newRow = "<tr id='row-offic-pract-" + item.id + "' class='mx-2'><td>" + item.officeName + "</td><td>" + item.officeTypeName + "</td><td>" + item.fullAddress + "</td><td>" + item.dateRequest + "</td><td>" + item.statusRequest + "</td><td><button id='offic-pract-" + item.id + "' type='button' class='btn btn-primary mr-1 w-75' onclick='RequestPractitioner(this)'>Add Request</button></td></tr>";
                     }
 
 
@@ -372,6 +373,11 @@ $(document).ready(function () {
 function RequestPractitioner(button) {
 
     var id = button.id;
+    //get the parent row
+    var row = button.parentNode.parentNode;
+    //get an array pf td elements in the row
+    var cells = row.getElementsByTagName("td");
+
     var idclean = button.id.replace("offic-pract-", "");
     var valueText = button.textContent;
     var btnClicked = document.getElementById(id);
@@ -410,6 +416,10 @@ function RequestPractitioner(button) {
         btnClicked.textContent = "Add Request";
         btnClicked.classList.remove("btn-danger");
         btnClicked.classList.add("btn-primary");
+
+        //remove the values in the dateRequest and status
+        cells[3].innerHTML = "";
+        cells[4].innerHTML = "";
 
         if (arrayIdAddRequestPract.includes(idclean)) {
 
