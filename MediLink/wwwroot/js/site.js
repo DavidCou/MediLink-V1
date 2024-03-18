@@ -431,7 +431,7 @@ $(document).ready(function () {
 
 
 
-                $("#data-table-patient-requests tbody").empty();
+                $("#data-table-patient-approved tbody").empty();
 
 
                 $.each(data, function (index, item) {
