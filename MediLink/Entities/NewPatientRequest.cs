@@ -11,6 +11,8 @@ namespace MediLink.Entities
 
         public DateTime DateRequest { get; set; } = DateTime.Now;
 
+        public DateTime DateApproved { get; set; } = DateTime.Now;
+
         public int PatientId { get; set; }
 
         public int PractitionerId { get; set; }

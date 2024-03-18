@@ -30,6 +30,8 @@ namespace MediLink.Models
 
         public string DateRequest { get; set; } = "";
 
+        public string DateApproved { get; set; } = "";
+
         public string statusRequest { get; set; } = "";
     }
 }
