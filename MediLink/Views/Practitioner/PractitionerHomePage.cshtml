@@ -387,7 +387,14 @@
                                     </tbody>
                                 </table>
                                 <div class="d-block text-center">
-                                                                      
+                                   
+                                    <form id="update-req-patient-remove" class="d-inline" action="@Url.Action("SaveRequestPatient","Practitioner")" method="post">
+                                        <!--inputs to store the ids selected-->
+
+                                        <input type="hidden" id="status-pat-req-remove" name="status-pat-req" />
+
+                                     
+                                    </form>
 
                                     <button type="button" class="btn btn-secondary tex" data-dismiss="modal" aria-label="Close">
                                         Close
@@ -405,6 +412,28 @@
 
                 </div>
 
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Confirm Remove Patient-->
+    <div class="modal fade" id="confirmdelete" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Please confirm the deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>The patient will be permanently removed.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary tex" data-dismiss="modal" aria-label="Close">
+                        Close
+                    </button>
+                     
+                    <button id="btn-delete-patient" type="button" class="btn btn-danger" onclick='removePatientToPractitioner(id)'>Delete</button>
+                </div>
             </div>
         </div>
     </div>

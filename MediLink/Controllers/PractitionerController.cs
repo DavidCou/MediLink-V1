@@ -519,6 +519,7 @@ namespace MediLink.Controllers
                 oPatientNewRequest.fullAddress = oPatientAddress.StreetAddress + " " + oPatientAddress.City + " " + oPatientAddress.Province;
                 oPatientNewRequest.officeName = oOfficeAddress.OfficeName;
                 oPatientNewRequest.dateRequest = item.DateRequest.ToShortDateString();
+                oPatientNewRequest.dateApproved = item.DateApproved.ToShortDateString();
                 oPatientNewRequest.age = patientAge;
                 oPatientNewRequest.gender = item.Patient.PatientDetails.gender;
                 oPatientNewRequest.officeId = oOfficeAddress.Id;
@@ -571,6 +572,12 @@ namespace MediLink.Controllers
                     if (oNewPatientRequest != null)
                     {
                         oNewPatientRequest.status = statusPatient;
+
+                        if(statusPatient == "approve")
+                        {
+                            oNewPatientRequest.DateApproved = DateTime.Now;
+                        }
+                         
 
                         // update the record
                         _mediLinkContext.NewPatientRequests.Update(oNewPatientRequest);

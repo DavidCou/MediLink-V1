@@ -10,6 +10,9 @@ let arrayIdAddRequestPract = [];
 let arrayIdRemoveRequestPract = [];
 let arrayPatientUpdateNewRequest = [];
 
+//variable global to store the value of the select selected in the Practitioner home page to update patient request status
+let valueSelectNewPatientRequest = "";
+
 //disable save button in the Practictioner Home Page
 var btnSaveAddres = document.getElementById("btn-save-address");
 //disable save button in the Patien Request Practictioner Page
@@ -75,10 +78,9 @@ function searchWalkInClinicByAddress() {
         if (td) {
             txtValue = td.textContent || td.innerHTML;
             txtValueTime = tdTime.textContent || tdTime.innerHTML;
-            console.log("paso")
-            console.log(filterTime)
+          
             if (filterTime > 0 ) {
-                console.log("paso 1")
+              
                 if (parseInt(txtValueTime) <= parseInt(filterTime) && txtValue.toUpperCase().indexOf(filter) > -1) {
 
                     tr[i].style.display = "";
@@ -88,7 +90,7 @@ function searchWalkInClinicByAddress() {
                 }
 
             } else {
-                console.log("paso 2")
+              
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
                     tr[i].style.display = "";
                 } else {
@@ -227,8 +229,7 @@ function addLangPractitioner(button) {
         inputListLang.value = "";
     }
 
-    console.log("array languages")
-    console.log(arrayIdLanguage);
+  
    
 
 }
@@ -394,7 +395,7 @@ $(document).ready(function () {
 
                     var newRow = "<tr id='row-patient-req-" + item.id + "' class='mx-2'><td>" + item.fullname + "</td><td>" + item.age + "</td><td>" + item.gender + "</td><td>" + item.fullAddress + "</td><td id='address-patient-req-" + item.officeId + "'>" + item.officeName + "</td><td>" + item.dateRequest + "</td>"
                     newRow += "<td id='" + parameterValue + "-" + item.id + "'>";
-                    newRow += "<select id='action-pract" + item.id + "' class='select-update-pat' name='action-pract' onchange='checkSelectedValues()'><option selected value='pending'>Pending</option><option value='waitlist'>WaitList</option><option value='approve' >Approve</option><option value='deny' >Deny</option></select>";
+                    newRow += "<select id='action-pract-" + item.officeId + "' class='select-update-pat' name='action-pract' onchange='checkSelectedValues(this)'><option selected value='pending'>Pending</option><option value='waitlist'>WaitList</option><option value='approve' >Approve</option><option value='deny' >Deny</option></select>";
                     newRow += "</td ></tr>";
                    
                    
@@ -438,11 +439,11 @@ $(document).ready(function () {
 
 
 
-                    var newRow = "<tr id='row-patient-req-" + item.id + "' class='mx-2'><td>" + item.fullname + "</td><td>" + item.age + "</td><td>" + item.gender + "</td><td>" + item.fullAddress + "</td><td id='address-patient-req-" + item.officeId + "'>" + item.officeName + "</td><td>" + item.dateRequest + "</td><td></td>"
-                    newRow += "<td id='" + parameterValue + "-" + item.id + "'>";
-                    newRow += "<button id='offic-pract-" + item.id + "' type='button' class='btn btn-danger mr-1 w-100' onclick='RequestPractitioner(this)'>Remove</button>";
+                    var newRow = "<tr id='row-patient-req-rem" + item.id + "' class='mx-2'><td>" + item.fullname + "</td><td>" + item.age + "</td><td>" + item.gender + "</td><td>" + item.fullAddress + "</td><td id='address-patient-req-" + item.officeId + "'>" + item.officeName + "</td><td>" + item.dateRequest + "</td><td>" + item.dateApproved + "</td>"
+                    newRow += "<td>";
+                    newRow += "<button id='offic-pract-rem-" + item.id + "' type='button' class='btn btn-danger mr-1 w-100' onclick='setIdPatientDelete(this)'>Remove</button>";
                     newRow += "</td ></tr>";
-
+ 
 
                     $("#data-table-patient-approved tbody").append(newRow);
 
@@ -557,13 +558,16 @@ function RequestPractitioner(button) {
 
 //function to get patient id and status to update status of patient request for practictioner
 //receive a aaray in format atring with patient id and status
-function updatePatientNewRequest(status) {
+function updatePatientNewRequest() {
 
     // Get the table element
     var table = document.getElementById("data-table-patient-requests");
 
     // Get all the rows in the table
     var rows = table.getElementsByTagName("tr");
+
+    arrayPatientUpdateNewRequest = [];
+       
 
     // Iterate over each row and get its ID
     for (var i = 1; i < rows.length; i++) {
@@ -574,9 +578,7 @@ function updatePatientNewRequest(status) {
         var cells = rows[i].getElementsByTagName("td");
           
         //var to stpre each value of array
-        var itemArray = '';
-
-        
+        var itemArray = '';        
 
         // Get the ID of the row
         var rowID = row.id;
@@ -586,11 +588,10 @@ function updatePatientNewRequest(status) {
         var cellOfficeId = cells[4].id
         var officeID = cellOfficeId.replace("address-patient-req-", "");
         // Output the the row
-        console.log("Id office ", officeID);
-
+       
         // Get the ID of the cell that contain the select to obtain the status 
         var cellSelectId = cells[6].id
-
+               
         //split the id to get the status 
         var statusSelec = cellSelectId.split("-");
 
@@ -598,31 +599,28 @@ function updatePatientNewRequest(status) {
         statusSelec = statusSelec[0];
 
         ///set the Select id
-        var idSelect = "action-pract" + rowIDClean;
+        var idSelect = "action-pract-" + rowIDClean;
 
         // Get the select element
         var selectElement = document.getElementById(idSelect);
-
-       
-
+        console.log("Paso aqi")
+      
+        // Get the select element inside the table cell
+        var selectElement = cells[6].querySelector("select");
+      
         // Get the selected option
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        //var selectedOption = selectElement.options[selectElement.selectedIndex];
 
-        // Get the value of the selected option
-        var selectedValue = selectedOption.value;
+        // Get the value of the selected option 
+        var selectedValue = selectElement.value;
 
         itemArray = rowIDClean + "-" + selectedValue + "-" + officeID;
 
-        // Output the ID of the row
-       
-        console.log("Status select");
-        console.log(statusSelec);
-
-
+     
         //statusSelec = status selected as parameter  
         //verify if the modified some status
         if (selectedValue != statusSelec) {
-
+            console.log("Paso aqui");
             // Add the selected value to the array
             arrayPatientUpdateNewRequest.push(itemArray);
 
@@ -646,10 +644,7 @@ function updatePatientNewRequest(status) {
         console.log("Selected values: ");
         
         console.log(arrayPatientUpdateNewRequest);
-
-        // Output the ID of the row
-        console.log("Row ID:", rowID);
-
+      
 
 
         //send the form
@@ -659,14 +654,73 @@ function updatePatientNewRequest(status) {
     }
 }
 
+
+//function to get patient id and status to update status to removed of patient request for practictioner
+//receive a array in format atring with patient id and status
+function removePatientToPractitioner(id) {
+
+  
+
+    // Output the the idCleam
+   
+    var idclean = id.replace("offic-pract-rem-", "");
+
+    // Output the the idCleam
+
+    // Display the array contents
+    console.log("Selected values: ", id);
+
+    var idRowClicked = "row-patient-req-rem" + idclean;
+
+    var rowClicked = document.getElementById(idRowClicked);
+
+    //get all the cells
+    var cells = rowClicked.getElementsByTagName("td");
+
+    //var to stpre each value of array
+    var itemArray = '';
+        
+    // Get the ID of the cell that contain the office name
+    var cellOfficeId = cells[4].id
+    var officeID = cellOfficeId.replace("address-patient-req-", "");
+   
+
+    itemArray = idclean + "-removed" + "-" + officeID;
+
+
+    // Add the selected value to the array
+    arrayPatientUpdateNewRequest.push(itemArray);
+
+    //get the input to store all the patient IDs and status to update
+    var inputStatusUpdate = document.getElementById("status-pat-req-remove");
+
+    //get the form that send the http post request to save the patient IDs and status to update
+    var formUpdatePatientRequest = document.getElementById("update-req-patient-remove");
+
+    //set the values all the patient IDs and status to update
+    inputStatusUpdate.value = arrayPatientUpdateNewRequest.join(",");
+
+
+    //send the form
+    formUpdatePatientRequest.submit();
+}
+
+
 //fuction to enable or disable save button to update a new pract request
-function checkSelectedValues() {
-    console.log("paso aqui")
+function checkSelectedValues(select) {
+
+   
+    //set the current value of select selected
+    valueSelectNewPatientRequest = select.value;
+
+    console.log("valor select");
+    console.log(valueSelectNewPatientRequest)
+
     var allSelected = true;
     var selectElements = document.getElementsByClassName("select-update-pat");
-    console.log(selectElements)
+   
     for (var i = 0; i < selectElements.length; i++) {
-        console.log(selectElements[i].value)
+     
         if (selectElements[i].value !== "pending") {
             allSelected = false;
             break; // Exit the loop early if the value is not selected
@@ -679,5 +733,16 @@ function checkSelectedValues() {
 
 
     
+}
+
+//set the id of the button after corfirmation to remove the patient
+function setIdPatientDelete(button) {
+    // Get the button element
+    var buttonDelete = document.getElementById("btn-delete-patient");
+
+    // Set the onclick attribute with the new dynamic value
+    buttonDelete.setAttribute("onclick", "removePatientToPractitioner('" + button.id + "')");
+
+    $('#confirmdelete').modal('show');
 }
 

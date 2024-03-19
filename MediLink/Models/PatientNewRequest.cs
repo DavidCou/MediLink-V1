@@ -63,6 +63,8 @@ namespace MediLink.Models
 
         public string? dateRequest { get; set; }
 
+        public string? dateApproved { get; set; }
+
         public int age { get; set; }
 
         public string? fullname { get; set; }
