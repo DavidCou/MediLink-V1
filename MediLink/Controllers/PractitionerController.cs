@@ -1,6 +1,8 @@
 ﻿using MediLink.Entities;
 using MediLink.Models;
+using MediLink.Services;
 using MediLink.Services.Contract;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,10 +13,11 @@ namespace MediLink.Controllers
 {
     public class PractitionerController : Controller
     {
-        public PractitionerController(MediLinkDbContext mediLinkContext, IUserService userService)
+        public PractitionerController(MediLinkDbContext mediLinkContext, IUserService userService, IWebHostEnvironment webHostEnvironment)
         {
             _mediLinkContext = mediLinkContext;
             _userService = userService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<IActionResult> PractitionerHomePage()
@@ -553,6 +556,8 @@ namespace MediLink.Controllers
 
             string patientUpdate = Request.Form["status-pat-req"];
 
+
+
             Console.WriteLine(patientUpdate);
 
             if(!string.IsNullOrEmpty(patientUpdate)) {
@@ -566,6 +571,12 @@ namespace MediLink.Controllers
                     string statusPatient = currentPatient[1].Trim();
                     int practOfficeID = Convert.ToInt32(((string)currentPatient[2]));
 
+                    Patient oPatient = await _mediLinkContext.Patients
+                  .Where(pa => pa.Id == patientID)
+                  .Include(pa => pa.PatientDetails)
+                  .FirstAsync();
+                   
+
                     // Query the new patient request record by its ID
                     NewPatientRequest oNewPatientRequest = await _mediLinkContext.NewPatientRequests.Where(pa => pa.PractitionerId == oPractitioner.Id && pa.PatientId == patientID && pa.officePractitionerId == practOfficeID).FirstAsync();
 
@@ -573,11 +584,69 @@ namespace MediLink.Controllers
                     {
                         oNewPatientRequest.status = statusPatient;
 
-                        if(statusPatient == "approve")
+                        // Map the path relative to the content root
+                        string path = "";
+
+
+                        if (statusPatient == "approve")
                         {
                             oNewPatientRequest.DateApproved = DateTime.Now;
+
+
+                            // Map the path relative to the content root
+                            path = Path.Combine(_webHostEnvironment.ContentRootPath, "Templates", "PatientRequestNotification.html");
+
+                            
                         }
-                         
+
+
+                        if (statusPatient == "waitlist")
+                        {
+                           
+                            // Map the path relative to the content root
+                            path = Path.Combine(_webHostEnvironment.ContentRootPath, "Templates", "PatientRequestNotificationWaitList.html");
+
+
+                        }
+
+                        if (statusPatient == "deny")
+                        {
+
+                            // Map the path relative to the content root
+                            path = Path.Combine(_webHostEnvironment.ContentRootPath, "Templates", "PatientRequestNotificationDenied.html");
+
+
+                        }
+
+                        if (statusPatient == "removed")
+                        {
+
+                            // Map the path relative to the content root
+                            path = Path.Combine(_webHostEnvironment.ContentRootPath, "Templates", "PatientRequestNotificationRemoved.html");
+
+
+                        }
+
+                        string content = System.IO.File.ReadAllText(path);
+
+                        string fullnamePract = oPractitioner.FirstName + " " + oPractitioner.LastName;
+
+                        string fullnamePatient = oPatient.PatientDetails.FirstName + " " + oPatient.PatientDetails.LastName;
+
+
+                        string htmlBody = string.Format(content, fullnamePatient, fullnamePract);
+
+                        Email emailDTO = new Email()
+                        {
+                            recipient = oPractitioner.Email,
+                            subject = "Notification New Patient Request MediLink",
+                            body = htmlBody
+                        };
+
+                        bool sent = EmailService.SendEmail(emailDTO);
+
+
+
 
                         // update the record
                         _mediLinkContext.NewPatientRequests.Update(oNewPatientRequest);
@@ -605,5 +674,6 @@ namespace MediLink.Controllers
 
         private MediLinkDbContext _mediLinkContext;
         private IUserService _userService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
     }
 }
