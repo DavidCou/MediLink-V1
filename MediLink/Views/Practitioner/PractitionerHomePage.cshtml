@@ -1,4 +1,5 @@
 ﻿@model PractitionerViewModel
+
 @{
     ViewData["Title"] = "Patient Home Page";
 }
@@ -48,7 +49,7 @@
                     <button id="btnPatientWaitList" type='button' class='btn btn-blue btn-block btn-half-width mb-3 btnPatientRequests' data-parameter="waitlist" data-toggle='modal'>View Your WaitList</button>
                     
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdatePractitionerDetails","Practitioner")">Edit Your Profile</a>
-                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdatePractitionerAddress","Practitioner")">Add / Edit Your Office Address(s)</a>
+                    <button id="btnAllOffices" type='button' class='btn btn-blue btn-block btn-half-width mb-3' data-toggle='modal'>Office Address(s)</button>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewReviews","Practitioner")">View Your Reviews</a>
                 </div>
             </div>
@@ -102,7 +103,7 @@
                     <div class="card">
                         <div class="card-header">
 
-                            <i class="fas fa-users me-1"></i> List of Offices
+                            <i class="fas fa-users me-1"></i> List of Practictioner Offices
                             <div class="d-inline text-end">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -438,4 +439,300 @@
         </div>
     </div>
 
+    <!-- Modal System Offices -->
+    <div class="modal fade" id="systemoffices" tabindex="-1" aria-labelledby="editmodal" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                    <div class="card">
+                        <div class="card-header">
+
+                            <i class="fas fa-users me-1"></i> List of System Offices
+                            <div class="d-inline text-end">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+
+                            <div class="card-body">
+                                @if (ViewData["messageUpdateOffic"] != null)
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                        <p id="message-home-pract2">@ViewData["messageUpdateOffic"]</p>
+                                    </div>
+                                }
+                                <div class="container my-1 position-relative">
+                                    <div class="d-flex justify-content-center ">
+                                        <div class="searchbar">
+                                            <input id="filterInputAllOffice" class="search_input search_input_width" type="text" onkeyup="searchOfficeByTable('data-table-all-offices', 'filterInputAllOffice')" placeholder="Search a office name...">
+                                            <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end ">
+                                        <div>
+
+                                            <button id="btn-add-office" type='button' class='btn btn-primary' >ADD</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <table id="data-table-all-offices" class="table mx-auto" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Office Name</th>
+                                            <th>Type</th>
+                                            <th>Address</th>                                           
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                     
+
+
+                                    </tbody>
+                                </table>
+                                <div class="d-block text-center">
+
+
+
+                                    <button type="button" class="btn btn-secondary tex" data-dismiss="modal" aria-label="Close">
+                                        Close
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal ADD System Offices -->
+    <div class="modal fade" id="systemaddoffices" tabindex="-1" aria-labelledby="editmodal" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                    <div class="card">
+                        <div class="card-header">
+
+                            <i class="fas fa-users me-1"></i> ADD a new Office
+                            <div class="d-inline text-end">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+
+                            <div class="card-body">
+                                <div id="div-messages" class="alert alert-danger" role="alert">
+                                    
+                                </div>
+                                
+
+                                <form id="frm-add-office-address" action="@Url.Action("AddNewOffice","Practitioner")" method="post">
+                                    Practitioner
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Office Name</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="officename-add" name="officename" placeholder="Office Name" class="form-control" type="text"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <div class="inputGroupContainer">
+                                                    <label class="control-label">Office Type</label>
+                                                    <div class="input-group">
+                                                        <select id="officeType-add" name="officeType" class="form-control" aria-label="Default select ">
+                                                            <option class="custom-select" disabled selected value="noselected" )>Select a Office Type</option>
+                                                            
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Street Address</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="street-address-add" name="street" placeholder="Number" class="form-control"  type="text"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">City</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="city-add" name="city" placeholder="City" class="form-control" type="text"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class ="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Zone</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="zone-add" name="zone" placeholder="Zone" class="form-control" type="text"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label class="control-label">Postal Code</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="postalcode-add" name="postalcode" placeholder="Postal Code/ZIP" class="form-control" type="text"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+
+                                            <div class="form-group">
+                                                <div class="inputGroupContainer">
+                                                    <label class="control-label">Province</label>
+                                                    <div class="input-group">
+                                                        <select id="province-add" name="province" class="form-control" aria-label="Default select ">
+                                                            <option class="custom-select" selected disabled value="noselected" )>Select a Province</option>
+                                                            <option value="Ontario">Ontario</option>
+                                                            <option value="Quebec">Quebec</option>
+                                                            <option value="New Brunswick">New Brunswick</option>
+                                                            <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+                                                            <option value="Alberta">Alberta</option>
+                                                            <option value="British Columbia">British Columbia</option>
+                                                            <option value="Nova Scotia">Nova Scotia</option>
+                                                            <option value="Manitoba">Manitoba</option>
+                                                            <option value="Prince Edward Island">Prince Edward Island</option>
+                                                            <option value="Saskatchewan">Saskatchewan</option>
+                                                            <option value="Northwest Territories">Northwest Territories</option>
+                                                            <option value="Nunavut">Nunavut</option>
+                                                            <option value="Yukon">Yukon</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>                                            
+                                          
+
+
+                                        </div>
+                                        <div class="col-6">
+
+                                            <div class="form-group">
+                                                <label class="control-label">Country</label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group"><input id="countryu-add" name="country" placeholder="Country" class="form-control" value="Canada" type="text"></div>
+                                                </div>
+                                            </div>                                         
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="d-block text-center">
+
+                                        <button id="btn-save-office" type="button" class="d-inline btn btn-success mx-2" onclick="addOfficeAddress()">Save</button>
+
+                                        <button type="button" class="btn btn-secondary tex" data-dismiss="modal" aria-label="Close">
+                                            Close
+                                        </button>
+
+                                    </div>
+                                                                      
+
+                               </form>
+                               
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
 </body>
+
+
+@section scripts{
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+    <script>
+
+        //get the value of the variable ViewData if it was added a new address
+        var messageServer = '@ViewData["messageUpdateOffic"]';
+
+      
+        //verify if it was added a new address a run a ajax to gel all the offices, insert them in the table and open the modal
+        if (messageServer.length > 0) {
+
+            $(document).ready(function () {
+
+                $.ajax({
+                    url: 'http://localhost:5220/ListAllOffices/',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+
+                        console.log("Data");
+                        console.log(data)
+
+
+
+                        $("#data-table-all-offices tbody").empty();
+
+
+                        $.each(data, function (index, item) {
+
+
+
+                            var newRow = "<tr id='row-offic-pract-" + item.id + "' class='mx-2'><td>" + item.officeName + "</td><td>" + item.officeTypeName + "</td><td>" + item.fullAddress + "</td></tr>";
+
+
+                            $("#data-table-all-offices tbody").append(newRow);
+
+
+
+
+                        });
+
+
+                        $('#systemoffices').modal('show');
+
+                    }
+                });
+
+            });
+
+        }
+    </script>
+
+
+ }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\juane\\source\\repos\\MediLink18032024\\MediLink\\MediLink.csproj": {}
+    "C:\\Users\\juane\\source\\repos\\MediLink19032024\\MediLink\\MediLink.csproj": {}
   },
   "projects": {
-    "C:\\Users\\juane\\source\\repos\\MediLink18032024\\MediLink\\MediLink.csproj": {
+    "C:\\Users\\juane\\source\\repos\\MediLink19032024\\MediLink\\MediLink.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\juane\\source\\repos\\MediLink18032024\\MediLink\\MediLink.csproj",
+        "projectUniqueName": "C:\\Users\\juane\\source\\repos\\MediLink19032024\\MediLink\\MediLink.csproj",
         "projectName": "MediLink",
-        "projectPath": "C:\\Users\\juane\\source\\repos\\MediLink18032024\\MediLink\\MediLink.csproj",
+        "projectPath": "C:\\Users\\juane\\source\\repos\\MediLink19032024\\MediLink\\MediLink.csproj",
         "packagesPath": "C:\\Users\\juane\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\juane\\source\\repos\\MediLink18032024\\MediLink\\obj\\",
+        "outputPath": "C:\\Users\\juane\\source\\repos\\MediLink19032024\\MediLink\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

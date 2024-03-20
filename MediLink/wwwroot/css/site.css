@@ -334,8 +334,20 @@ details {
     width: 5.5em;
 }
 
-#btn-save-address {
+#btn-save-address, #btn-save-office {
     width: 6em;
+}
+
+#div-messages{
+    display: none;
+}
+
+select {
+    background-color: white;
+}
+
+.custom-select {
+    color: white !important;
 }
 
 html {

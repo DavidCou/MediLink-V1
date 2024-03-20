@@ -27,7 +27,12 @@ namespace MediLink.Controllers
         
             ViewData["messageUpdatePract"] = mensajeResultSave;
 
-           
+            //created by juan quintana -setup a message to inforn status for add or remove address
+            string mensajeResAddAddress = TempData["mensajeResultAddAddress"] as string;
+
+            ViewData["messageUpdateOffic"] = mensajeResAddAddress;
+
+
 
             ClaimsPrincipal claimuser = HttpContext.User;
             string userName = "";
@@ -406,6 +411,44 @@ namespace MediLink.Controllers
 
         }
 
+        //get all the offices availables
+        [HttpGet("/ListAllOffices")]
+        public async Task<IActionResult> ListAllOffices()
+        {
+
+            // use the DB contet to query for all Address entities and transform them into
+            // OfficeInf bjects:
+            List<OfficeInfo> offices = await _mediLinkContext.OfficeAddresses
+                    .Include(t => t.OfficeType)
+                    .OrderByDescending(t => t.StreetAddress)
+                    .Select(t => new OfficeInfo()
+                    {
+                        fullAddress = t.StreetAddress + " " + t.City + " " + t.PostalCode,
+                        OfficeName = t.OfficeName,
+                        OfficeTypeName = t.OfficeType.OfficeTypeName,
+                        Id = t.Id
+
+                    })
+                    .ToListAsync();
+
+
+            return Json(offices);
+
+        }
+
+        //get all the offices availables
+        [HttpGet("/ListAllOfficesTypes")]
+        public async Task<IActionResult> ListAllOfficesTypes()
+        {
+
+            // use the DB contet to query for all Address entities and transform them into
+            // OfficeInf bjects:
+            List<OfficeType> officesTypes = await _mediLinkContext.OfficeTypes.ToListAsync();
+
+            return Json(officesTypes);
+
+        }
+
         [HttpPost]
         public async Task<IActionResult> SavePractitionerAddress(string listOffices)
         {
@@ -667,6 +710,42 @@ namespace MediLink.Controllers
             }
 
             return RedirectToAction("PractitionerHomePage");
+
+
+        }
+
+        [HttpPost]
+        public ActionResult AddNewOffice()
+        {
+           
+            // Access form fields using FormCollection
+            string officeName = Request.Form["officename"];
+            int typeOffice = Convert.ToInt32(Request.Form["officeType"]);
+            string street = Request.Form["street"];
+            string city = Request.Form["city"];
+            string province = Request.Form["province"];
+            string postalCode = Request.Form["postalcode"];
+            string zone = Request.Form["zone"];
+            string country = Request.Form["country"];
+
+            OfficeAddress address = new OfficeAddress();
+
+            address.OfficeName = officeName;
+            address.OfficeTypeId = typeOffice;
+            address.StreetAddress = street;
+            address.City = city;
+            address.Province = province;
+            address.country = country;
+            address.PostalCode = postalCode;
+            address.zone = zone;
+
+            _mediLinkContext.OfficeAddresses.Add(address);
+            _mediLinkContext.SaveChanges();
+
+            TempData["mensajeResultAddAddress"] = "The office " + officeName + " has beed added successfully";
+
+            return RedirectToAction("PractitionerHomePage");
+
 
 
         }

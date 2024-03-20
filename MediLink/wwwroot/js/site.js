@@ -59,6 +59,34 @@ function searchOffice() {
     }
 }
 
+//function to search medical offices
+function searchOfficeByTable(table, input) {
+    //declare variables
+    console.log("here pass")
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById(input);
+    filter = input.value.toUpperCase();
+    table = document.getElementById(table);
+    tr = table.getElementsByTagName("tr");
+    console.log(table);
+
+    //loop through all table rows and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        console.log(td);
+        if (td) {
+            txtValue = td.textContent || td.innerHTML;
+            console.log(txtValue);
+            console.log("Filter", filter);
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
 //function to search Walk-in Clinic by address
 function searchWalkInClinicByAddress() {
     //declare variables
@@ -459,12 +487,95 @@ $(document).ready(function () {
         });
     });
 
+    $('#btnAllOffices').click(function () {
+       
+        $.ajax({
+            url: 'http://localhost:5220/ListAllOffices/',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+
+                console.log("Data");
+                console.log(data)
+
+
+
+                $("#data-table-all-offices tbody").empty();
+
+
+                $.each(data, function (index, item) {
+
+
+
+                    var newRow = "<tr id='row-offic-pract-" + item.id + "' class='mx-2'><td>" + item.officeName + "</td><td>" + item.officeTypeName + "</td><td>" + item.fullAddress + "</td></tr>";
+
+
+                    $("#data-table-all-offices tbody").append(newRow);
+
+
+
+
+                });
+
+
+                $('#systemoffices').modal('show');
+
+            }
+        });
+    });
+
+    $('#btn-add-office').click(function () {
+
+        $.ajax({
+            url: 'http://localhost:5220/ListAllOfficesTypes/',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+
+                console.log("Data");
+                console.log(data)
+
+
+
+                $("#officeType-add").empty();
+
+                var firstOption = "<option class= 'custom-select' disabled selected value='noselected' >Select a Office Type</option >";
+
+                $("#officeType-add").append(firstOption);
+
+                $.each(data, function (index, item) {
+
+
+
+                    var newOption = "<option value='" + item.id + "'>" + item.officeTypeName + "</option>";
+
+
+                    $("#officeType-add").append(newOption);
+
+
+
+
+                });
+
+
+                $('#systemaddoffices').modal('show');
+
+            }
+        });
+    });
+
+   
+
 
 
 });
 
 
+function openAddModal() {
 
+    $('#systemoffices').modal('show');
+
+}
 
 //add request patient for practictioner by offices id to input
 function RequestPractitioner(button) {
@@ -746,3 +857,80 @@ function setIdPatientDelete(button) {
     $('#confirmdelete').modal('show');
 }
 
+//function to valifate and add a new address
+function addOfficeAddress() {
+
+    //grl all th elements in the form
+    var officeName = document.getElementById("officename-add").value;
+    var typeOffice = document.getElementById("officeType-add").value;
+    var street = document.getElementById("street-address-add").value;
+    var city = document.getElementById("city-add").value;
+    var province = document.getElementById("province-add").value;
+    var zone = document.getElementById("zone-add").value;
+    var postalCode = document.getElementById("postalcode-add").value;
+    var country = document.getElementById("countryu-add").value;
+
+    //get the element to show the errors
+    var formAddress = document.getElementById("frm-add-office-address");
+
+    //set the arry to store all the erros
+    var errorMessage = [];
+
+
+    if (officeName == undefined || officeName == "" || officeName == null) {
+
+        errorMessage.push("Please enter Office name");
+    }
+    if (typeOffice == "noselected") {
+
+        errorMessage.push("Please enter Office type");
+    }
+    if (street == undefined || street == "" || street == null) {
+
+        errorMessage.push("Please enter Street");
+    }
+    if (city == undefined || city == "" || city == null) {
+
+        errorMessage.push("Please enter City");
+    }
+    if (zone == undefined || zone == "" || zone == null) {
+
+        errorMessage.push("Please enter Zone");
+    }
+    if (province == "noselected") {
+
+        errorMessage.push("Please enter Province");
+    }
+    if (postalCode == undefined || postalCode == "" || postalCode == null) {
+
+        errorMessage.push("Please enter Postal Code");
+    }
+    if (country == undefined || country == "" || country == null) {
+
+        errorMessage.push("Please enter Country");
+    }
+
+    console.log("result errors");
+    console.log(errorMessage);
+
+    $("#div-messages").empty();
+
+    if (errorMessage.length > 0) {
+
+        errorMessage.forEach(item => {
+
+            var elementP = "<p class='my-0 py-0'> -" + item + "</p>";
+
+            $("#div-messages").append(elementP);
+            $("#div-messages").show();
+
+        });
+    }
+    else {
+        //send form to server
+        formAddress.submit();
+
+    }
+     
+
+}
