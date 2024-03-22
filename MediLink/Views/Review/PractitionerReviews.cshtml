@@ -1,0 +1,116 @@
+﻿@model PractitionerReviewViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Your reviews";
+}
+
+<nav id="header-st" class="navbar navbar-expand static-top ">
+    <div class="mr=auto">
+        <a class="navbar-brand mx-0" href="#"><img class="ms-5 me-0" src="~/img/logo2.png" alt="Company Logo" width="70" height="60"></a>
+        <h3 id="company-title">MediLink</h3>
+    </div>
+    <div class="ml-auto mt-4">
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto ">
+                <li class="nav-item">
+                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("PractitionerHomePage", "Practitioner")">Home</a>
+                </li>
+
+                <li class="nav-item dropdown no-arrow ">
+                    <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 mx-2 d-none d-lg-inline text-white ">@ViewData["userName"]</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
+                         aria-labelledby="userDropdown">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("ChangePassword", "Practitioner")">
+                            <i class="bi bi-people text-gray-400"></i>
+                            Change Password
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Management")">
+                            <i class="bi bi-box-arrow-in-left text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    <div class="card">
+        <div class="card-header">
+
+            <i class="fas fa-users me-1"></i> Your Reviews
+            <div class="d-inline text-end">
+                <a class="close" href="@Url.Action("PractitionerHomePage","Practitioner")"><span aria-hidden="true">&times;</span></a>
+
+            </div>
+
+            <div class="card-body">
+                @if (Model.currentPractitionerReviews.Count > 0)
+                {
+                    <table class="table mx-auto">
+                        <tr>
+                            <th>Rating</th>
+                            <th>Actions</th>
+                        </tr>
+                        @foreach (var review in Model.currentPractitionerReviews)
+                        {
+                            <tr>
+                                <td>@review.Rating stars</td>
+                                <td><button type='button' class='btn btn-link' data-toggle="modal" data-target="#viewReview_@review.Id" data-id="@review.Id">View Review</button></td>
+                            </tr>
+                        }
+                    </table>
+                }
+                else
+                {
+                    <p>No Reviews</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@foreach (var review in Model.currentPractitionerReviews)
+{
+    <div class="modal fade" id="viewReview_@review.Id" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="container">
+                    <div class="d-inline text-end">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                        <div class="card-body p-3">
+                            <p><strong>Review:</strong> @review.Review</p>
+                            <p><strong>Rating:</strong> @review.Rating stars</p>
+                            @if (review.IsPractitionerOnTime)
+                            {
+                                <p><strong>Was the practitioner on time?</strong> Yes</p>
+                            }
+                            else
+                            {
+                                <p><strong>Was the practitioner on time?</strong> No</p>
+                            }
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,464 @@
+﻿@model PractitionerReviewViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Your Reviewed Practitioners";
+}
+
+<nav id="header-st" class="navbar navbar-expand static-top ">
+    <div class="mr=auto">
+        <a class="navbar-brand mx-0" href="#"><img class="ms-5 me-0" src="~/img/logo2.png" alt="Company Logo" width="70" height="60"></a>
+        <h3 id="company-title">MediLink</h3>
+    </div>
+    <div class="ml-auto mt-4">
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto ">
+                <li class="nav-item">
+                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("PatientHomePage", "Patient")">Home</a>
+                </li>
+
+                <li class="nav-item dropdown no-arrow ">
+                    <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 mx-2 d-none d-lg-inline text-white ">@ViewData["userName"]</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
+                         aria-labelledby="userDropdown">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("ChangePassword", "Patients")">
+                            <i class="bi bi-people text-gray-400"></i>
+                            Change Password
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Management")">
+                            <i class="bi bi-box-arrow-in-left text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    <div class="card">
+        <div class="card-header">
+
+            <i class="fas fa-users me-1"></i> Your Reviewed Practitioners
+            <div class="d-inline text-end">
+                <a class="close" href="@Url.Action("PatientHomePage","Patient")"><span aria-hidden="true">&times;</span></a>
+
+            </div>
+
+            <div class="card-body">
+                @if (ViewBag.Success != null)
+                {
+                    <div class="alert alert-success" role="alertdialog">
+                        <span>@ViewBag.Success</span>
+                    </div>
+                }
+                <div>
+                    <h4>Current Practitioners</h4>
+                    @if (Model.currentPractitionerReviews.Count > 0)
+                    {
+                        <table class="table mx-auto">
+                            <tr>
+                                <th>Name</th>
+                                <th>Actions</th>
+                            </tr>
+                            @foreach (var review in Model.currentPractitionerReviews)
+                            {
+                                <tr>
+                                    <td>@review.Practitioner.FirstName, @review.Practitioner.LastName</td>
+                                    <td>
+                                        <button type='button' class='btn btn-link' data-toggle="modal" data-target="#viewReview_@review.Id" data-id="@review.Id">View Review</button> 
+                                        | <button type='button' class='btn btn-link' data-toggle="modal" data-target="#editReview_@review.Id" data-id="@review.Id">Edit Review</button> 
+                                        | <button type='button' class='btn btn-link' data-toggle="modal" data-target="#deleteReview_@review.Id" data-id="@review.Id">Delete Review</button>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No Reviewd Current Practitioners</p>
+                    }
+                </div>
+
+                <div>
+                    <h4>Past Practitioners</h4>
+                    @if (Model.pastPractitionerReviews.Count > 0)
+                    {
+                        <table class="table mx-auto">
+                            <tr>
+                                <th>Name</th>
+                                <th>Actions</th>
+                            </tr>
+                            @foreach (var review in Model.pastPractitionerReviews)
+                            {
+                                <tr>
+                                    <td>@review.Practitioner.FirstName, @review.Practitioner.LastName</td>
+                                    <td>
+                                        <button type='button' class='btn btn-link' data-toggle="modal" data-target="#viewReview_@review.Id" data-id="@review.Id">View Review</button>
+                                        | <button type='button' class='btn btn-link' data-toggle="modal" data-target="#editReview_@review.Id" data-id="@review.Id">Edit Review</button>
+                                        | <button type='button' class='btn btn-link' data-toggle="modal" data-target="#deleteReview_@review.Id" data-id="@review.Id">Delete Review</button>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No Reviewed Past Practitioners</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@foreach (var review in Model.currentPractitionerReviews)
+{
+    <div class="modal fade" id="editReview_@review.Id" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="container">
+                    <div class="d-inline text-end">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <h4 id="tiltle-search-pract" class="text-center text-black mt-5">Edit Review for @review.Practitioner.FirstName @review.Practitioner.LastName</h4>
+                    <p class="text-center">Please make sure you select whether your practitioner was on time. It will always be saved.</p>
+
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                        <div class="card-body p-3">
+                            <form asp-controller="Review" asp-action="EditReview" method="post">
+                                <div>
+                                    <div class="form-group">
+                                        <label for="preferencesCity" class="control-label">Review: </label>
+                                        <div class="inputGroupContainer">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" asp-for="review.Review" value="@review.Review" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Rating: </label>
+                                            <div class="inputGroupContainer">
+                                                <div class="input-group">
+                                                    <select asp-for="review.Rating" >
+                                                        <option value="0">0</option>
+                                                        @if(review.Rating == 1)
+                                                        {
+                                                            <option selected value="1">1</option>
+                                                        }
+                                                        else
+                                                        {
+                                                           <option value="1">1</option> 
+                                                        }
+                                                        @if(review.Rating == 2)
+                                                        {
+                                                            <option selected value="2">2</option>
+                                                        }
+                                                        else
+                                                        {
+                                                           <option value="2">2</option> 
+                                                        }
+                                                        @if(review.Rating == 3)
+                                                        {
+                                                            <option selected value="3">3</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="3">3</option>
+                                                        }
+                                                        @if(review.Rating == 4)
+                                                        {
+                                                            <option selected value="4">4</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="4">4</option>
+                                                        }
+                                                        @if(review.Rating == 5)
+                                                        {
+                                                            <option selected value="5">5</option>
+                                                        }
+                                                        else{
+                                                            <option value="5">5</option>
+                                                        }
+                                                        
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-check-label">Was the practitioner on time?</label>
+                                            <div class="inputGroupContainer">
+                                                <div class="input-group">
+                                                    <input type="checkbox" asp-for="review.IsPractitionerOnTime" checked="@review.IsPractitionerOnTime" class="form-check" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" asp-for="review.PractitionerId" value="@review.PractitionerId" />
+                                <input type="hidden" asp-for="review.Id" value="@review.Id" />
+
+                                <div class="d-block text-center">
+                                    <input type="submit" class="btn btn-primary px-5" value="Save" />
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="viewReview_@review.Id" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="container">
+                    <div class="d-inline text-end">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <h4 id="tiltle-search-pract" class="text-center text-black mt-5">Review for @review.Practitioner.FirstName @review.Practitioner.LastName</h4>
+
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                        <div class="card-body p-3">
+                            <p><strong>Review:</strong> @review.Review</p>
+                            <p><strong>Rating:</strong> @review.Rating stars</p>
+                            @if (review.IsPractitionerOnTime)
+                            {
+                                <p><strong>Was the practitioner on time?</strong> Yes</p>
+                            }
+                            else
+                            {
+                                <p><strong>Was the practitioner on time?</strong> No</p>
+                            }
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteReview_@review.Id" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="container">
+                    <div class="d-inline text-end">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <h4 id="tiltle-search-pract" class="text-center text-black mt-5">Delete Review for @review.Practitioner.FirstName @review.Practitioner.LastName?</h4>
+
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                        <div class="row d-block text-center">
+                            <a type="button" class="btn btn-danger" asp-controller="Review" asp-action="DeleteReview" asp-route-id="@review.Id">Yes</a>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+@foreach (var review in Model.pastPractitionerReviews)
+{
+    <div class="modal fade" id="editReview_@review.Id" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="container">
+                    <div class="d-inline text-end">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <h4 id="tiltle-search-pract" class="text-center text-black mt-5">Add Review for @review.Practitioner.FirstName @review.Practitioner.LastName</h4>
+                    <p class="text-center">Please make sure you select whether your practitioner was on time. It will always be saved.</p>
+
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                        <div class="card-body p-3">
+                            <form asp-controller="Review" asp-action="EditReview" method="post">
+                                <div>
+                                    <div class="form-group">
+                                        <label for="preferencesCity" class="control-label">Review: </label>
+                                        <div class="inputGroupContainer">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" asp-for="review.Review" value="@review.Review" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Rating: </label>
+                                            <div class="inputGroupContainer">
+                                                <div class="input-group">
+                                                    <select asp-for="review.Rating">
+                                                        <option value="0">0</option>
+                                                        @if (review.Rating == 1)
+                                                        {
+                                                            <option selected value="1">1</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="1">1</option>
+                                                        }
+                                                        @if (review.Rating == 2)
+                                                        {
+                                                            <option selected value="2">2</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="2">2</option>
+                                                        }
+                                                        @if (review.Rating == 3)
+                                                        {
+                                                            <option selected value="3">3</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="3">3</option>
+                                                        }
+                                                        @if (review.Rating == 4)
+                                                        {
+                                                            <option selected value="4">4</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="4">4</option>
+                                                        }
+                                                        @if (review.Rating == 5)
+                                                        {
+                                                            <option selected value="5">5</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="5">5</option>
+                                                        }
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="form-check-label">Was the practitioner on time?</label>
+                                            <div class="inputGroupContainer">
+                                                <div class="input-group">
+                                                    <input type="checkbox" asp-for="review.IsPractitionerOnTime" checked="@review.IsPractitionerOnTime" class="form-check" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input type="hidden" asp-for="review.PractitionerId" value="@review.PractitionerId" />
+                                <input type="hidden" asp-for="review.Id" vlaue="@review.Id" />
+
+                                <div class="d-block text-center">
+                                    <input type="submit" class="btn btn-primary px-5" value="Save" />
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="viewReview_@review.Id" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="container">
+                    <div class="d-inline text-end">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <h4 id="tiltle-search-pract" class="text-center text-black mt-5">Review for @review.Practitioner.FirstName @review.Practitioner.LastName</h4>
+
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                        <div class="card-body p-3">
+                            <p><strong>Review:</strong> @review.Review</p>
+                            <p><strong>Rating:</strong> @review.Rating stars</p>
+                            @if (review.IsPractitionerOnTime)
+                            {
+                                <p><strong>Was the practitioner on time?</strong> Yes</p>
+                            }
+                            else
+                            {
+                                <p><strong>Was the practitioner on time?</strong> No</p>
+                            }
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteReview_@review.Id" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="container">
+                    <div class="d-inline text-end">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <h4 id="tiltle-search-pract" class="text-center text-black mt-5">Delete Review for @review.Practitioner.FirstName @review.Practitioner.LastName?</h4>
+
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                        <div class="row d-block text-center">
+                            <a type="button" class="btn btn-danger" asp-controller="Review" asp-action="DeleteReview" asp-route-id="@review.Id">Yes</a>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
