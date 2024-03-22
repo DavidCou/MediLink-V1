@@ -533,14 +533,23 @@ namespace MediLink.Controllers
             oPractict.officeInfo = offices;
             oPractict.languagesInfo = languages;
 
+            //assign list of practitioner types
+            oPractict.practitionerTypes = practitionerTypes;
+
+
+            List<string> errorMessage = new List<string>();
 
             if (practFound != null)
             {
-                ViewData["MessageRegisterPract"] = "User Already Exist";
-                return View();
-            }
+               errorMessage.Add("User Already Exist");
 
-            List<string> errorMessage = new List<string>();
+                ViewBag.MyErrorList = errorMessage;
+
+                ViewData["MessageRegisterPract"] = errorMessage;
+
+                return View(oPractict);
+                
+            }
 
 
             // Regular expression for phone validation
@@ -604,7 +613,7 @@ namespace MediLink.Controllers
             }
 
             // valid if selected a type
-            if (oPractict.PractitionerTypesId == null)
+            if (oPractict.PractitionerTypesId == null || oPractict.PractitionerTypesId == 0)
             {
                 errorMessage.Add("-Must select a practitioner type ");
 
@@ -615,9 +624,7 @@ namespace MediLink.Controllers
             {
                 errorMessage.Add("-Please Select Spoken Languages");
             }
-
-            //assign list of practitioner types
-            oPractict.practitionerTypes = practitionerTypes;
+                        
 
             if (errorMessage.Count == 0)
             {

@@ -131,7 +131,7 @@
                                                 <div class="inputGroupContainer">
                                                     <div class="input-group">
                                                         <select name="PractitionerTypesId" class="form-control" asp-for="@Model.PractitionerTypesId">
-                                                            <option value="" disable selected>Select a type</option>
+                                                            <option value="0" disable selected>Select a type</option>
                                                             @foreach (var c in Model.practitionerTypes)
                                                             {
                                                                 <option value="@c.Id">@c.Name</option>
