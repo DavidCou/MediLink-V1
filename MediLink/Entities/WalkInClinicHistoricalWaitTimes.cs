@@ -4,6 +4,8 @@
     {
         public int Id { get; set; }
 
+        public DateTime PatientCheckInTime { get; set; }
+
         public string DayOfTheWeek { get; set; }
 
         public string TimeOfDay { get; set; }

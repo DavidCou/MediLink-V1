@@ -90,7 +90,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJhY3RpdGlvbmVyXFVwZGF0ZVByYWN0aXRpb25lckRldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-<<<<<<< Updated upstream
 [D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Review/PractitionerReviews.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3XFByYWN0aXRpb25lclJldmlld3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -103,8 +102,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmV2aWV3XFVucmV2aWV3ZWRQcmFjdGl0aW9uZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-=======
->>>>>>> Stashed changes
 [D:/college/Git_Repos/Semester_6/MediLink/MediLink/Views/Search/PractitionerDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VhcmNoXFByYWN0aXRpb25lckRldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

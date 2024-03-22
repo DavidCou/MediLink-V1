@@ -732,6 +732,9 @@ namespace MediLink.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("PatientCheckInTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("TimeOfDay")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

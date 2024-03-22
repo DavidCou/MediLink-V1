@@ -317,6 +317,49 @@ namespace MediLink.Controllers
             return View(checkOutViewModel);
         }
 
+        [HttpPost("/WalkInClinic/CheckPatientOut/{id}")]
+        public async Task<IActionResult> CheckPatientOut(int id)
+        {
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+            if (claimuser.Identity.IsAuthenticated)
+            {
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            ViewData["userName"] = userName;
+
+            WalkInClinic walkInClinic = await _userService.GetWalkInClinicByEmail(userName);
+
+            WalkInClinicCheckedInPatient walkInClinicCheckedInPatient = await _mediLinkContext.WalkInClinicCheckedInPatients
+                .FindAsync(id);
+
+            DateTime patientCheckInTime = walkInClinicCheckedInPatient.PatientCheckInTime;
+            DateTime currentTime = DateTime.Now;
+            TimeSpan waitTime = currentTime - patientCheckInTime;
+            int hours = waitTime.Hours;
+            int minutes = waitTime.Minutes;
+            int seconds = waitTime.Seconds;
+
+            WalkInClinicHistoricalWaitTimes historicalWaitTimes = new WalkInClinicHistoricalWaitTimes() 
+            {
+                PatientCheckInTime = patientCheckInTime,
+                DayOfTheWeek = walkInClinicCheckedInPatient.PatientCheckInTime.DayOfWeek.ToString(),
+                TimeOfDay = walkInClinicCheckedInPatient.PatientCheckInTime.TimeOfDay.ToString(),
+                WaitTime = hours.ToString() + ":" + minutes.ToString() + ":" + seconds.ToString(),
+                WalkInClinicId = walkInClinic.Id,
+                WalkInClinic = walkInClinic
+            };
+
+            _mediLinkContext.WalkInClinicHistoricalWaitTimes.Add(historicalWaitTimes);
+            await _mediLinkContext.SaveChangesAsync();
+
+            TempData["WalkInSuccess"] = $"{walkInClinicCheckedInPatient.PatientFirstName}  {walkInClinicCheckedInPatient.PatientLastName} was checked out successfully.";
+
+            return RedirectToAction("WalkinClinicHomePage");
+        }
 
         private MediLinkDbContext _mediLinkContext;
         private IUserService _userService;
