@@ -919,7 +919,7 @@ function addOfficeAddress() {
 
         errorMessage.forEach(item => {
 
-            var elementP = "<p class='my-0 py-0'> -" + item + "</p>";
+            var elementP = "<p class='my-0 py-0'>" + item + "</p>";
 
             $("#div-messages").append(elementP);
             $("#div-messages").show();
@@ -934,3 +934,50 @@ function addOfficeAddress() {
      
 
 }
+
+function checkInPatientValidation() {
+
+    //get all the elements in the form
+    var firstName = document.getElementById("first-Name").value.trim();
+    var lastName = document.getElementById("last-Name").value.trim();
+
+    //get the element to show the errors
+    var formCheckInPatient = document.getElementById("frm-check-patient-in");
+
+    //set the arry to store all the erros
+    var errorMessage = [];
+
+
+    if (firstName == undefined || firstName == "" || firstName == null) {
+
+        errorMessage.push("Please enter the patient's first name");
+    }
+    if (lastName == undefined || lastName == "" || lastName == null) {
+
+        errorMessage.push("Please enter the patient's last name");
+    }
+    
+    console.log("result errors");
+    console.log(errorMessage);
+
+    $("#div-check-in-error-messages").empty();
+
+    if (errorMessage.length > 0) {
+
+        errorMessage.forEach(item => {
+
+            var elementP = "<p class='my-0 py-0'>" + item + "</p>";
+
+            $("#div-check-in-error-messages").append(elementP);
+            $("#div-check-in-error-messages").show();
+
+        });
+    }
+    else {
+        //send form to server
+        formCheckInPatient.submit();
+    }
+
+
+}
+

@@ -1,6 +1,6 @@
 ﻿@model WalkClinicViewModel
 @{
-    ViewData["Title"] = "Patient Home Page";
+    ViewData["Title"] = "Walk In Clinic Home Page";
 }
 <nav id="header-st" class="navbar navbar-expand static-top ">
     <div class="mr=auto">
@@ -29,12 +29,18 @@
 </nav>
 <body class="background">
     <div class="container-fluid">
+        @if (ViewBag.WalkInSuccess != null)
+        {
+            <div class="alert alert-success" role="alertdialog">
+                <span>@ViewBag.WalkInSuccess</span>
+            </div>
+        }
         <div class="row">
-            <div class="col-sm-4 d-flex align-items-center justify-content-center">
-                <div class="btn-group-vertical-center">
-                    <h3 class="mb-4 mt-2">Menu</h3>
+            <div class="col-sm-4 center-content">
+                <div>
+                    <h3 class="mb-4 mt-2 text-center">Menu</h3>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdateWalkInClinicDetails","WalkInClinic")">Edit Profile</a>
-                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("CheckPatientIn","WalkInClinic")">Check A Patient In</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" data-toggle='modal' data-target='#checkpatientin'>Check A Patient In</a>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("CheckPatientOut","WalkInClinic")">Check A Patient Out</a>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdateHours","WalkInClinic")">Update Operating Hours</a>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewHistoricalWaitTimes","WalkInClinic")">View Historical Wait Times</a>
@@ -58,12 +64,81 @@
                         }
                     </p>
                     <p><strong>Address:</strong> @Model.OfficeAddress.StreetAddress @Model.OfficeAddress.City</p>
-                    <p><strong>Postal:</strong> @Model.OfficeAddress.PostalCode</p>
-                    <p><strong>Provice:</strong> @Model.OfficeAddress.Province</p>
-                    <p><strong>Contry:</strong> @Model.OfficeAddress.country</p>
+                    <p><strong>Postal Code:</strong> @Model.OfficeAddress.PostalCode</p>
+                    <p><strong>Province:</strong> @Model.OfficeAddress.Province</p>
+                    <p><strong>Country:</strong> @Model.OfficeAddress.country</p>
                 </div>
             </div>
             <div class="col-sm-4">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="checkpatientin" tabindex="-1" aria-labelledby="editmodal" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                    <div class="card">
+                        <div class="card-header">
+
+                            <i class="fas fa-users me-1"></i> Check A Patient In
+                            <div class="d-inline text-end">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                            </div>
+
+                            <div class="card-body">
+                                <div id="div-check-in-error-messages" class="alert alert-danger" role="alert">
+
+                                </div>
+                               
+                                <form id="frm-check-patient-in" action="@Url.Action("CheckPatientIn","WalkInClinic")" method="post" align="center">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="preferencesCity" class="control-label">Patient's First Name: </label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group">
+                                                        <input type="text" id="first-Name" name="firstName" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="preferencesCity" class="control-label">Patient's Last Name: </label>
+                                                <div class="inputGroupContainer">
+                                                    <div class="input-group">
+                                                        <input type="text" id="last-Name" name="lastName" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="d-block text-center">
+                                        <button id="btn-check-in-patient" type="button" class="btn btn-primary px-5" onclick="checkInPatientValidation()">Check Patient In</button>
+                                    </div>
+
+                                </form>
+                                <br />
+                                <div class="d-block text-center">
+                                    <button type="button" class="btn btn-secondary tex" data-dismiss="modal" aria-label="Close">
+                                        Close
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </div>

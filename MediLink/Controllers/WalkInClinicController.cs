@@ -52,6 +52,11 @@ namespace MediLink.Controllers
                 OfficeAddress = officeAddress
             };
 
+            if (TempData["WalkInSuccess"] != null)
+            {
+                ViewBag.WalkInSuccess = TempData["WalkInSuccess"];
+            }
+
             return View(walkClinicViewModel);
         }
 
@@ -242,11 +247,76 @@ namespace MediLink.Controllers
                 return View(walkClinicUpdateViewModel);
             }
 
-            ViewBag.Success = "Your profile has been updated.";
-            ViewData["UpdateSuccess"] = "Your profile has been updated.";
+            TempData["WalkInSuccess"] = "Your profile has been updated.";
 
             return RedirectToAction("WalkinClinicHomePage");
         }
+
+        [HttpPost]
+        public async Task<ActionResult> CheckPatientIn()
+        {
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+            if (claimuser.Identity.IsAuthenticated)
+            {
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            WalkInClinic walkInClinic = await _mediLinkContext.WalkInClinics
+                .Where(wc => wc.Email == userName)
+                .FirstOrDefaultAsync();
+
+            string firstName = Request.Form["firstName"];
+            string lastName = Request.Form["lastName"];
+
+            WalkInClinicCheckedInPatient walkInClinicCheckedInPatient = new WalkInClinicCheckedInPatient()
+            {
+                PatientFirstName = firstName,
+                PatientLastName = lastName,
+                PatientCheckInTime = DateTime.Now,
+                WalkInClinicId = walkInClinic.Id,
+                WalkInClinic = walkInClinic
+            };
+
+            _mediLinkContext.WalkInClinicCheckedInPatients.Add(walkInClinicCheckedInPatient);
+            await _mediLinkContext.SaveChangesAsync();
+
+            TempData["WalkInSuccess"] = "Patient checked in successfully.";
+
+            return RedirectToAction("WalkinClinicHomePage");
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> CheckPatientOut() 
+        {
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+            if (claimuser.Identity.IsAuthenticated)
+            {
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            ViewData["userName"] = userName;
+
+            WalkInClinic walkInClinic = await _userService.GetWalkInClinicByEmail(userName);
+
+            List<WalkInClinicCheckedInPatient> checkedInPatients = _mediLinkContext.WalkInClinicCheckedInPatients
+                .Where(cp => cp.WalkInClinicId == walkInClinic.Id)
+                .ToList();
+
+            CheckOutViewModel checkOutViewModel = new CheckOutViewModel() 
+            { 
+                CheckedInPatients = checkedInPatients   
+            };
+
+            return View(checkOutViewModel);
+        }
+
 
         private MediLinkDbContext _mediLinkContext;
         private IUserService _userService;

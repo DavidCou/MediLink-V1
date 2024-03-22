@@ -1,0 +1,85 @@
+﻿@model CheckOutViewModel
+@{
+    ViewData["Title"] = "Check Out Patients";
+}
+
+<nav id="header-st" class="navbar navbar-expand static-top ">
+    <div class="mr=auto">
+        <a class="navbar-brand mx-0" href="#"><img class="ms-5 me-0" src="~/img/logo2.png" alt="Company Logo" width="70" height="60"></a>
+        <h3 id="company-title">MediLink</h3>
+    </div>
+    <div class="ml-auto mt-4">
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto ">
+                <li class="nav-item">
+                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("WalkInClinicHomePage", "WalkInClinic")">Home</a>
+                </li>
+
+                <li class="nav-item dropdown no-arrow ">
+                    <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 mx-2 d-none d-lg-inline text-white ">@ViewData["userName"]</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
+                         aria-labelledby="userDropdown">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Management")">
+                            <i class="bi bi-box-arrow-in-left text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    <div class="card">
+        <div class="card-header">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <i class="fas fa-users me-1"></i> <strong>Check Patients Out</strong>
+                </div>
+                <div class="text-left">
+                    <a class="btn btn-secondary tex" href="@Url.Action("WalkInClinicHomePage", "WalkInClinic")">Cancel</a>
+                </div>
+            </div>
+
+            <div class="card-body">
+                @if (ViewBag.CheckOutSuccess != null)
+                {
+                    <div class="alert alert-success" role="alertdialog">
+                        <span>@ViewBag.CheckOutSuccess</span>
+                    </div>
+                }
+
+                @if (Model.CheckedInPatients.Count > 0)
+                {
+                    <table class="table mx-auto">
+                        <tr>
+                            <th>Patient First Name</th>
+                            <th>Patient Last Name</th>
+                            <th>Actions</th>
+                        </tr>
+                        @foreach (var patient in Model.CheckedInPatients)
+                        {
+                            <tr>
+                                <td>@patient.PatientFirstName</td>
+                                <td>@patient.PatientLastName</td>
+                                <td><a class="btn btn-primary" asp-controller="WalkInClinic" asp-action="CheckPatientOut" asp-route-id="@patient.Id">Check Out</a></td>
+                            </tr>
+                        }
+                    </table>
+                }
+                else
+                {
+                    <p>There are no patients currently checked in</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
