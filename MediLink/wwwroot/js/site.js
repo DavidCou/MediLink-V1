@@ -442,6 +442,51 @@ $(document).ready(function () {
         });
     });
 
+    $('#btnPatientWaitListRequest').click(function () {
+        var parameterValue = $(this).data('parameter');
+
+
+
+
+        $.ajax({
+            url: 'http://localhost:5220/ViewPatientRequests/' + parameterValue,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+
+                console.log("Data");
+                console.log(data)
+
+
+
+                $("#data-table-patient-home-requests tbody").empty();
+
+
+                $.each(data, function (index, item) {
+
+
+
+                    var newRow = "<tr id='rowcanc-" + item.id + "-" + item.practictionerId + "-" + item.officeId + "' class='mx-2'><td id='patient-req-canc-" + item.practictionerId + "' >" + item.practictionerFullname + "</td><td id='patient-cancel-" + item.id + "'>" + item.practictionerType + "</td><td id='address-patient-home-" + item.officeId + "'>" + item.officeName + "</td><td>" + item.officeAddress + "</td><td>" + item.dateRequest + "</td>"
+                    newRow += "<td id='" + parameterValue + "-" + item.practictionerId + "'>";
+                    newRow += "<button id='canc-" + item.id + "-" + item.practictionerId + "-" + item.officeId + "' type='button' class='btn btn-danger mr-1 w-100' onclick='setIdRequesttoCancel(this)'>Cancel Request</button>";
+                    newRow += "</td ></tr>";
+
+
+                    $("#data-table-patient-home-requests tbody").append(newRow);
+
+
+
+
+                });
+
+                $(".select-update-pat").val(parameterValue);
+
+                $('#patienthomerequests').modal('show');
+
+            }
+        });
+    });
+
     
     $('#btnPatientaApproved').click(function () {
         var parameterValue = $(this).data('parameter');
@@ -765,9 +810,9 @@ function updatePatientNewRequest() {
     }
 }
 
-
+//#########################continue here ##########################################
 //function to get patient id and status to update status to removed of patient request for practictioner
-//receive a array in format atring with patient id and status
+//receive a array in format string with patient id and status
 function removePatientToPractitioner(id) {
 
   
@@ -816,6 +861,49 @@ function removePatientToPractitioner(id) {
     formUpdatePatientRequest.submit();
 }
 
+function cancelPatientRequest(id) {
+
+     
+    // Display the array contents
+    console.log("Selected values: ", id);   
+    var idRowClicked = "row" + id;
+
+    var rowClicked = document.getElementById(idRowClicked);
+
+    //get all the cells
+    var cells = rowClicked.getElementsByTagName("td");
+
+    //var to stpre each value of array
+    var itemArray = '';
+
+    // Get the ID of the cell that contain the office name
+    var cellOfficeId = cells[2].id;
+    var cellPatientId = cells[1].id;
+    var PatientId = cellPatientId.replace("patient-cancel-", "");
+    
+    var practID = cells[0].id;
+    var practIDClean = practID.replace("patient-req-canc-", "");
+    var officeID = cellOfficeId.replace("address-patient-home-", "");
+
+    //idClean = id practictioner
+    itemArray = PatientId + "-canceled" + "-" + officeID + "-" + practIDClean;
+     
+    // Add the selected value to the array
+    arrayPatientUpdateNewRequest.push(itemArray);
+
+    //get the input to store all the patient IDs and status to update
+    var inputStatusUpdate = document.getElementById("status-pat-req-remove");
+
+    //get the form that send the http post request to save the patient IDs and status to update
+    var formUpdatePatientRequest = document.getElementById("update-patient-cancel-req");
+
+    //set the values all the patient IDs and status to update
+    inputStatusUpdate.value = arrayPatientUpdateNewRequest.join(",");
+
+
+    //send the form
+    formUpdatePatientRequest.submit();
+}
 
 //fuction to enable or disable save button to update a new pract request
 function checkSelectedValues(select) {
@@ -855,6 +943,17 @@ function setIdPatientDelete(button) {
     buttonDelete.setAttribute("onclick", "removePatientToPractitioner('" + button.id + "')");
 
     $('#confirmdelete').modal('show');
+}
+
+//set the id of the button after corfirmation to cancel the patient request in the home page patient
+function setIdRequesttoCancel(button) {
+    // Get the button element
+    var buttonDelete = document.getElementById("btn-cancel-request");
+
+    // Set the onclick attribute with the new dynamic value
+    buttonDelete.setAttribute("onclick", "cancelPatientRequest('" + button.id + "')");
+
+    $('#confirmcancelrequest').modal('show');
 }
 
 //function to valifate and add a new address

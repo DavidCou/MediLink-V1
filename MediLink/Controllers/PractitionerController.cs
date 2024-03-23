@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.IO;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 
@@ -522,7 +523,12 @@ namespace MediLink.Controllers
                     .Select(c => c.Value).SingleOrDefault();
             }
 
-            Practitioner oPractitioner = await _userService.GetPractitionerByEmail(userName);
+            Practitioner oPractitioner = await _mediLinkContext.Practitioners
+            .Include(pt => pt.PractitionerType)
+            .Where(pa => pa.Email == userName)
+            .FirstAsync();
+           
+            //Practitioner oPractitioner = await _userService.GetPractitionerByEmail(userName);
 
             List<PatientNewRequest> ListPatientReq = new List<PatientNewRequest>();
 
@@ -569,6 +575,92 @@ namespace MediLink.Controllers
                 oPatientNewRequest.age = patientAge;
                 oPatientNewRequest.gender = item.Patient.PatientDetails.gender;
                 oPatientNewRequest.officeId = oOfficeAddress.Id;
+                oPatientNewRequest.practictionerId = item.PractitionerId;
+                oPatientNewRequest.practictionerFullname = item.Practitioner.FirstName + " " + item.Practitioner.LastName;
+                oPatientNewRequest.practictionerType = item.Practitioner.PractitionerType.Name;
+                oPatientNewRequest.officeAddress = oOfficeAddress.StreetAddress + " " + oOfficeAddress.City + " " + oOfficeAddress.Province;
+
+                ListPatientReq.Add(oPatientNewRequest);
+
+
+            }
+
+
+
+            return Json(ListPatientReq);
+
+
+
+        }
+
+        [HttpGet("/ViewPatientRequests/{status}")]
+        public async Task<ActionResult> ViewPatientRequests(string status)
+        {
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+            if (claimuser.Identity.IsAuthenticated)
+            {
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            Patient oPatient = await _userService.GetUserByEmail(userName);
+
+            List<PatientNewRequest> ListPatientReq = new List<PatientNewRequest>();
+
+            // Find the record(s) you want to delete using a where statement
+            List<NewPatientRequest> ListNewPatientRequest = await _mediLinkContext.NewPatientRequests
+            .Where(pa => pa.PatientId == oPatient.Id && pa.status == status)
+            .Include(pat => pat.Patient)
+            .ThenInclude(oa => oa.PatientDetails)
+            .ToListAsync();
+
+            foreach (var item in ListNewPatientRequest)
+            {
+                PatientNewRequest oPatientNewRequest = new PatientNewRequest();
+
+                PatientAddress oPatientAddress = await _mediLinkContext.PatientAddress
+               .Where(pa => pa.Id == Convert.ToInt32(item.Patient.PatientDetails.PatientAddressesId))
+               .FirstAsync();
+
+                OfficeAddress oOfficeAddress = await _mediLinkContext.OfficeAddresses
+               .Where(pa => pa.Id == Convert.ToInt32(item.officePractitionerId))
+               .FirstAsync();
+
+                Practitioner oPractitioner = await _mediLinkContext.Practitioners
+               .Include(pt => pt.PractitionerType)
+               .Where(pa => pa.Id == Convert.ToInt32(item.PractitionerId))
+               .FirstAsync();
+
+                //get the patient birthday
+                DateTime patientDoB = (DateTime)item.Patient.PatientDetails.DoB;
+
+                // Get the current date
+                DateTime currentDate = DateTime.Today;
+
+                // Calculate the age
+                int patientAge = currentDate.Year - patientDoB.Year;
+
+                // Check if the birthday has occurred this year
+                if (currentDate.Month < patientDoB.Month || (currentDate.Month == patientDoB.Month && currentDate.Day < patientDoB.Day))
+                {
+                    patientAge--;
+                }
+
+                oPatientNewRequest.Id = item.Patient.Id;
+                oPatientNewRequest.fullname = item.Patient.PatientDetails.FirstName + " " + item.Patient.PatientDetails.LastName;
+                oPatientNewRequest.fullAddress = oPatientAddress.StreetAddress + " " + oPatientAddress.City + " " + oPatientAddress.Province;
+                oPatientNewRequest.officeName = oOfficeAddress.OfficeName;
+                oPatientNewRequest.dateRequest = item.DateRequest.ToShortDateString();
+                oPatientNewRequest.dateApproved = item.DateApproved.ToShortDateString();
+                oPatientNewRequest.age = patientAge;
+                oPatientNewRequest.gender = item.Patient.PatientDetails.gender;
+                oPatientNewRequest.officeId = oOfficeAddress.Id;
+                oPatientNewRequest.practictionerId = item.PractitionerId;
+                oPatientNewRequest.practictionerFullname = oPractitioner.FirstName + " " + oPractitioner.LastName;
+                oPatientNewRequest.practictionerType = oPractitioner.PractitionerType.Name;
+                oPatientNewRequest.officeAddress = oOfficeAddress.StreetAddress + " " + oOfficeAddress.City + " " + oOfficeAddress.Province;
 
                 ListPatientReq.Add(oPatientNewRequest);
 
@@ -586,19 +678,11 @@ namespace MediLink.Controllers
         [HttpPost]
         public async Task<ActionResult> SaveRequestPatient()
         {
-            ClaimsPrincipal claimuser = HttpContext.User;
-            string userName = "";
 
-            if (claimuser.Identity.IsAuthenticated)
-            {
-                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
-                    .Select(c => c.Value).SingleOrDefault();
-            }
-
-            Practitioner oPractitioner = await _userService.GetPractitionerByEmail(userName);
+            Practitioner oPractitioner = null;
 
             string patientUpdate = Request.Form["status-pat-req"];
-
+            string statusPatient = "";
 
 
             Console.WriteLine(patientUpdate);
@@ -607,12 +691,42 @@ namespace MediLink.Controllers
 
                 string[] newPatientReq = patientUpdate.Split(',');
 
+
+
                 foreach (var item in newPatientReq)
                 {
                     string[] currentPatient = item.Split("-");
                     int patientID = Convert.ToInt32(((string)currentPatient[0]));
-                    string statusPatient = currentPatient[1].Trim();
+                    statusPatient = currentPatient[1].Trim();
                     int practOfficeID = Convert.ToInt32(((string)currentPatient[2]));
+
+                    //set a variable to store the practictioner ID the come from the post request
+                    int practID;
+
+                    if(currentPatient.Length > 3)
+                    {
+                        practID = Convert.ToInt32(((string)currentPatient[3]));
+
+                       oPractitioner = await _mediLinkContext.Practitioners
+                      .Where(pa => pa.Id == practID)
+                      .FirstAsync();
+
+                    }
+                    else
+                    {
+                        ClaimsPrincipal claimuser = HttpContext.User;
+                        string userName = "";
+
+                        if (claimuser.Identity.IsAuthenticated)
+                        {
+                            userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                                .Select(c => c.Value).SingleOrDefault();
+                        }
+
+                        oPractitioner = await _userService.GetPractitionerByEmail(userName);
+
+                        practID = oPractitioner.Id;
+                    }
 
                     Patient oPatient = await _mediLinkContext.Patients
                   .Where(pa => pa.Id == patientID)
@@ -621,7 +735,7 @@ namespace MediLink.Controllers
                    
 
                     // Query the new patient request record by its ID
-                    NewPatientRequest oNewPatientRequest = await _mediLinkContext.NewPatientRequests.Where(pa => pa.PractitionerId == oPractitioner.Id && pa.PatientId == patientID && pa.officePractitionerId == practOfficeID).FirstAsync();
+                    NewPatientRequest oNewPatientRequest = await _mediLinkContext.NewPatientRequests.Where(pa => pa.PractitionerId == practID && pa.PatientId == patientID && pa.officePractitionerId == practOfficeID).FirstAsync();
 
                     if (oNewPatientRequest != null)
                     {
@@ -670,12 +784,22 @@ namespace MediLink.Controllers
 
                         }
 
+                       
+                        if (statusPatient == "canceled")
+                        {
+
+                            // Map the path relative to the content root
+                            path = Path.Combine(_webHostEnvironment.ContentRootPath, "Templates", "PatientCancelRequest.html");
+
+
+                        }
+
+                        //prepare to send email
                         string content = System.IO.File.ReadAllText(path);
 
                         string fullnamePract = oPractitioner.FirstName + " " + oPractitioner.LastName;
 
                         string fullnamePatient = oPatient.PatientDetails.FirstName + " " + oPatient.PatientDetails.LastName;
-
 
                         string htmlBody = string.Format(content, fullnamePatient, fullnamePract);
 
@@ -709,7 +833,19 @@ namespace MediLink.Controllers
 
             }
 
-            return RedirectToAction("PractitionerHomePage");
+            if (statusPatient == "canceled")
+            {
+                TempData["mensajeResultSaveAddress"] = "The Request in the waitlist has been canceled successfully";
+
+                return RedirectToAction("PatientHomePage", "Patient");
+
+
+            }
+            else
+            {
+                return RedirectToAction("PractitionerHomePage");
+            }
+            
 
 
         }

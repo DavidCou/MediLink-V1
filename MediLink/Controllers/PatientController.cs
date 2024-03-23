@@ -20,6 +20,11 @@ namespace MediLink.Controllers
 
         public async Task<IActionResult> PatientHomePage()
         {
+            //created by juan quintana -setup a message to inforn status waitlist
+            string mensajeResultSave = TempData["mensajeResultSaveAddress"] as string;
+
+            ViewBag.Success = mensajeResultSave;
+
             ClaimsPrincipal claimuser = HttpContext.User;
             string userName = "";
 
