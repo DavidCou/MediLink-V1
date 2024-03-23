@@ -89,6 +89,9 @@ namespace MediLink.Controllers
                 lastAcceptedPatientDateString = "No patients accepted yet";
             }
 
+            double rating = await _mediLinkContext.PractitionerReviews.Where(pr => pr.PractitionerId == practitioner.Id).Select(pr => pr.Rating).AverageAsync();
+            practitioner.rating = rating;
+
             PractitionerViewModel practitionerViewModel = new PractitionerViewModel()
             {
                 Practitioner = practitioner,

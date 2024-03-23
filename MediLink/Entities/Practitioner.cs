@@ -57,7 +57,7 @@ namespace MediLink.Entities
 
 		public PractitionerType PractitionerType { get; set; } = null!;
 
-        public int? rating { get; set; }
+        public double? rating { get; set; }
 
     }
 }

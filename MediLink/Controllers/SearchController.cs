@@ -195,7 +195,18 @@ namespace MediLink.Controllers
             {
                 if (viewModel.minimumRating == 0)
                 {
-                    viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners.Where(p => practitionerIds.Contains(p.Id)).OrderBy(p => p.FirstName + p.LastName).ToListAsync());
+                    viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners
+                        .Where(p => practitionerIds.Contains(p.Id))
+                        .Include(p => p.PractitionerReviews)
+                        .OrderBy(p => p.FirstName + p.LastName)
+                        .Select(p => new Practitioner()
+                        {
+                            Email = p.Email,
+                            FirstName = p.FirstName,
+                            LastName = p.LastName,
+                            rating = p.PractitionerReviews.Average(p => p.Rating)
+                        })
+                        .ToListAsync());
                 }
                 else
                 {
@@ -351,8 +362,10 @@ namespace MediLink.Controllers
             }
             //end
 
-           
-            if(practitioner.rating == null)
+            double rating = await _mediLinkContext.PractitionerReviews.Where(pr => pr.PractitionerId == practitioner.Id).Select(pr => pr.Rating).AverageAsync();
+            practitioner.rating = rating;
+
+            if (practitioner.rating == null)
             {
                 practitioner.rating = 0;
             }
@@ -366,7 +379,7 @@ namespace MediLink.Controllers
                 PhoneNumber = practitioner.PhoneNumber,
                 gender = practitioner.gender,
                 OfficeAddresses = listOfficeInfo,
-                Rating = practitioner.rating,
+                Rating = (int)practitioner.rating,
                 PractitionerSpokenLanguages = string.Join(", ", spokenLanguages),
                 PractitionerType = practitionerType.Name,
                 IsAcceptingNewPatients = isAcceptingNewPatients,
