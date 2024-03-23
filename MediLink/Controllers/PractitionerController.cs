@@ -69,7 +69,7 @@ namespace MediLink.Controllers
                 .FirstOrDefaultAsync();
 
             string isAcceptingNewPatients = ""; 
-            if (practitioner.IsAcceptingNewPatients = true) 
+            if (practitioner.IsAcceptingNewPatients == true) 
             {
                 isAcceptingNewPatients = "Currently accepting new patients";
             }
@@ -661,6 +661,7 @@ namespace MediLink.Controllers
                 oPatientNewRequest.practictionerFullname = oPractitioner.FirstName + " " + oPractitioner.LastName;
                 oPatientNewRequest.practictionerType = oPractitioner.PractitionerType.Name;
                 oPatientNewRequest.officeAddress = oOfficeAddress.StreetAddress + " " + oOfficeAddress.City + " " + oOfficeAddress.Province;
+                oPatientNewRequest.practEmail = oPractitioner.Email;
 
                 ListPatientReq.Add(oPatientNewRequest);
 
@@ -749,9 +750,15 @@ namespace MediLink.Controllers
                         {
                             oNewPatientRequest.DateApproved = DateTime.Now;
 
+                            oPractitioner.lastPatientAcceptedDate = DateTime.Now;
+
+                            // update the record
+                            _mediLinkContext.Practitioners.Update(oPractitioner);
+                            _mediLinkContext.SaveChanges();
 
                             // Map the path relative to the content root
                             path = Path.Combine(_webHostEnvironment.ContentRootPath, "Templates", "PatientRequestNotification.html");
+
 
                             
                         }

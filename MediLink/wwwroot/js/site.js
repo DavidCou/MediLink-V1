@@ -396,6 +396,7 @@ $(document).ready(function () {
         });
     });
 
+    
 
     $('.btnPatientRequests').click(function () {
         var parameterValue = $(this).data('parameter');
@@ -466,7 +467,7 @@ $(document).ready(function () {
 
 
 
-                    var newRow = "<tr id='rowcanc-" + item.id + "-" + item.practictionerId + "-" + item.officeId + "' class='mx-2'><td id='patient-req-canc-" + item.practictionerId + "' >" + item.practictionerFullname + "</td><td id='patient-cancel-" + item.id + "'>" + item.practictionerType + "</td><td id='address-patient-home-" + item.officeId + "'>" + item.officeName + "</td><td>" + item.officeAddress + "</td><td>" + item.dateRequest + "</td>"
+                    var newRow = "<tr id='rowcanc-" + item.id + "-" + item.practictionerId + "-" + item.officeId + "' class='mx-2'><td id='patient-req-canc-" + item.practictionerId + "' ><button id='" + item.practEmail + "' type='button' class='btn btn-link mr-1 w-100' onclick='showPractDetails(this)'>" + item.practictionerFullname + "</button></td><td id='patient-cancel-" + item.id + "'>" + item.practictionerType + "</td><td id='address-patient-home-" + item.officeId + "'>" + item.officeName + "</td><td>" + item.officeAddress + "</td><td>" + item.dateRequest + "</td>"
                     newRow += "<td id='" + parameterValue + "-" + item.practictionerId + "'>";
                     newRow += "<button id='canc-" + item.id + "-" + item.practictionerId + "-" + item.officeId + "' type='button' class='btn btn-danger mr-1 w-100' onclick='setIdRequesttoCancel(this)'>Cancel Request</button>";
                     newRow += "</td ></tr>";
@@ -482,6 +483,50 @@ $(document).ready(function () {
                 $(".select-update-pat").val(parameterValue);
 
                 $('#patienthomerequests').modal('show');
+
+            }
+        });
+    });
+
+    $('#btnPatientApproved').click(function () {
+        var parameterValue = $(this).data('parameter');
+
+
+
+
+        $.ajax({
+            url: 'http://localhost:5220/ViewPatientRequests/' + parameterValue,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+
+                console.log("Data");
+                console.log(data)
+
+
+
+                $("#data-table-patient-home-approved tbody").empty();
+
+
+                $.each(data, function (index, item) {
+
+
+
+                    var newRow = "<tr id='rowcanc-" + item.id + "-" + item.practictionerId + "-" + item.officeId + "' class='mx-2'><td id='patient-req-canc-" + item.practictionerId + "' ><button id='" + item.practEmail + "' type='button' class='btn btn-link mr-1 w-100' onclick='showPractDetails(this)'>" + item.practictionerFullname + "</button></td><td id='patient-cancel-" + item.id + "'>" + item.practictionerType + "</td><td id='address-patient-home-" + item.officeId + "'>" + item.officeName + "</td><td>" + item.officeAddress + "</td><td>" + item.dateRequest + "</td><td>" + item.dateApproved + "</td>"
+                    newRow += "<td id='" + parameterValue + "-" + item.practictionerId + "'>";
+                    newRow += "</td ></tr>";
+
+
+                    $("#data-table-patient-home-approved tbody").append(newRow);
+
+
+
+
+                });
+
+                $(".select-update-pat").val(parameterValue);
+
+                $('#patienthomerequestsapproved').modal('show');
 
             }
         });
@@ -615,6 +660,39 @@ $(document).ready(function () {
 
 });
 
+function showPractDetails(button) {
+    console.log("paso");
+    console.log(button.id);
+    var parameterValue = $(button).data('parameter');
+    $.ajax({
+        url: 'http://localhost:5220/PractitionerDetails/' + button.id,
+        method: 'GET',
+        dataType: 'json',
+        success: function (data) {
+
+            console.log("Data");
+            console.log(data)
+
+            $('#pract-fullname').text(data.firstName + " " + data.lastName);
+            $('#phone-pract').text(data.phoneNumber);
+            $('#gender-pract').text(data.gender);
+            $('#rating-pract').text(data.rating);
+            $('#patient-acep-pract').text(data.isAcceptingNewPatients);
+            $('#patient-last-pract').text(data.lastAcceptedPatientDate);
+            $('#pract-type').text(data.practitionerType);
+            $('#pract-lang').text(data.practitionerSpokenLanguages);
+            $('#practemail').text(data.email);
+            $('#id-patient').val(data.patientId);
+            $('#id-pract').val(data.id);
+
+            console.log("paso 2");
+            
+            $('#pract-details-patientpage').modal('show');
+
+        }
+    });
+
+}
 
 function openAddModal() {
 

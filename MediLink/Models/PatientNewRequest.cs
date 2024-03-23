@@ -75,6 +75,8 @@ namespace MediLink.Models
 
         public string? practictionerFullname { get; set; }
 
+        public string? practEmail { get; set; }
+
         public string? practictionerType { get; set; }
 
         public string? officeAddress { get; set;}
