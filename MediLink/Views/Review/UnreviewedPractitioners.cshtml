@@ -130,7 +130,11 @@
 
                     <div class="card o-hidden border-0 shadow-lg my-5">
                         <div class="card-body p-3">
-                            <form asp-controller="Review" asp-action="AddReview" method="post">
+                            <div id="div-current-prac-review-error-messages" class="alert alert-danger" role="alert">
+
+                            </div>
+
+                            <form id="frm-add-current-prac-review" asp-controller="Review" asp-action="AddReview" method="post">
                                 <div>
                                     <div class="form-group">
                                         <label for="preferencesCity" class="control-label">Review: </label>
@@ -148,8 +152,8 @@
                                             <label class="control-label">Rating: </label>
                                             <div class="inputGroupContainer">
                                                 <div class="input-group">
-                                                    <select asp-for="review.Rating">
-                                                        <option value="0">0</option>
+                                                    <select asp-for="review.Rating" id="currentPracRating">
+                                                        <option disabled value="0">Please choose a rating</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
@@ -176,7 +180,7 @@
                                 <input type="hidden" asp-for="review.PractitionerId" value="@prac.PractitionerId" />
 
                                 <div class="d-block text-center">
-                                    <input type="submit" class="btn btn-primary px-5" value="Save" />
+                                    <button type="button" class="btn btn-primary px-5" onclick="currentPracReviewValidation()">Save</button>
                                 </div>
                             </form>
                             
@@ -207,7 +211,11 @@
 
                     <div class="card o-hidden border-0 shadow-lg my-5">
                         <div class="card-body p-3">
-                            <form asp-controller="Review" asp-action="AddReview" method="post">
+                            <div id="div-past-prac-review-error-messages" class="alert alert-danger" role="alert">
+
+                            </div>
+
+                            <form id="frm-add-past-prac-review" asp-controller="Review" asp-action="AddReview" method="post">
                                 <div>
                                     <div class="form-group">
                                         <label for="preferencesCity" class="control-label">Review: </label>
@@ -225,8 +233,8 @@
                                             <label class="control-label">Rating: </label>
                                             <div class="inputGroupContainer">
                                                 <div class="input-group">
-                                                    <select asp-for="review.Rating">
-                                                        <option value="0">0</option>
+                                                    <select asp-for="review.Rating" id="pastPracRating">
+                                                        <option disabled value="0">Please choose a rating</option>
                                                         <option value="1">1</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
@@ -253,7 +261,7 @@
                                 <input type="hidden" asp-for="review.PractitionerId" value="@prac.PractitionerId" />
 
                                 <div class="d-block text-center">
-                                    <input type="submit" class="btn btn-primary px-5" value="Save" />
+                                    <button type="button" class="btn btn-primary px-5" onclick="pastPracReviewValidation()">Save</button>
                                 </div>
                             </form>
                         </div>

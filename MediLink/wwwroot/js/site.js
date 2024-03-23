@@ -1158,3 +1158,52 @@ function checkInPatientValidation() {
 
 }
 
+function currentPracReviewValidation() {
+    var rating = document.getElementById("currentPracRating").value;
+    var errorMessage = "";
+
+    if (rating == 0) {
+        errorMessage = "Please rate the practitioner";
+    }
+
+    console.log("result errors");
+    console.log(errorMessage);
+
+    $("div-current-prac-review-error-messages").empty();
+
+    if (errorMessage.length !== "") {
+        var elementP = "<p class='my-0 py-0'>" + errorMessage + "</p>";
+
+        $("div-current-prac-review-error-messages").append(elementP);
+        $("div-current-prac-review-error-messages").show();
+        
+    }
+    else {
+        document.getElementById("frm-add-current-prac-review").submit();
+    }
+}
+
+function pastPracReviewValidation() {
+    var rating = document.getElementById("pastPracRating").value;
+    var errorMessage = "";
+
+    if (rating == 0) {
+        errorMessage = "Please rate the practitioner";
+    }
+
+    console.log("result errors");
+    console.log(errorMessage);
+
+    $("div-past-prac-review-error-messages").empty();
+
+    if (errorMessage.length === "") {
+        var elementP = "<p class='my-0 py-0'>" + errorMessage + "</p>";
+
+        $("div-past-prac-review-error-messages").append(elementP);
+        $("div-past-prac-review-error-messages").show();
+    }
+    else {
+        document.getElementById("frm-add-past-prac-review").submit();
+    }
+}
+
