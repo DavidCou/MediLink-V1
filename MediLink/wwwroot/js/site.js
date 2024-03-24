@@ -1160,6 +1160,7 @@ function checkInPatientValidation() {
 
 function currentPracReviewValidation() {
     var rating = document.getElementById("currentPracRating").value;
+    var form = document.getElementById("frm-add-current-prac-review")
     var errorMessage = "";
 
     if (rating == 0) {
@@ -1179,7 +1180,7 @@ function currentPracReviewValidation() {
         
     }
     else {
-        document.getElementById("frm-add-current-prac-review").submit();
+        form.submit();
     }
 }
 

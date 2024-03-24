@@ -362,8 +362,17 @@ namespace MediLink.Controllers
             }
             //end
 
-            double rating = await _mediLinkContext.PractitionerReviews.Where(pr => pr.PractitionerId == practitioner.Id).Select(pr => pr.Rating).AverageAsync();
-            practitioner.rating = rating;
+            var reviews = await _mediLinkContext.PractitionerReviews.Where(pr => pr.PractitionerId == practitioner.Id).ToListAsync();
+            if (reviews.Count > 0)
+            {
+                double rating = reviews.Average(r => r.Rating);
+                practitioner.rating = rating;
+            }
+            else
+            {
+                practitioner.rating = 0;
+            }
+
 
             if (practitioner.rating == null)
             {
