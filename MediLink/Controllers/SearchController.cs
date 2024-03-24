@@ -109,7 +109,18 @@ namespace MediLink.Controllers
             {
                 if (viewModel.minimumRating == 0)
                 {
-                    viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners.Where(p => practitionerIds.Contains(p.Id)).OrderBy(p => p.FirstName + p.LastName).ToListAsync());
+                    viewModel.practitioners.AddRange(await _mediLinkContext.Practitioners
+                        .Where(p => practitionerIds.Contains(p.Id))
+                        .Include(p => p.PractitionerReviews)
+                        .OrderBy(p => p.FirstName + p.LastName)
+                        .Select(p => new Practitioner()
+                        {
+                            Email = p.Email,
+                            FirstName = p.FirstName,
+                            LastName = p.LastName,
+                            rating = p.PractitionerReviews.Average(p => p.Rating)
+                        })
+                        .ToListAsync());
                 }
                 else
                 {
