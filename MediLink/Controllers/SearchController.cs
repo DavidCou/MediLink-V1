@@ -384,12 +384,6 @@ namespace MediLink.Controllers
                 practitioner.rating = 0;
             }
 
-
-            if (practitioner.rating == null)
-            {
-                practitioner.rating = 0;
-            }
-
             SearchPractitionerRequest oSearchPractitionerRequest = new SearchPractitionerRequest()
             {
                 Id = practitioner.Id,
