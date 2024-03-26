@@ -26,7 +26,7 @@ namespace MediLink.Models
 
         public bool IsDeleted { get; set; } = false;
 
-        public int? CurrentWaitTime { get; set; }
+        public string? CurrentWaitTime { get; set; }
 
         public string? fullAddress { get; set; }
 

@@ -1,10 +1,8 @@
-﻿
+﻿@model WalkInSearchViewModel
 @{
     ViewData["Title"] = "SearchWalkClinic";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-@model MediLink.Models.WalkClinicInfo
 <nav id="header-st" class="navbar navbar-expand static-top ">
     <div class="mr=auto">
         <a class="navbar-brand mx-0" href="#"><img class="ms-5 me-0" src="~/img/logo2.png" alt="Company Logo" width="70" height="60"></a>
@@ -71,19 +69,30 @@
                         <tr>
                             <th>Walk-Clinic Name</th>
                             <th>Address</th>
-                            <th>Current Wait Time (In Miniutes)</th>
+                            <th>Current Wait Time In Miniutes</th>
                             <th>View Historical Wait Times</th>
                             <th>View Clinic Hours</th>
                         </tr>
                     </thead>
                     <tbody>
                        
-                        @foreach (var c in ViewBag.WalkClinics)
+                        @foreach (var c in Model.WalkInClinicInfo)
                         {
                             <tr class='mx-2'>
                                 <td id="office-1">@c.OfficeName</td>
                                 <td>@c.fullAddress</td>
                                 <td class="text-center">@c.CurrentWaitTime</td>
+                                <td>
+                                    <form method="get" asp-controller="Search" asp-action="SearchViewHistoricalWaitTimes">
+                                        <input type="hidden" name="id" value="@c.Id" />
+                                        <button type="submit" class="btn btn-primary">View Historical Wait Times</button>
+                                    </form>
+                                <td>
+                                    <form method="get" asp-controller="Search" asp-action="ViewClinicHours">
+                                        <input type="hidden" name="id" value="@c.Id" />
+                                        <button type="submit" class="btn btn-primary">View Hours</button>
+                                    </form>
+                                </td>
                             </tr>
 
                         }
@@ -93,16 +102,10 @@
                 </table>
                 <div class="d-block text-center">
                     <a class="btn btn-secondary tex" href="@Url.Action("PatientHomePage","Patient")">Return</a>
-                  
-
+                 
                 </div>
             </div>
         </div>
-
-
     </div>
-
-
-
-
 </div>
+

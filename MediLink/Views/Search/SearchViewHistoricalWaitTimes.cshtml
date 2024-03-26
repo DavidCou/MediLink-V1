@@ -1,0 +1,121 @@
+﻿@model HistoricalWaitTimesViewModel
+@{
+    ViewData["Title"] = "View Historical Wait Times";
+}
+
+<nav id="header-st" class="navbar navbar-expand static-top ">
+    <div class="mr=auto">
+        <a class="navbar-brand mx-0" href="#"><img class="ms-5 me-0" src="~/img/logo2.png" alt="Company Logo" width="70" height="60"></a>
+        <h3 id="company-title">MediLink</h3>
+    </div>
+    <div class="ml-auto mt-4">
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto ">
+                <li class="nav-item">
+                    <a class="nav-link mx-2 h6 text-white" href="@Url.Action("WalkInClinicHomePage", "WalkInClinic")">Home</a>
+                </li>
+
+                <li class="nav-item dropdown no-arrow ">
+                    <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 mx-2 d-none d-lg-inline text-white ">@ViewData["userName"]</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
+                         aria-labelledby="userDropdown">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Management")">
+                            <i class="bi bi-box-arrow-in-left text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+
+    <div class="card">
+        <div class="card-header">
+            @if (ViewBag.WalkInSuccess != null)
+            {
+                <div class="alert alert-success" role="alertdialog">
+                    <span>@ViewBag.WalkInSuccess</span>
+                </div>
+            }
+            <div class="text-center">
+                <h4>Historical Wait Times</h4>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+
+                @*                 <div class="text-left">
+                <a class="btn btn-secondary tex" href="@Url.Action("WalkInClinicHomePage", "WalkInClinic")">Cancel</a>
+                </div> *@
+            </div>
+
+            <form asp-controller="WalkInClinic" asp-action="ViewHistoricalWaitTimes" method="post">
+                <div class="mt-3 align-content-center">
+                    <p>Select a day of the week you would like to see the historical wait times for:</p>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <div class="inputGroupContainer">
+                                    <div class="input-group">
+                                        <select id="dayOfWeek" name="DayOfTheWeek" class="selectpicker form-control" aria-label="Default select" asp-for="DayOfTheWeek" onchange="toggleParagraph()">
+                                            <option selected disabled value="noselected">Please select a day of the week</option>
+                                            <option value="Monday">Monday</option>
+                                            <option value="Tuesday">Tuesday</option>
+                                            <option value="Wednesday">Wednesday</option>
+                                            <option value="Thursday">Thursday</option>
+                                            <option value="Friday">Friday</option>
+                                            <option value="Saturday">Saturday</option>
+                                            <option value="Sunday">Sunday</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-block text-center">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                    <a class="btn btn-secondary tex" href="@Url.Action("PatientHomePage","Patient")">Back</a>
+                </div>
+            </form>
+
+            <div class="card-body text-center" id="historicalWaitTimes">
+                @if (Model.HistoricalWaitTimes.Count > 0)
+                {
+                    <table id="table" class="table mx-auto">
+                        <tr>
+                            <th>Time Of Day</th>
+                            <th>Historical Wait Time In Minutes</th>
+                        </tr>
+                        @foreach (var waitTime in Model.HistoricalWaitTimes)
+                        {
+                            <tr>
+                                <td>@waitTime.Key</td>
+                                <td>@waitTime.Value</td>
+                            </tr>
+                        }
+                    </table>
+                }
+                else
+                {
+                    <p id="closedMessage">The clinic is closed on this day.</p>
+                }
+            </div>
+
+            <script>
+                function toggleParagraph() {
+                    var select = document.getElementById("dayOfWeek");
+                    var paragraph = document.getElementById("closedMessage");
+                    paragraph.style.display = select.value === "noselected" ? "none" : "block";
+                }
+            </script>
+
+        </div>
+    </div>
+</div>
+

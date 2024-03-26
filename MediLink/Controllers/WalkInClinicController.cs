@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualBasic;
+using NuGet.Packaging.Signing;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -50,6 +51,27 @@ namespace MediLink.Controllers
                 .Where(wch => wch.WalkInClinicId == walkInClinic.Id)
                 .ToListAsync();
 
+            DateTime thirtyMinutesAgo = DateTime.Now.AddMinutes(-30);
+
+            string dayOfTheWeek = DateTime.Now.DayOfWeek.ToString();
+
+            List<WalkInClinicHistoricalWaitTimes> walkInClinicHistoricalWaitTimes = await _mediLinkContext.WalkInClinicHistoricalWaitTimes
+                .Where(wch => wch.WalkInClinicId == walkInClinic.Id
+                        && wch.DayOfTheWeek == dayOfTheWeek
+                        && wch.PatientCheckInTime >= thirtyMinutesAgo) 
+                .ToListAsync();
+            string currentWaitTimeString = "";
+
+            double currentWaitTime = 0;
+            if (walkInClinicHistoricalWaitTimes.Any())
+            {
+                currentWaitTimeString = ((int)walkInClinicHistoricalWaitTimes.Average(w => w.WaitTimeInSeconds) / 60).ToString() + " minutes";
+            }
+            else
+            {
+                currentWaitTimeString = "No Current Data";
+            }
+
             Dictionary<string, string> hoursDictionary = new Dictionary<string, string>();
 
             foreach (var hours in walkInClinicHours)
@@ -66,6 +88,7 @@ namespace MediLink.Controllers
 
             WalkClinicViewModel walkClinicViewModel = new WalkClinicViewModel()
             {
+                CurrentWaitTime = currentWaitTimeString,
                 WalkInClinic = walkInClinic,
                 WalkInPractitionerSpokenLanguages = walkInPractitionerSpokenLanguages,
                 OfficeAddress = officeAddress,
@@ -112,13 +135,13 @@ namespace MediLink.Controllers
 
             List<Languages> languages = await _mediLinkContext.Languages.ToListAsync();
 
-            List <WalkInPractitionerSpokenLanguages> walkInPractitionerSpokenLanguages = await _mediLinkContext.WalkInPractitionerSpokenLanguages
+            List<WalkInPractitionerSpokenLanguages> walkInPractitionerSpokenLanguages = await _mediLinkContext.WalkInPractitionerSpokenLanguages
                 .Where(wpsl => wpsl.WalkInPractitionerId == walkInClinic.Id)
                 .ToListAsync();
 
             List<int> currentSpokenLanguageIds = new List<int>();
 
-            foreach (var language in walkInPractitionerSpokenLanguages) 
+            foreach (var language in walkInPractitionerSpokenLanguages)
             {
                 currentSpokenLanguageIds.Add(language.LanguageId);
             }
@@ -218,7 +241,7 @@ namespace MediLink.Controllers
 
             if (errorMessage.Count == 0)
             {
-                
+
                 OfficeAddress officeAddress = await _mediLinkContext.OfficeAddresses
                 .Where(of => of.Id == walkInClinic.OfficeAddressId)
                 .FirstOrDefaultAsync();
@@ -263,9 +286,9 @@ namespace MediLink.Controllers
             {
                 List<Languages> languages = await _mediLinkContext.Languages.ToListAsync();
                 List<int> currentSpokenLanguageIds = new List<int>();
-               
-                foreach(var currentLanguage  in currentSpokenLanguages) 
-                { 
+
+                foreach (var currentLanguage in currentSpokenLanguages)
+                {
                     currentSpokenLanguageIds.Add(currentLanguage.LanguageId);
                 }
 
@@ -319,7 +342,7 @@ namespace MediLink.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CheckPatientOut() 
+        public async Task<IActionResult> CheckPatientOut()
         {
             ClaimsPrincipal claimuser = HttpContext.User;
             string userName = "";
@@ -338,9 +361,9 @@ namespace MediLink.Controllers
                 .Where(cp => cp.WalkInClinicId == walkInClinic.Id)
                 .ToList();
 
-            CheckOutViewModel checkOutViewModel = new CheckOutViewModel() 
-            { 
-                CheckedInPatients = checkedInPatients   
+            CheckOutViewModel checkOutViewModel = new CheckOutViewModel()
+            {
+                CheckedInPatients = checkedInPatients
             };
 
             return View(checkOutViewModel);
@@ -351,7 +374,7 @@ namespace MediLink.Controllers
         {
             WalkInClinicCheckedInPatient walkInClinicCheckedInPatient = await _mediLinkContext.WalkInClinicCheckedInPatients
                 .FindAsync(id);
-  
+
             DateTime patientCheckInTime = walkInClinicCheckedInPatient.PatientCheckInTime;
             DateTime currentTime = DateTime.Now;
             TimeSpan waitTime = currentTime - patientCheckInTime;
@@ -498,7 +521,7 @@ namespace MediLink.Controllers
             }
 
 
-            if (errorMessage.Count == 0) 
+            if (errorMessage.Count == 0)
             {
                 WalkInClinic walkInClinic = await _userService.GetWalkInClinicByEmail(userName);
 
@@ -571,12 +594,117 @@ namespace MediLink.Controllers
 
                 return RedirectToAction("WalkinClinicHomePage");
             }
-            else 
+            else
             {
                 ViewBag.MyErrorList = errorMessage;
                 ViewData["UpdateErrorMessage"] = errorMessage;
                 return View(walkInHoursViewModel);
             }
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> ViewHistoricalWaitTimes()
+        {
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+            if (claimuser.Identity.IsAuthenticated)
+            {
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            ViewData["userName"] = userName;
+
+            Dictionary<string, string> historicalWaitTimes = new Dictionary<string, string>();
+
+            HistoricalWaitTimesViewModel historicalWaitTimesViewModel = new HistoricalWaitTimesViewModel()
+            {
+                HistoricalWaitTimes = historicalWaitTimes
+            };
+
+            return View(historicalWaitTimesViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ViewHistoricalWaitTimes(HistoricalWaitTimesViewModel historicalWaitTimesViewModel)
+        {
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+            if (claimuser.Identity.IsAuthenticated)
+            {
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            ViewData["userName"] = userName;
+
+            WalkInClinic walkInClinic = await _userService.GetWalkInClinicByEmail(userName);
+
+            var historicalWaitTimesQuery = _mediLinkContext.WalkInClinicHistoricalWaitTimes
+                .Where(wch => wch.WalkInClinicId == walkInClinic.Id && wch.DayOfTheWeek == historicalWaitTimesViewModel.DayOfTheWeek);
+
+            var clinicHoursQuery = _mediLinkContext.WalkInClinicHours
+                .Where(wch => wch.WalkInClinicId == walkInClinic.Id && wch.DayOfTheWeek == historicalWaitTimesViewModel.DayOfTheWeek);
+
+            var historicalWaitTimes = await historicalWaitTimesQuery.ToListAsync();
+            var clinicHours = await clinicHoursQuery.ToListAsync();
+
+            int openingHour = 0;
+            int closingHour = 0;
+
+            foreach (var day in clinicHours) 
+            { 
+                if (day.DayOfTheWeek == historicalWaitTimesViewModel.DayOfTheWeek) 
+                {
+                    openingHour = int.Parse(day.OpeningTime.Substring(0, 2));
+                    closingHour = int.Parse(day.ClosingTime.Substring(0, 2)) + 12;
+                    break;
+                }
+            }
+
+            // Create a dictionary to store the average wait times by hour
+            Dictionary<int, int> averageWaitTimesByHour = new Dictionary<int, int>();
+
+            // Group wait times by hour
+            var waitTimesGroupedByHour = historicalWaitTimes
+                .GroupBy(w => w.PatientCheckInTime.Hour);
+
+            // Calculate average wait time for each hour
+            foreach (var group in waitTimesGroupedByHour)
+            {
+                double averageWaitTime = group.Average(w => w.WaitTimeInSeconds);
+                averageWaitTimesByHour[group.Key] = (int)averageWaitTime / 60;
+            }
+
+            historicalWaitTimesViewModel.HistoricalWaitTimes = ConstructHistoricalWaitTimesDictionary(openingHour, closingHour, averageWaitTimesByHour);
+
+            return View(historicalWaitTimesViewModel);
+        }
+
+        private Dictionary<string, string> ConstructHistoricalWaitTimesDictionary(int openingHour, int closingHour, Dictionary<int, int> averageWaitTimesByHour)
+        {
+            var historicalWaitTimes = new Dictionary<string, string>();
+
+            for (int hour = openingHour; hour < closingHour; hour++)
+            {
+                int hour12 = hour > 12 ? hour - 12 : hour;
+                string period = hour >= 12 ? "PM" : "AM";
+                string hourString = $"{hour12.ToString("00")}:00 {period}";
+
+                if (averageWaitTimesByHour.ContainsKey(hour))
+                {
+                    historicalWaitTimes[hourString] = averageWaitTimesByHour[hour].ToString("0");
+                }
+                else
+                {
+                    historicalWaitTimes[hourString] = "N/A";
+                }
+            }
+
+            return historicalWaitTimes;
         }
 
         private MediLinkDbContext _mediLinkContext;
