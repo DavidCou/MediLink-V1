@@ -437,8 +437,8 @@ namespace MediLink.Migrations
                     b.Property<bool>("passwordReset")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("rating")
-                        .HasColumnType("int");
+                    b.Property<double?>("rating")
+                        .HasColumnType("float");
 
                     b.Property<string>("token")
                         .IsRequired()
@@ -735,13 +735,8 @@ namespace MediLink.Migrations
                     b.Property<DateTime>("PatientCheckInTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("TimeOfDay")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WaitTime")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("WaitTimeInSeconds")
+                        .HasColumnType("int");
 
                     b.Property<int>("WalkInClinicId")
                         .HasColumnType("int");

@@ -42,7 +42,7 @@
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdateWalkInClinicDetails","WalkInClinic")">Edit Profile</a>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" data-toggle='modal' data-target='#checkpatientin'>Check A Patient In</a>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("CheckPatientOut","WalkInClinic")">Check A Patient Out</a>
-                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("UpdateHours","WalkInClinic")">Update Operating Hours</a>
+                    <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("AddEditOperatingHours","WalkInClinic")">Update Operating Hours</a>
                     <a class="btn btn-blue btn-block btn-half-width mb-3" href="@Url.Action("ViewHistoricalWaitTimes","WalkInClinic")">View Historical Wait Times</a>
                 </div>
             </div>
@@ -69,7 +69,17 @@
                     <p><strong>Country:</strong> @Model.OfficeAddress.country</p>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 center-content">
+                <div class="profile-info mt-2">
+                    <h2>Clinic Hours</h2>
+                    <p><strong>Monday:</strong> @Model.WalkInClinicHours.MondayHours</p>
+                    <p><strong>Tuesday:</strong> @Model.WalkInClinicHours.TuesdayHours</p>
+                    <p><strong>Wednesday:</strong> @Model.WalkInClinicHours.WednesdayHours</p>
+                    <p><strong>Thursday:</strong> @Model.WalkInClinicHours.ThursdayHours</p>
+                    <p><strong>Friday:</strong> @Model.WalkInClinicHours.FridayHours</p>
+                    <p><strong>Saturday:</strong> @Model.WalkInClinicHours.SaturdayHours</p>
+                    <p><strong>Sunday:</strong> @Model.WalkInClinicHours.SundayHours</p>
+                </div>
             </div>
         </div>
     </div>

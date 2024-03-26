@@ -9,6 +9,8 @@ namespace MediLink.Models
         public List<WalkInPractitionerSpokenLanguages> WalkInPractitionerSpokenLanguages { get; set; }
 
         public OfficeAddress OfficeAddress { get; set; }
+
+        public WalkInClinicHoursInfo WalkInClinicHours { get; set; }
     }
 
 }

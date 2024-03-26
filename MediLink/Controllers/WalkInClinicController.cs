@@ -4,9 +4,11 @@ using MediLink.Services.Contract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualBasic;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 
@@ -44,12 +46,39 @@ namespace MediLink.Controllers
                 .Include(psl => psl.Language)
                 .ToListAsync();
 
+            List<WalkInClinicHours> walkInClinicHours = await _mediLinkContext.WalkInClinicHours
+                .Where(wch => wch.WalkInClinicId == walkInClinic.Id)
+                .ToListAsync();
+
+            Dictionary<string, string> hoursDictionary = new Dictionary<string, string>();
+
+            foreach (var hours in walkInClinicHours)
+            {
+                if (hours.OpeningTime == "Closed")
+                {
+                    hoursDictionary[hours.DayOfTheWeek] = "Closed";
+                }
+                else
+                {
+                    hoursDictionary[hours.DayOfTheWeek] = hours.OpeningTime + " - " + hours.ClosingTime;
+                }
+            }
 
             WalkClinicViewModel walkClinicViewModel = new WalkClinicViewModel()
             {
                 WalkInClinic = walkInClinic,
                 WalkInPractitionerSpokenLanguages = walkInPractitionerSpokenLanguages,
-                OfficeAddress = officeAddress
+                OfficeAddress = officeAddress,
+                WalkInClinicHours = new WalkInClinicHoursInfo()
+                {
+                    MondayHours = hoursDictionary.GetValueOrDefault("Monday", ""),
+                    TuesdayHours = hoursDictionary.GetValueOrDefault("Tuesday", ""),
+                    WednesdayHours = hoursDictionary.GetValueOrDefault("Wednesday", ""),
+                    ThursdayHours = hoursDictionary.GetValueOrDefault("Thursday", ""),
+                    FridayHours = hoursDictionary.GetValueOrDefault("Friday", ""),
+                    SaturdayHours = hoursDictionary.GetValueOrDefault("Saturday", ""),
+                    SundayHours = hoursDictionary.GetValueOrDefault("Sunday", "")
+                }
             };
 
             if (TempData["WalkInSuccess"] != null)
@@ -59,6 +88,7 @@ namespace MediLink.Controllers
 
             return View(walkClinicViewModel);
         }
+
 
         [HttpGet]
         public async Task<IActionResult> UpdateWalkInClinicDetails()
@@ -288,7 +318,6 @@ namespace MediLink.Controllers
             return RedirectToAction("WalkinClinicHomePage");
         }
 
-
         [HttpGet]
         public async Task<IActionResult> CheckPatientOut() 
         {
@@ -317,8 +346,38 @@ namespace MediLink.Controllers
             return View(checkOutViewModel);
         }
 
-        [HttpPost("/WalkInClinic/CheckPatientOut/{id}")]
+        [HttpPost()]
         public async Task<IActionResult> CheckPatientOut(int id)
+        {
+            WalkInClinicCheckedInPatient walkInClinicCheckedInPatient = await _mediLinkContext.WalkInClinicCheckedInPatients
+                .FindAsync(id);
+  
+            DateTime patientCheckInTime = walkInClinicCheckedInPatient.PatientCheckInTime;
+            DateTime currentTime = DateTime.Now;
+            TimeSpan waitTime = currentTime - patientCheckInTime;
+
+
+            WalkInClinicHistoricalWaitTimes historicalWaitTimes = new WalkInClinicHistoricalWaitTimes()
+            {
+                PatientCheckInTime = patientCheckInTime,
+                DayOfTheWeek = walkInClinicCheckedInPatient.PatientCheckInTime.DayOfWeek.ToString(),
+                WaitTimeInSeconds = (int)waitTime.TotalSeconds,
+                WalkInClinicId = walkInClinicCheckedInPatient.WalkInClinicId
+            };
+
+            _mediLinkContext.WalkInClinicHistoricalWaitTimes.Add(historicalWaitTimes);
+            await _mediLinkContext.SaveChangesAsync();
+
+            _mediLinkContext.WalkInClinicCheckedInPatients.Remove(walkInClinicCheckedInPatient);
+            await _mediLinkContext.SaveChangesAsync();
+
+            TempData["WalkInSuccess"] = $"{walkInClinicCheckedInPatient.PatientFirstName}  {walkInClinicCheckedInPatient.PatientLastName} was checked out successfully.";
+
+            return RedirectToAction("WalkinClinicHomePage");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddEditOperatingHours()
         {
             ClaimsPrincipal claimuser = HttpContext.User;
             string userName = "";
@@ -331,34 +390,193 @@ namespace MediLink.Controllers
 
             ViewData["userName"] = userName;
 
-            WalkInClinic walkInClinic = await _userService.GetWalkInClinicByEmail(userName);
+            //WalkInClinic walkInClinic = await _userService.GetWalkInClinicByEmail(userName);
 
-            WalkInClinicCheckedInPatient walkInClinicCheckedInPatient = await _mediLinkContext.WalkInClinicCheckedInPatients
-                .FindAsync(id);
+            WalkInHoursViewModel walkInHoursViewModel = new WalkInHoursViewModel();
 
-            DateTime patientCheckInTime = walkInClinicCheckedInPatient.PatientCheckInTime;
-            DateTime currentTime = DateTime.Now;
-            TimeSpan waitTime = currentTime - patientCheckInTime;
-            int hours = waitTime.Hours;
-            int minutes = waitTime.Minutes;
-            int seconds = waitTime.Seconds;
+            return View(walkInHoursViewModel);
 
-            WalkInClinicHistoricalWaitTimes historicalWaitTimes = new WalkInClinicHistoricalWaitTimes() 
+            //Dictionary<string, string> operatingHours = new Dictionary<string, string>();
+
+            //List<WalkInClinicHours> walkInClinicHours = _mediLinkContext.WalkInClinicHours
+            //    .Where(wch => wch.WalkInClinicId == walkInClinic.Id)
+            //    .ToList();
+
+            //if (walkInClinicHours != null)
+            //{
+            //    foreach (WalkInClinicHours walkInClinichour in walkInClinicHours)
+            //    {
+            //        if (walkInClinichour.DayOfTheWeek == "Monday")
+            //        {
+            //            operatingHours.Add("MondayOpening", walkInClinichour.OpeningTime);
+            //            operatingHours.Add("MondayClosing", walkInClinichour.ClosingTime);
+            //        }
+            //        else if (walkInClinichour.DayOfTheWeek == "Tuesday")
+            //        {
+            //            operatingHours.Add("TuesdayOpening", walkInClinichour.OpeningTime);
+            //            operatingHours.Add("TuesdayClosing", walkInClinichour.ClosingTime);
+            //        }
+            //        else if (walkInClinichour.DayOfTheWeek == "Wednesday")
+            //        {
+            //            operatingHours.Add("TuesdayOpening", walkInClinichour.OpeningTime);
+            //            operatingHours.Add("TuesdayClosing", walkInClinichour.ClosingTime);
+            //        }
+            //        else if (walkInClinichour.DayOfTheWeek == "Thursday")
+            //        {
+            //            operatingHours.Add("TuesdayOpening", walkInClinichour.OpeningTime);
+            //            operatingHours.Add("TuesdayClosing", walkInClinichour.ClosingTime);
+            //        }
+            //        else if (walkInClinichour.DayOfTheWeek == "Friday")
+            //        {
+            //            operatingHours.Add("TuesdayOpening", walkInClinichour.OpeningTime);
+            //            operatingHours.Add("TuesdayClosing", walkInClinichour.ClosingTime);
+            //        }
+            //        else if (walkInClinichour.DayOfTheWeek == "Saturday")
+            //        {
+            //            operatingHours.Add("TuesdayOpening", walkInClinichour.OpeningTime);
+            //            operatingHours.Add("TuesdayClosing", walkInClinichour.ClosingTime);
+            //        }
+            //        else if (walkInClinichour.DayOfTheWeek == "Sunday")
+            //        {
+            //            operatingHours.Add("TuesdayOpening", walkInClinichour.OpeningTime);
+            //            operatingHours.Add("TuesdayClosing", walkInClinichour.ClosingTime);
+            //        }
+            //    }
+            //}
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddEditOperatingHours(WalkInHoursViewModel walkInHoursViewModel)
+        {
+            ClaimsPrincipal claimuser = HttpContext.User;
+            string userName = "";
+
+            if (claimuser.Identity.IsAuthenticated)
             {
-                PatientCheckInTime = patientCheckInTime,
-                DayOfTheWeek = walkInClinicCheckedInPatient.PatientCheckInTime.DayOfWeek.ToString(),
-                TimeOfDay = walkInClinicCheckedInPatient.PatientCheckInTime.TimeOfDay.ToString(),
-                WaitTime = hours.ToString() + ":" + minutes.ToString() + ":" + seconds.ToString(),
-                WalkInClinicId = walkInClinic.Id,
-                WalkInClinic = walkInClinic
+                userName = claimuser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            ViewData["userName"] = userName;
+
+            List<string> errorMessage = new List<string>();
+            string timePattern = @"^\d{2}:\d{2}$";
+            Regex regex = new Regex(timePattern);
+            bool isBlank = false;
+
+            Dictionary<string, string> operatingHours = new Dictionary<string, string>
+            {
+                { "opening time on Mondays", walkInHoursViewModel.MondayOpeningTime },
+                { "closing time on Mondays", walkInHoursViewModel.MondayClosingTime },
+                { "opening time on Tuesdays", walkInHoursViewModel.TuesdayOpeningTime },
+                { "closing time on Tuesdays", walkInHoursViewModel.TuesdayClosingTime },
+                { "opening time on Wednesdays", walkInHoursViewModel.WednesdayOpeningTime },
+                { "closing time on Wednesdays", walkInHoursViewModel.WednesdayClosingTime },
+                { "opening time on Thursdays", walkInHoursViewModel.ThursdayOpeningTime },
+                { "closing time on Thursdays", walkInHoursViewModel.ThursdayClosingTime },
+                { "opening time on Fridays", walkInHoursViewModel.FridayOpeningTime },
+                { "closing time on Fridays", walkInHoursViewModel.FridayClosingTime },
+                { "opening time on Saturdays", walkInHoursViewModel.SaturdayOpeningTime },
+                { "closing time on Saturdays", walkInHoursViewModel.SaturdayClosingTime },
+                { "opening time on Sundays", walkInHoursViewModel.SundayOpeningTime },
+                { "closing time on Sundays", walkInHoursViewModel.SundayClosingTime },
             };
 
-            _mediLinkContext.WalkInClinicHistoricalWaitTimes.Add(historicalWaitTimes);
-            await _mediLinkContext.SaveChangesAsync();
+            foreach (var operatingHour in operatingHours)
+            {
+                if (string.IsNullOrEmpty(operatingHour.Value) || string.IsNullOrWhiteSpace(operatingHour.Value))
+                {
+                    errorMessage.Add($"The {operatingHour.Key} cannot be blank.");
+                }
+                else
+                {
+                    if (!regex.IsMatch(operatingHour.Value) && operatingHour.Value != "Closed")
+                    {
+                        errorMessage.Add($"The {operatingHour.Key} is invalid. Please use the following format: 00:00 or enter 'Closed' if your clinic is not open that day.");
+                    }
+                }
+            }
 
-            TempData["WalkInSuccess"] = $"{walkInClinicCheckedInPatient.PatientFirstName}  {walkInClinicCheckedInPatient.PatientLastName} was checked out successfully.";
 
-            return RedirectToAction("WalkinClinicHomePage");
+            if (errorMessage.Count == 0) 
+            {
+                WalkInClinic walkInClinic = await _userService.GetWalkInClinicByEmail(userName);
+
+                WalkInClinicHours mondayHours = new WalkInClinicHours();
+                WalkInClinicHours tuesdayHours = new WalkInClinicHours();
+                WalkInClinicHours wednesdayHours = new WalkInClinicHours();
+                WalkInClinicHours thursdayHours = new WalkInClinicHours();
+                WalkInClinicHours fridayHours = new WalkInClinicHours();
+                WalkInClinicHours saturdayHours = new WalkInClinicHours();
+                WalkInClinicHours sundayHours = new WalkInClinicHours();
+
+                mondayHours.DayOfTheWeek = "Monday";
+                mondayHours.OpeningTime = operatingHours["opening time on Mondays"] + "AM";
+                mondayHours.ClosingTime = operatingHours["closing time on Mondays"] + "PM";
+                mondayHours.WalkInClinicId = walkInClinic.Id;
+                mondayHours.WalkInClinic = walkInClinic;
+                _mediLinkContext.WalkInClinicHours.Add(mondayHours);
+                await _mediLinkContext.SaveChangesAsync();
+
+                tuesdayHours.DayOfTheWeek = "Tuesday";
+                tuesdayHours.OpeningTime = operatingHours["opening time on Tuesdays"] + "AM";
+                tuesdayHours.ClosingTime = operatingHours["closing time on Tuesdays"] + "PM";
+                tuesdayHours.WalkInClinicId = walkInClinic.Id;
+                tuesdayHours.WalkInClinic = walkInClinic;
+                _mediLinkContext.WalkInClinicHours.Add(tuesdayHours);
+                await _mediLinkContext.SaveChangesAsync();
+
+                wednesdayHours.DayOfTheWeek = "Wednesday";
+                wednesdayHours.OpeningTime = operatingHours["opening time on Wednesdays"] + "AM";
+                wednesdayHours.ClosingTime = operatingHours["closing time on Wednesdays"] + "PM";
+                wednesdayHours.WalkInClinicId = walkInClinic.Id;
+                wednesdayHours.WalkInClinic = walkInClinic;
+                _mediLinkContext.WalkInClinicHours.Add(wednesdayHours);
+                await _mediLinkContext.SaveChangesAsync();
+
+                thursdayHours.DayOfTheWeek = "Thursday";
+                thursdayHours.OpeningTime = operatingHours["opening time on Thursdays"] + "AM";
+                thursdayHours.ClosingTime = operatingHours["closing time on Thursdays"] + "PM";
+                thursdayHours.WalkInClinicId = walkInClinic.Id;
+                thursdayHours.WalkInClinic = walkInClinic;
+                _mediLinkContext.WalkInClinicHours.Add(thursdayHours);
+                await _mediLinkContext.SaveChangesAsync();
+
+                fridayHours.DayOfTheWeek = "Friday";
+                fridayHours.OpeningTime = operatingHours["opening time on Fridays"] + "AM";
+                fridayHours.ClosingTime = operatingHours["closing time on Fridays"] + "PM";
+                fridayHours.WalkInClinicId = walkInClinic.Id;
+                fridayHours.WalkInClinic = walkInClinic;
+                _mediLinkContext.WalkInClinicHours.Add(fridayHours);
+                await _mediLinkContext.SaveChangesAsync();
+
+                saturdayHours.DayOfTheWeek = "Saturday";
+                saturdayHours.OpeningTime = operatingHours["opening time on Saturdays"] + "AM";
+                saturdayHours.ClosingTime = operatingHours["closing time on Saturdays"] + "PM";
+                saturdayHours.WalkInClinicId = walkInClinic.Id;
+                saturdayHours.WalkInClinic = walkInClinic;
+                _mediLinkContext.WalkInClinicHours.Add(saturdayHours);
+                await _mediLinkContext.SaveChangesAsync();
+
+                sundayHours.DayOfTheWeek = "Sunday";
+                sundayHours.OpeningTime = operatingHours["opening time on Sundays"] + "AM";
+                sundayHours.ClosingTime = operatingHours["closing time on Sundays"] + "PM";
+                sundayHours.WalkInClinicId = walkInClinic.Id;
+                sundayHours.WalkInClinic = walkInClinic;
+                _mediLinkContext.WalkInClinicHours.Add(sundayHours);
+                await _mediLinkContext.SaveChangesAsync();
+
+
+                TempData["WalkInSuccess"] = " Your clinics operating hours were added successfully.";
+
+                return RedirectToAction("WalkinClinicHomePage");
+            }
+            else 
+            {
+                ViewBag.MyErrorList = errorMessage;
+                ViewData["UpdateErrorMessage"] = errorMessage;
+                return View(walkInHoursViewModel);
+            }
         }
 
         private MediLinkDbContext _mediLinkContext;

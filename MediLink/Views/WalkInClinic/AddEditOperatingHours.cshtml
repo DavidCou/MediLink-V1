@@ -1,0 +1,180 @@
+﻿@model WalkInHoursViewModel
+@{
+    ViewData["Title"] = "Add Walk-In Clinic Operating Hours";
+}
+<nav id="header-st" class="navbar navbar-expand static-top ">
+    <div class="mr=auto">
+        <a class="navbar-brand mx-0" href="#"><img class="ms-5 me-0" src="~/img/logo2.png" alt="Company Logo" width="70" height="60"></a>
+        <h3 id="company-title">MediLink</h3>
+    </div>
+    <div class="ml-auto mt-4">
+        <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mx-auto ">
+                <li class="nav-item dropdown no-arrow ">
+                    <a class="nav-link dropdown-toggle h6 text-white" href="#" id="reportsDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 mx-2 d-none d-lg-inline text-white ">@ViewData["userName"]</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-left shadow animated--grow-in"
+                         aria-labelledby="userDropdown">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Management")">
+                            <i class="bi bi-box-arrow-in-left text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<body class="bg-gradient-login">
+    <div class="container">
+        <h4 class="text-center text-black mt-5">Add Your Clinics Operating Hours</h4>
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-3">
+                @if (ViewBag.MyErrorList != null)
+                {
+
+                    <div class="alert alert-danger" role="alert">
+                        @foreach (var item in ViewBag.MyErrorList)
+                        {
+                            <span>@item</span>
+
+                            <br>
+                        }
+                    </div>
+                }
+                <form asp-controller="WalkInClinic" asp-action="AddEditOperatingHours" method="post">
+                    <h4>Operating Hours</h4>
+                    <p>To indicate that your clinic is closed on a given day, please enter Closed for both the opening and closing hours for that day., </p>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label">Opening Time On Mondays</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="mondayOpeningTime" name="MondayOpeningTime" value="@Model.MondayOpeningTime" placeholder="00:00" class="form-control" asp-for="MondayOpeningTime" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label">Closing Time On Mondays</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="mondayClosingTime" name="MondayClosingTime" value="@Model.MondayClosingTime" placeholder="00:00" class="form-control" asp-for="MondayClosingTime" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label">Opening Time On Tuesdays</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="tuesdayOpeningTime" name="TuesdayOpeningTime" value="@Model.TuesdayOpeningTime" placeholder="00:00" class="form-control" asp-for="TuesdayOpeningTime" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label">Closing Time On Tuesdays</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="tuesdayClosingTime" name="TuesdayClosingTime" value="@Model.TuesdayClosingTime" placeholder="00:00" class="form-control" asp-for="TuesdayClosingTime" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label">Opening Time On Wednesdays</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="wednesdayOpeningTime" name="WednesdayOpeningTime" value="@Model.WednesdayOpeningTime" placeholder="00:00" class="form-control" asp-for="WednesdayOpeningTime" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label">Closing Time On Wednesdays</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="wednesdayClosingTime" name="WednesdayClosingTime" value="@Model.WednesdayClosingTime" placeholder="00:00" class="form-control" asp-for="WednesdayClosingTime" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label">Opening Time On Thursdays</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="thursdayOpeningTime" name="ThursdayOpeningTime" value="@Model.ThursdayOpeningTime" placeholder="00:00" class="form-control" asp-for="ThursdayOpeningTime" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label">Closing Time On Thursdays</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="thursdayClosingTime" name="ThursdayClosingTime" value="@Model.ThursdayClosingTime" placeholder="00:00" class="form-control" asp-for="ThursdayClosingTime" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label">Opening Time On Fridays</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="fridayOpeningTime" name="FridayOpeningTime" value="@Model.FridayOpeningTime" placeholder="00:00" class="form-control" asp-for="FridayOpeningTime" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label">Closing Time On Fridays</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="fridayClosingTime" name="FridayClosingTime" value="@Model.FridayClosingTime" placeholder="00:00" class="form-control" asp-for="FridayClosingTime" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label">Opening Time On Saturdays</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="saturdayOpeningTime" name="SaturdayOpeningTime" value="@Model.SaturdayOpeningTime" placeholder="00:00" class="form-control" asp-for="SaturdayOpeningTime" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label">Closing Time On Saturdays</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="saturdayClosingTime" name="SaturdayClosingTime" value="@Model.SaturdayClosingTime" placeholder="00:00" class="form-control" asp-for="SaturdayClosingTime" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label">Opening Time On Sundays</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="sundayOpeningTime" name="SundayOpeningTime" value="@Model.SundayOpeningTime" placeholder="00:00" class="form-control" asp-for="SundayOpeningTime" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label class="control-label">Closing Time On Sundays</label>
+                                <div class="inputGroupContainer">
+                                    <div class="input-group"><input id="sundayClosingTime" name="SundayClosingTime" value="@Model.SundayClosingTime" placeholder="00:00" class="form-control" asp-for="SundayClosingTime" type="text"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <a class="btn-user btn-block mt-3 mb-3" href="@Url.Action("WalkInClinicHomePage", "WalkInClinic")">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Add Operating Hours</button>
+                    </div>
+                    <hr>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>

@@ -11623,19 +11623,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jossl\\.nuget\\packages\\": {}
+    "C:\\Users\\david\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\MediLink.csproj",
+      "projectUniqueName": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\MediLink.csproj",
       "projectName": "MediLink",
-      "projectPath": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\MediLink.csproj",
-      "packagesPath": "C:\\Users\\jossl\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jossl\\OneDrive\\College\\Capstone_Proj\\MediLink\\MediLink\\obj\\",
+      "projectPath": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\MediLink.csproj",
+      "packagesPath": "C:\\Users\\david\\.nuget\\packages\\",
+      "outputPath": "D:\\college\\Git_Repos\\Semester_6\\MediLink\\MediLink\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\jossl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\david\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

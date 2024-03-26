@@ -8,9 +8,7 @@
 
         public string DayOfTheWeek { get; set; }
 
-        public string TimeOfDay { get; set; }
-
-        public string WaitTime { get; set; }
+        public int WaitTimeInSeconds { get; set; }
 
         public int WalkInClinicId { get; set; }
 
