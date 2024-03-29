@@ -46,17 +46,21 @@ namespace MediLink.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginPatient(string Email, string Password)
         {
+            if (string.IsNullOrEmpty(Email) || string.IsNullOrWhiteSpace(Password))
+            {
+                ViewData["mensajeResultLoginPatient"] = "Please insert a valid email and password";
+                return View();
+            }
 
             Patient patientFound = await _userService.GetUser(Email, Utilities.EncryptPassword(Password));
-
+                      
             if (patientFound == null)
             {
                 ViewData["mensajeResultLoginPatient"] = "User Not Found";
                 return View();
             }
 
-
-            if (!patientFound.IsEmailConfirmed)
+                       if (!patientFound.IsEmailConfirmed)
             {
                 ViewData["mensajeResultLoginPatient"] = "Your email has not been confirmed yet. An email has been sent to your account";
                 return View();
@@ -422,16 +426,21 @@ namespace MediLink.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginPractitioner(string Email, string Password)
         {
+            if (string.IsNullOrEmpty(Email) || string.IsNullOrWhiteSpace(Password))
+            {
+                ViewData["mensajeResultLoginPractitioner"] = "Please insert a valid email and password";
+                return View();
+            }
 
             Practitioner practFound = await _userService.GetPractitioner(Email, Utilities.EncryptPassword(Password));
-
+                      
             if (practFound == null)
             {
                 ViewData["mensajeResultLoginPractitioner"] = "Practitioner Not Found";
                 return View();
             }
 
-
+        
             if (!practFound.IsValidated)
             {
                 ViewData["mensajeResultLoginPractitioner"] = "Your email has not been confirmed yet. An email has been sent to your account";
@@ -620,11 +629,16 @@ namespace MediLink.Controllers
 
             }
 
+            if (string.IsNullOrEmpty(oPractict.listOffices))
+            {
+                errorMessage.Add("-Please Select Office Address");
+            }
+
             if (string.IsNullOrEmpty(oPractict.listLanguages))
             {
                 errorMessage.Add("-Please Select Spoken Languages");
             }
-                        
+
 
             if (errorMessage.Count == 0)
             {
@@ -836,15 +850,20 @@ namespace MediLink.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginWalkInClinic(string Email, string Password)
         {
+            if (string.IsNullOrEmpty(Email) || string.IsNullOrWhiteSpace(Password))
+            {
+                ViewData["mensajeResultLoginClinic"] = "Please insert a valid email and password";
+                return View();
+            }
 
             WalkInClinic clientFound = await _userService.GetWalkInClinic(Email, Utilities.EncryptPassword(Password));
-
+                       
             if (clientFound == null)
             {
                 ViewData["mensajeResultLoginClinic"] = "User Not Found";
                 return View();
             }
-
+          
 
             if (!clientFound.IsValidated)
             {
