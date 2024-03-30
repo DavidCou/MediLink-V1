@@ -41,6 +41,18 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome!!</h1>
                                     </div>
+                                    @if (ViewData["mensajeResultLoginPatient"] != null)
+                                    {
+                                        <div class="alert alert-danger" role="alert">
+                                            @ViewData["mensajeResultLoginPatient"]
+                                        </div>
+                                    }
+                                    else if (ViewData["PasswordResetSuccess"] != null)
+                                    {
+                                        <div class="alert alert-success" role="alert">
+                                            @ViewData["PasswordResetSuccess"]
+                                        </div>
+                                    }
                                     <form class="user" action="@Url.Action("LoginPatient","Management")" method="post">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
@@ -65,12 +77,6 @@
                                     <div class="text-center">
                                         <a class="small" href="@Url.Action("RegisterPatient", "Management")">Create an Account!</a>
                                     </div>
-                                    @if (ViewData["mensajeResultLoginPatient"] != null)
-                                    {
-                                        <div class="alert alert-danger" role="alert">
-                                            @ViewData["mensajeResultLoginPatient"]
-                                        </div>
-                                    }
                                 </div>
                             </div>
                         </div>

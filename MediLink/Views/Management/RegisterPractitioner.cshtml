@@ -36,13 +36,16 @@
                             {
 
                                 <div class="alert alert-danger" role="alert">
-                                    <ul>
-
-                                        @foreach (var item in ViewBag.MyErrorList)
-                                        {
-                                            <li>@item</li>
-                                        }
-                                    </ul>
+                                    @foreach (var item in ViewBag.MyErrorList)
+                                    {
+                                        <span>@item</span>
+                                    }
+                                </div>
+                            }
+                            else if (ViewBag.practitionerRegSuccess != null)
+                            {
+                                <div class="alert alert-success" role="alert">
+                                    <span>@ViewBag.practitionerRegSuccess</span>
                                 </div>
                             }
                             <form class="user" action="@Url.Action("RegisterPractitioner","Management")" method="post">

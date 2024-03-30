@@ -36,18 +36,21 @@
                             </div>
                            
                             @if (ViewBag.MyErrorList != null)
-                                {
-                                    
-                                    <div class="alert alert-danger" role="alert">
-                                    <ul>
+                            {
 
-                                        @foreach (var item in ViewBag.MyErrorList)
-                                        {
-                                            <li>@item</li>
-                                        }
-                                    </ul>
-                                    </div>
-                                }
+                                <div class="alert alert-danger" role="alert">
+                                    @foreach (var item in ViewBag.MyErrorList)
+                                    {
+                                        <p>@item</p>
+                                    }
+                                </div>
+                            }
+                            else if (ViewBag.PatientRegSuccess != null)
+                            {
+                                <div class="alert alert-success" role="alert">
+                                    <span>@ViewBag.PatientRegSuccess</span>
+                                </div>
+                            }
                             <form class="user" action="@Url.Action("RegisterPatient","Management")" method="post">
                                 <fieldset>
                                     <div class="row">

@@ -40,6 +40,12 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome!!</h1>
                                     </div>
+                                    @if (ViewData["mensajeResultLoginPractitioner"] != null)
+                                    {
+                                        <div class="alert alert-danger" role="alert">
+                                            @ViewData["mensajeResultLoginPractitioner"]
+                                        </div>
+                                    }
                                     <form class="user" action="@Url.Action("LoginPractitioner","Management")" method="post">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
@@ -64,12 +70,6 @@
                                     <div class="text-center">
                                         <a class="small" href="@Url.Action("RegisterPractitioner", "Management")">Create an Account!</a>
                                     </div>
-                                    @if (ViewData["mensajeResultLoginPractitioner"] != null)
-                                    {
-                                        <div class="alert alert-danger" role="alert">
-                                            @ViewData["mensajeResultLoginPractitioner"]
-                                        </div>
-                                    }
                                 </div>
                             </div>
                         </div>
