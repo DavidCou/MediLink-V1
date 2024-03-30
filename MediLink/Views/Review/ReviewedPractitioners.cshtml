@@ -48,10 +48,6 @@
         <div class="card-header">
 
             <i class="fas fa-users me-1"></i> Your Reviewed Practitioners
-            <div class="d-inline text-end">
-                <a class="close" href="@Url.Action("PatientHomePage","Patient")"><span aria-hidden="true">&times;</span></a>
-
-            </div>
 
             <div class="card-body">
                 @if (ViewBag.Success != null)
@@ -114,6 +110,9 @@
                     {
                         <p>No Reviewed Past Practitioners</p>
                     }
+                </div>
+                <div class="d-block text-center">
+                    <a asp-controller="Patient" asp-action="PatientHomePage" class="btn btn-primary px-5">Back to Home Page</a>
                 </div>
             </div>
         </div>

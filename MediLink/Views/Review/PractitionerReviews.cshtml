@@ -48,10 +48,6 @@
         <div class="card-header">
 
             <i class="fas fa-users me-1"></i> Your Reviews
-            <div class="d-inline text-end">
-                <a class="close" href="@Url.Action("PractitionerHomePage","Practitioner")"><span aria-hidden="true">&times;</span></a>
-
-            </div>
 
             <div class="card-body">
                 @if (Model.currentPractitionerReviews.Count > 0)
@@ -74,6 +70,9 @@
                 {
                     <p>No Reviews</p>
                 }
+                <div class="d-block text-center">
+                    <a asp-controller="Practitioner" asp-action="PractitionerHomePage" class="btn btn-primary px-5">Back to Home Page</a>
+                </div>
             </div>
         </div>
     </div>

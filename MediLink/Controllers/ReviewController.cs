@@ -152,7 +152,7 @@ namespace MediLink.Controllers
             _mediLinkContext.PractitionerReviews.Remove(review);
             await _mediLinkContext.SaveChangesAsync();
 
-            TempData["Success"] = "Review deleted";
+            TempData["Success"] = "Your review has been deleted";
 
             return RedirectToAction("ReviewedPractitioners", "Review");
         }
