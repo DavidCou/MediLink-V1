@@ -601,7 +601,7 @@ namespace MediLink.Controllers
 
         }
 
-        [HttpGet("/search/walk-in/{id}")]
+        [HttpGet]
         public async Task<IActionResult> ViewClinicHours(int id) 
         {
             Debug.WriteLine(id);
